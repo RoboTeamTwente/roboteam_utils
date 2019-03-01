@@ -5,6 +5,10 @@
 #include "roboteam_msgs/World.h"
 #include "roboteam_utils/LastWorld.h"
 #include "boost/optional.hpp"
+#include "roboteam_utils/Vector2.h"
+#include "roboteam_utils/Angle.h"
+#include "roboteam_utils/Math.h"
+#include <boost/range/join.hpp>
 
 namespace rtt {
 

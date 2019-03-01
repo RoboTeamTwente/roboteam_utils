@@ -1,6 +1,5 @@
 #include "roboteam_utils/world_analysis.h"
-#include "roboteam_utils/Math.h"
-#include <boost/range/join.hpp>
+
 
 namespace rtt {
 
@@ -30,7 +29,7 @@ bool bot_has_ball(const roboteam_msgs::WorldRobot& bot, const roboteam_msgs::Wor
     Vector2 ball_norm = (ball_vec - bot_vec);
 
     double dist = ball_norm.length();
-    double angle = ball_norm.angle();
+    double angle = ball_norm.toAngle().getAngle();
 
     // Within 10.5 cm and .2 radians (of center of dribbler)
     return dist <= .15 && fabs(cleanAngle(angle - bot.angle)) <= .5;

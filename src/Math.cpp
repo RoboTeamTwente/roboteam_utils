@@ -1,4 +1,5 @@
 #include "roboteam_utils/Vector2.h"
+#include "roboteam_utils/Angle.h"
 #include "roboteam_utils/Math.h"
 #include <cmath>
 
@@ -23,7 +24,7 @@ double cleanAngle(double angle){
 }
 
 Vector2 limitAngleDiff(Vector2 vector1, Vector2 vector2, double maxAngleDiff) {
-    double angleDiff = cleanAngle(vector1.angle() - vector2.angle());
+    double angleDiff = cleanAngle(vector1.toAngle().getAngle() - vector2.toAngle().getAngle());
     if (angleDiff > maxAngleDiff) {
         vector1 = vector2.scale(vector1.length() / vector2.length()).rotate(maxAngleDiff);
     } else if (angleDiff < -maxAngleDiff) {
@@ -48,7 +49,7 @@ Vector2 worldToRobotFrame(Vector2 requiredv, double rotation){
 
 double computeAngle(Vector2 robotPos, Vector2 faceTowardsPos) {
 	Vector2 differenceVector = faceTowardsPos - robotPos;
-	return differenceVector.angle();
+	return differenceVector.toAngle().getAngle();
 }
 
 bool isBetweenAngles(double a1, double a2, double testAngle) {

@@ -1,10 +1,10 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <iostream>
 #include "roboteam_msgs/Vector2f.h"
 
 namespace rtt {
+class Angle;
 
 /**
  * \class Vector2
@@ -14,24 +14,28 @@ namespace rtt {
  * The only exception is operator=(const roboteam_msgs::Vector2f&).
  */
 class Vector2 {
+
     public:
+        double x;
+        double y;
+
         /**
          * \brief The zero vector.
          */
         constexpr Vector2()
-                :x(0), y(0) { }
+                : x(0.0), y(0.0) { }
 
         /**
          * \brief Construct a vector from two doubles.
          */
         constexpr Vector2(double x, double y)
-                :x(x), y(y) { }
+                : x(x), y(y) { }
 
         /**
          * \brief Copy constructor.
          */
         constexpr Vector2(const Vector2 &copy)
-                :x(copy.x), y(copy.y) { }
+                : x(copy.x), y(copy.y) { }
 
         /**
          * \brief Convert a ROS Vector2f to an rtt::Vector2.
@@ -86,7 +90,7 @@ class Vector2 {
 	     *     - Vectors with a negative or zero y value have a positive angle
 	     *     - The angle of the zero vector is undefined.
 	     */
-        double angle() const;
+        rtt::Angle toAngle() const;
 
         /**
          * \brief Performs linear interpolation/extrapolation.
@@ -219,8 +223,6 @@ class Vector2 {
          */
         std::ostream &write(std::ostream &os) const;
 
-        double x;
-        double y;
 };
 
 /**
@@ -232,6 +234,7 @@ constexpr Vector2 ZERO_VECTOR{};
  * \brief Writes a vector to an output stream.
  */
 std::ostream &operator<<(std::ostream &os, const Vector2 vec);
+
 }
 
 #endif // VECTOR2_H

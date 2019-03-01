@@ -1,6 +1,7 @@
-#include "home/thijs/roboteamtwente/workspace/src/roboteam_ai/roboteam_ai/test/temp/Vector2.h"
-#include <ros/ros.h>
+#include "../include/roboteam_utils/Vector2.h"
+#include "../include/roboteam_utils/Angle.h"
 
+#include <ros/ros.h>
 #include <cmath>
 
 namespace rtt {
@@ -37,8 +38,9 @@ double Vector2::length2() const {
     return (x*x + y*y);
 }
 
-double Vector2::angle() const {
-    return atan2(y, x);
+rtt::Angle Vector2::toAngle() const {
+    Angle a = Angle(atan2(y, x));
+    return a.getAngle();
 }
 
 Vector2 Vector2::lerp(const Vector2 &other, double factor) const {
@@ -76,7 +78,10 @@ bool Vector2::isNotNaN() const {
 
 Vector2 Vector2::closestPointOnVector(const Vector2 &startPoint, const Vector2 &point) const {
     Vector2 vectorToPoint = point - startPoint;
-    double angle = this->angle() - vectorToPoint.angle();
+    Angle me = this->toAngle();
+    Angle vtp = vectorToPoint.toAngle();
+    Angle a = me - vtp;
+    double angle = a.getAngle();
     double projectionLength = vectorToPoint.length()*cos(angle);
 
     Vector2 closestPoint;

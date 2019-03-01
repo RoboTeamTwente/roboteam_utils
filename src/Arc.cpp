@@ -1,6 +1,8 @@
 #include "roboteam_utils/Arc.h"
 #include "roboteam_utils/Math.h"
 #include <iostream>
+#include "roboteam_utils/Angle.h"
+
 
 namespace rtt {
     
@@ -43,18 +45,18 @@ double Arc::normalize(double angle) {
 
 bool Arc::pointInArc(const Vector2& point) const {
     Vector2 normPoint = point - center;
-    auto arcPoint = arcPointTowards(normPoint.angle());
+    auto arcPoint = arcPointTowards(normPoint.toAngle().getAngle());
     return arcPoint && normPoint.length() <= arcPoint->length();  
 }
 
 bool Arc::pointOnArc(const Vector2& point) const {
     Vector2 normPoint = point - center;
-    auto arcPoint = arcPointTowards(normPoint.angle());
+    auto arcPoint = arcPointTowards(normPoint.toAngle().getAngle());
     return arcPoint && *arcPoint == normPoint;
 }
 
 boost::optional<Vector2> Arc::checkAndDenormalize(Vector2 vec) const {
-    return normalize(angleEnd - angleStart) - normalize(vec.angle() - angleStart) >= 0 ?
+    return normalize(angleEnd - angleStart) - normalize(vec.toAngle().getAngle() - angleStart) >= 0 ?
             boost::optional<Vector2>(vec + center)
             :
             boost::none;
@@ -102,7 +104,7 @@ Arc::intersectionWithLine(Vector2 lineStart, Vector2 lineEnd) const {
 }
 
 boost::optional<Vector2> Arc::arcPointTowards(Vector2 point) const {
-    return arcPointTowards((point - center).angle());
+    return arcPointTowards((point - center).toAngle().getAngle());
 }
 
 boost::optional<Vector2> Arc::arcPointTowards(double angle) const {
@@ -114,7 +116,7 @@ boost::optional<Vector2> Arc::arcPointTowards(double angle) const {
     
     // special cases
     // the 0.5 * pi and 1.5 * pi cases are important,
-    // then tan(angle) is infinite and the normal calculation fails.
+    // then tan(toAngle) is infinite and the normal calculation fails.
     if (angle < .000001) {
         return Vector2(length, 0);
     } else if (fabsl(angle - M_PI_2) < .000001) {

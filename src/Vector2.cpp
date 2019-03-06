@@ -6,8 +6,15 @@
 
 namespace rtt {
 
+
+Vector2::Vector2(rtt::Angle &angle, const double &length)
+        :epsilon(0.00001) {
+    y = sin(angle.getAngle())*length;
+    x = cos(angle.getAngle())*length;
+}
+
 double Vector2::dot(const Vector2 &other) const {
-    return this->x * other.x + this->y * other.y;
+    return this->x*other.x + this->y*other.y;
 }
 
 double Vector2::dist(const Vector2 &other) const {
@@ -15,11 +22,11 @@ double Vector2::dist(const Vector2 &other) const {
 }
 
 double Vector2::dist2(const Vector2 &other) const {
-    return (*this-other).length2();
+    return (*this - other).length2();
 }
 
 Vector2 Vector2::scale(double scalar) const {
-    return {x * scalar, y * scalar};
+    return {x*scalar, y*scalar};
 }
 
 Vector2 Vector2::normalize() const {
@@ -39,8 +46,11 @@ double Vector2::length2() const {
 }
 
 rtt::Angle Vector2::toAngle() const {
+    if (this->length() < epsilon)
+        return {};
+
     Angle a = Angle(atan2(y, x));
-    return a.getAngle();
+    return a;
 }
 
 Vector2 Vector2::lerp(const Vector2 &other, double factor) const {
@@ -106,7 +116,7 @@ Vector2 Vector2::stretchToLength(double desiredLength) const {
 }
 
 bool Vector2::operator==(const Vector2 &other) const {
-    return fabs(x - other.x) < 0.00001 && fabs(y - other.y) < 0.00001;
+    return fabs(this->x - other.x) < epsilon && fabs(this->y - other.y) < epsilon;
 }
 
 bool Vector2::operator!=(const Vector2 &other) const {
@@ -142,6 +152,9 @@ Vector2 Vector2::operator*=(const double &scalar) {
 }
 
 Vector2 Vector2::operator/=(const Vector2 &other) {
+    if (other == Vector2())
+        throw std::invalid_argument("You mongol, stop dividing by zero");
+
     return {this->x /= other.x, this->y /= other.y};
 }
 
@@ -188,8 +201,8 @@ void Vector2::operator=(const roboteam_msgs::Vector2f &msg) {
 
 Vector2::operator roboteam_msgs::Vector2f() const {
     roboteam_msgs::Vector2f msg;
-    msg.x = x;
-    msg.y = y;
+    msg.x = static_cast<float>(x);
+    msg.y = static_cast<float>(y);
     return msg;
 }
 

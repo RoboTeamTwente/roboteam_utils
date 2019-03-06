@@ -8,17 +8,20 @@
 #include "Math.h"
 
 namespace rtt {
+
 class Vector2;
 
 class Angle {
+
     public:
         constexpr Angle()
-                : angle(0.0) { }
-
-        constexpr Angle(double angle);
+            : angle(0.0), epsilon(0.00001) { };
 
         constexpr Angle(const Angle &copy)
-                : angle(copy.angle) { }
+            :angle(copy.angle), epsilon(0.00001) { }
+
+        Angle(double angle);
+        Angle(const rtt::Vector2 &vec);
 
         double getAngle();
         void setAngle(double angle);
@@ -30,7 +33,10 @@ class Angle {
 
         rtt::Vector2 toVector2(double length = 1.0);
         bool operator==(const Angle &other) const;
+        bool operator==(const double &scalar) const;
+
         bool operator!=(const Angle &other) const;
+        bool operator!=(const double &scalar) const;
 
         bool operator<(const Angle &other) const;
 
@@ -43,8 +49,12 @@ class Angle {
         Angle operator-=(const Angle &other);
         Angle operator-=(const double &scalar);
 
+        void operator=(const double &scalar);
+        operator double() const;
+
     private:
         double angle;
+        double epsilon;
 
         Angle constrain();
 

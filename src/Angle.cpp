@@ -7,9 +7,17 @@
 
 namespace rtt {
 
-constexpr Angle::Angle(double angle)
-        :angle(angle) {
+Angle::Angle(double angle)
+        : angle(angle), epsilon(0.00001) {
     this->constrain();
+}
+
+Angle::Angle(const rtt::Vector2 &vec)
+        :epsilon(0.00001) {
+    if (vec.length() < epsilon)
+        angle = 0.0;
+    else
+        angle = vec.toAngle().getAngle();
 }
 
 double Angle::getAngle() {
@@ -21,9 +29,9 @@ void Angle::setAngle(double angle) {
 }
 
 Angle Angle::constrain() {
-    while (angle > M_PI) angle -= 2*M_PI;
-    while (angle < - M_PI) angle += 2*M_PI;
-    return angle;
+    this->angle = fmod(angle+M_PI, 2*M_PI);
+    this->angle = ( angle < 0) ? angle+M_PI : angle-M_PI;
+    return *this;
 }
 
 double Angle::angleDiff(Angle &other) {
@@ -53,11 +61,19 @@ rtt::Vector2 Angle::toVector2(double length) {
 }
 
 bool Angle::operator==(const Angle &other) const {
-    return fabs(this->angle - other.angle) < 0.00001;
+    return fabs(this->angle - other.angle) < epsilon;
+}
+
+bool Angle::operator==(const double &scalar) const {
+    return *this == Angle(scalar);
 }
 
 bool Angle::operator!=(const Angle &other) const {
     return ! (*this == other);
+}
+
+bool Angle::operator!=(const double &scalar) const {
+    return *this != Angle(scalar);
 }
 
 bool Angle::operator<(const Angle &other) const {
@@ -99,4 +115,14 @@ Angle Angle::operator-=(const double &scalar) {
     Angle other = Angle(scalar);
     return *this -= other;
 }
+
+void Angle::operator=(const double &scalar) {
+    this->angle = scalar;
+    this->constrain();
+}
+
+Angle::operator double() const {
+    return this->angle;
+}
+
 }

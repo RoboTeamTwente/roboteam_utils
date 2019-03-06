@@ -14,34 +14,23 @@ class Angle;
  * The only exception is operator=(const roboteam_msgs::Vector2f&).
  */
 class Vector2 {
-
     public:
-        double x;
-        double y;
-
         /**
          * \brief The zero vector.
          */
         constexpr Vector2()
-                : x(0.0), y(0.0) { }
+                :x(0.0), y(0.0), epsilon(0.00001) { }
 
-        /**
-         * \brief Construct a vector from two doubles.
-         */
-        constexpr Vector2(double x, double y)
-                : x(x), y(y) { }
-
-        /**
-         * \brief Copy constructor.
-         */
         constexpr Vector2(const Vector2 &copy)
-                : x(copy.x), y(copy.y) { }
+                :x(copy.x), y(copy.y), epsilon(0.00001) { }
 
-        /**
-         * \brief Convert a ROS Vector2f to an rtt::Vector2.
-         */
+        constexpr Vector2(const double x, const double y)
+                :x(x), y(y), epsilon(0.00001) { }
+
         constexpr Vector2(const roboteam_msgs::Vector2f &msg)
                 :Vector2(msg.x, msg.y) { }
+
+        Vector2(rtt::Angle &angle, const double &length = 1.0);
 
         /**
          * \brief Calculate the dot product of this vector with another. (this . other)
@@ -223,12 +212,11 @@ class Vector2 {
          */
         std::ostream &write(std::ostream &os) const;
 
+        double x;
+        double y;
+    private:
+        double epsilon;
 };
-
-/**
- * \brief The zero vector, Vector2(0, 0)
- */
-constexpr Vector2 ZERO_VECTOR{};
 
 /**
  * \brief Writes a vector to an output stream.

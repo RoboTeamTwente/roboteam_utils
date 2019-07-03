@@ -3,15 +3,17 @@
 
 namespace rtt {
 
-template<typename T, long unsigned int N>
-static bool has(std::array<T, N> arr, T val) {
-  for (unsigned int i = 0; i < N; i++) {
+
+static bool has(const std::array<std::__cxx11::basic_string<char>, 2>& arr, const string& val) {
+  for (unsigned int i = 0; i < 2; i++) {
     if (arr[i] == val) {
       return true;
     }
   }
   return false;
 }
+
+
 
 const std::string NODE_AVOID_ROBOTS_TEST = "AvoidRobotsTest";
 

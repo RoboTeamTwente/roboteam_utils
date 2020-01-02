@@ -7,16 +7,7 @@ include(cotire)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-set(CMAKE_CXX_FLAGS "\
---std=c++17 ${CMAKE_CXX_FLAGS} \
--Wall \
--Werror \
--Wextra \
--Wno-unused-function \
--Wsign-compare \
--g \
-"
-        )
+
 
 add_library(roboteam_utils STATIC
         src/Polygon.cpp
@@ -49,8 +40,8 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Timer.h
         include/roboteam_utils/type_traits.h
         include/roboteam_utils/json.hpp
-        include/roboteam_utils/BiMap.h
-        include/roboteam_utils/Graph.h
+        #include/roboteam_utils/BiMap.h
+        #include/roboteam_utils/Graph.h
         )
 
 
@@ -62,4 +53,32 @@ target_include_directories(roboteam_utils
 target_link_libraries(roboteam_utils
         PUBLIC roboteam_proto
         #gtest
+        )
+target_compile_options(roboteam_utils PRIVATE
+        --std=c++17
+        -Wall
+        -Werror
+        -Wextra
+        -Wno-unused-function
+        -Wno-comment
+        -Wsign-compare
+        -g
+        )
+add_executable(utils_tests
+        test/main.cpp
+        test/ArcTest.cpp
+        #test/BiMapTest.cpp
+        #test/GraphTest.cpp
+        test/LineTest.cpp
+        test/normaliseTest.cpp
+        test/OptimizationTest.cpp
+        test/PolygonTest.cpp
+        test/PositionTest.cpp
+        test/Vector2Test.cpp
+        )
+
+
+target_link_libraries(utils_tests
+        PRIVATE roboteam_utils
+        PRIVATE gtest
         )

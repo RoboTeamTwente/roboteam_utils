@@ -1,7 +1,7 @@
 #include "roboteam_utils/Vector2.h"
 #include <gtest/gtest.h>
 #include <cmath>
-
+#include <math.h>
 using namespace rtt;
 
 TEST(VectorTests, instantiation) {

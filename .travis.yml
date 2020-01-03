@@ -45,6 +45,9 @@ install:
 # Finally, we run the tests.
 script:
   - cd ~
+  - export CC="ccache gcc"
+  - export CXX="ccache g++"
+  - export CCACHE_SLOPPINESS=pch_defines,time_macros
   - git clone https://github.com/RoboTeamTwente/roboteam_suite roboteam_suite --recurse-submodules
   - cd ~/roboteam_suite
   - rm -rf roboteam_utils

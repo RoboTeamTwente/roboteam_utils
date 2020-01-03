@@ -8,7 +8,6 @@ include(cotire)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 
-
 add_library(roboteam_utils STATIC
         src/Polygon.cpp
         include/roboteam_utils/Polygon.h
@@ -77,8 +76,17 @@ add_executable(utils_tests
         test/Vector2Test.cpp
         )
 
+if (UNIX AND NOT APPLE)
+    target_link_libraries(utils_tests
+            PRIVATE roboteam_utils
+            PRIVATE gtest
+            )
+endif ()
 
-target_link_libraries(utils_tests
-        PRIVATE roboteam_utils
-        PRIVATE gtest
-        )
+if (APPLE)
+    target_link_libraries(utils_tests
+            PRIVATE roboteam_utils
+            PRIVATE /usr/local/lib/libgtest.a
+            PRIVATE /usr/local/lib/libgtest_main.a
+            )
+endif ()

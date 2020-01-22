@@ -77,7 +77,7 @@ add_executable(utils_tests
         test/PolygonTest.cpp
         test/PositionTest.cpp
         test/Vector2Test.cpp
-        )
+        test/RectangleTest.cpp)
 
 if (UNIX AND NOT APPLE)
     target_link_libraries(utils_tests

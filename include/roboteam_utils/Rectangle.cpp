@@ -14,6 +14,9 @@ constexpr const int RIGHT = 0x02;
 constexpr const int BOTTOM = 0x04;
 constexpr const int TOP = 0x08;
 namespace rtt {
+Rectangle::Rectangle(const Vector2 &corner, const Vector2 &oppositeCorner)
+        :corner1{corner}, corner2{oppositeCorner} {
+}
 int Rectangle::CohenSutherlandCode(const Vector2 &point) const {
     double x = point.x;
     double y = point.y;
@@ -146,7 +149,7 @@ std::vector<Vector2> Rectangle::intersects(const LineSegment &line) const {
             }
         }
     }
-    return accept ? std::vector<Vector2>() : intersections;
+    return accept ? intersections : std::vector<Vector2>();
 }
 bool Rectangle::doesIntersect(const LineSegment &line) const {
     return ! intersects(line).empty();
@@ -173,8 +176,11 @@ bool Rectangle::doesIntersect(const Line &line) const {
     }
     return false;
 }
+
+//include the boundary for this calculation!
 bool Rectangle::contains(const Vector2 &point) const {
-    return maxX() > point.x && minX() < point.x && maxY() > point.y && minY() < point.y;
+    return maxX() >= point.x && minX() <= point.x && maxY() >= point.y && minY() <= point.y;
 }
+
 }
 

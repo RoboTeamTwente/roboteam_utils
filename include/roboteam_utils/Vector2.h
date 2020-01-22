@@ -226,7 +226,6 @@ class Vector2 {
          * \brief Writes a textual representation of this vector to the given output stream.
          */
         std::ostream &write(std::ostream &os) const;
-
 };
 
 /**

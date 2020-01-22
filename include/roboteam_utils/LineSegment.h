@@ -29,6 +29,11 @@ class LineSegment {
         constexpr LineSegment(const Vector2 &_start, const Vector2 &_end)
                 : start{_start},end{_end} { };
         /**
+         * @brief Construct a LineSegment from a line.
+         * @param line Line to construct LineSegment from
+         */
+        LineSegment(const Line &line);
+        /**
          * @brief Start of the line
          */
         Vector2 start;

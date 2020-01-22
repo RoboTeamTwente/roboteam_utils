@@ -6,6 +6,10 @@
 #include "../include/roboteam_utils/LineSegment.h"
 
 namespace rtt {
+LineSegment::LineSegment(const Line &line) {
+    start=line.start;
+    end=line.end;
+}
 double LineSegment::length() const {
     return (end - start).length();
 }

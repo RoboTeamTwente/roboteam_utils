@@ -41,7 +41,6 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/json.hpp
         #include/roboteam_utils/BiMap.h
         #include/roboteam_utils/Graph.h
-        include/roboteam_utils/Statistics.cpp
         include/roboteam_utils/Statistics.h
         )
 

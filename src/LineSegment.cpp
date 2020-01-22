@@ -112,7 +112,7 @@ bool LineSegment::nonSimpleDoesIntersect(const LineSegment &line) const {
     return false;
 }
 
-std::shared_ptr<Vector2> LineSegment::intersects(const Line &line) const {
+std::optional<Vector2> LineSegment::intersects(const Line &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     double denom = A.cross(B);
@@ -121,15 +121,15 @@ std::shared_ptr<Vector2> LineSegment::intersects(const Line &line) const {
         double numer = C.cross(B);
         double t = numer/denom;
         if (! (t < 0 || t > 1)) {
-            return std::make_shared<Vector2>(start - A*t);
+            return start - A*t;
         }
     }
-    return nullptr;
+    return std::nullopt;
 
 }
 
 // only returns a vector if there is a point intersection. If a segment intersects does not return anything
-std::shared_ptr<Vector2> LineSegment::intersects(const LineSegment &line) const {
+std::optional<Vector2> LineSegment::intersects(const LineSegment &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     Vector2 C = start - line.start;
@@ -139,7 +139,7 @@ std::shared_ptr<Vector2> LineSegment::intersects(const LineSegment &line) const 
         double t = numer/denom;
         double u = - A.cross(C)/denom;
         if (! (t < 0 || t > 1) && ! (u < 0 || u > 1)) {
-            return std::make_shared<Vector2>(start - A*t);
+            return start - A*t;
         }
     }
     else if (numer == 0) {
@@ -147,13 +147,13 @@ std::shared_ptr<Vector2> LineSegment::intersects(const LineSegment &line) const 
         double t1 = t0 + B.dot(A)/A.length2();
         //check the ends for point intersections
         if ((t0 == 0 && t1 < 0) || (t1 == 0 && t0 < 0)) {
-            return std::make_shared<Vector2>(Vector2(start));
+            return start;
         }
         else if ((t0 == 1 && t1 > 1) || (t1 == 1 && t0 > 1)) {
-            return std::make_shared<Vector2>(Vector2(end));
+            return end;
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 double LineSegment::distanceToLine(const Vector2 &point) const {
@@ -192,7 +192,7 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     return true;
 }
 
-std::shared_ptr<Vector2> LineSegment::nonSimpleIntersects(const LineSegment &line) const {
+std::optional<Vector2> LineSegment::nonSimpleIntersects(const LineSegment &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     Vector2 C = start - line.start;
@@ -201,10 +201,10 @@ std::shared_ptr<Vector2> LineSegment::nonSimpleIntersects(const LineSegment &lin
         double t = C.cross(B)/denom;
         double u = - A.cross(C)/denom;
         if (! (t <= 0 || t >= 1) && ! (u <= 0 || u >= 1)) {
-            return std::make_shared<Vector2>(start - A*t);
+            return start - A*t;
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 }

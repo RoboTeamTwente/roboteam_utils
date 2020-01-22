@@ -44,7 +44,7 @@ class Line {
          * @brief Constructs a new Line from a LineSegment.
          * @param other LineSegment to use for construction
          */
-         Line(const LineSegment &other);
+         explicit Line(const LineSegment &other);
         /**
          * @brief Gets the length of the vector representation of this line.
          *        Note in this case it does not really make sense as this class represents lines of infinite length
@@ -153,7 +153,7 @@ class Line {
          * @param line Line to get an intersection from
          * @return std::shared_ptr<Vector2> Vector representation of this intersection
          */
-        [[nodiscard]] std::shared_ptr<Vector2> intersects(const Line &line) const;
+        [[nodiscard]] std::optional<Vector2> intersects(const Line &line) const;
 
         /**
          * @brief Gets the intersection of the lines
@@ -162,7 +162,7 @@ class Line {
          * @param line LineSegment to get an intersection from
          * @return std::shared_ptr<Vector2> Vector representation of this intersection
          */
-        [[nodiscard]] std::shared_ptr<Vector2> intersects(const LineSegment &line) const ;
+        [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const ;
 
         /**
          * @brief Checks whether \ref line intersects `this`

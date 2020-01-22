@@ -77,7 +77,7 @@ bool Line::isOnLine(const Vector2 &point) const {
 }
 
 // see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
-std::shared_ptr<Vector2> Line::intersects(const Line &line) const {
+std::optional<Vector2> Line::intersects(const Line &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     double denom = A.cross(B);
@@ -85,12 +85,12 @@ std::shared_ptr<Vector2> Line::intersects(const Line &line) const {
         Vector2 C = start - line.start;
         double numer = - C.cross(B);
         double t = numer/denom;
-        return std::make_shared<Vector2>(start + A*t);
+        return start + A*t;
     }
-    return nullptr;
+    return std::nullopt;
 }
 
-std::shared_ptr<Vector2> Line::intersects(const LineSegment &line) const {
+std::optional<Vector2> Line::intersects(const LineSegment &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     double denom = A.cross(B);
@@ -99,10 +99,10 @@ std::shared_ptr<Vector2> Line::intersects(const LineSegment &line) const {
         double numer = C.cross(A);
         double u = numer/denom;
         if (! (u < 0 || u > 1)) {
-            return std::make_shared<Vector2>(line.start - B*u);
+            return line.start - B*u;
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 bool Line::doesIntersect(const Line &line) const {

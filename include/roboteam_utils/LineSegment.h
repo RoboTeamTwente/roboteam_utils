@@ -32,7 +32,7 @@ class LineSegment {
          * @brief Construct a LineSegment from a line.
          * @param line Line to construct LineSegment from
          */
-        LineSegment(const Line &line);
+        explicit LineSegment(const Line &line);
         /**
          * @brief Start of the line
          */
@@ -152,7 +152,7 @@ class LineSegment {
          * @param line Line to get an intersection from
          * @return std::shared_ptr<Vector2> Vector representation of this intersection
          */
-        [[nodiscard]] std::shared_ptr<Vector2> intersects(const Line &line) const;
+        [[nodiscard]] std::optional<Vector2> intersects(const Line &line) const;
 
         /**
          * @brief Gets the intersection of the lines
@@ -161,7 +161,7 @@ class LineSegment {
          * @param line LineSegment to get an intersection from
          * @return std::shared_ptr<Vector2> Vector representation of this intersection
          */
-        [[nodiscard]] std::shared_ptr<Vector2> intersects(const LineSegment &line) const;
+        [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
 
         /**
          * @brief Checks whether \ref line intersects `this`
@@ -200,7 +200,7 @@ class LineSegment {
          * @param line Line to check against
          * @return std::shared_ptr<Vector2> Returns a shared_ptr to a Vector2 that represents the intersection
          */
-        [[nodiscard]] std::shared_ptr<Vector2> nonSimpleIntersects(const LineSegment &line) const;
+        [[nodiscard]] std::optional<Vector2> nonSimpleIntersects(const LineSegment &line) const;
 
         /**
          * @brief Destroy the Line Segment object

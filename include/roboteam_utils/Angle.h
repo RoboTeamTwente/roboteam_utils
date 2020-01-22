@@ -33,14 +33,14 @@ namespace rtt {
          *
          * @param angle Angle to set the initial angle to
          */
-        explicit Angle(double angle);
+        Angle(double angle);
 
         /**
          * @brief Construct a new Angle object from an rtt::Vector2
          *
          * @param vec vector to construct from
          */
-        explicit Angle(const rtt::Vector2 &vec);
+        Angle(const rtt::Vector2 &vec);
 
         /**
          * @brief Get the Angle as double

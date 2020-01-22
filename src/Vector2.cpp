@@ -45,7 +45,7 @@ double Vector2::angle() const {
 }
 
 rtt::Angle Vector2::toAngle() const {
-    return {atan2(y, x)};
+    return Angle(atan2(y, x));
 }
 
 Vector2 Vector2::lerp(const Vector2 &other, double factor) const {

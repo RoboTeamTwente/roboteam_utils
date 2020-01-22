@@ -177,8 +177,8 @@ Vector2 LineSegment::project(const Vector2 &point) const {
 bool LineSegment::isOnLine(const Vector2 &point) const {
     Vector2 A = end - start;
     Vector2 B = point - start;
-    double crpd = A.cross(B);
-    if (crpd != 0) {
+    double cross = A.cross(B);
+    if (cross != 0) {
         return false;
     }
     //check if the point is in between the two points

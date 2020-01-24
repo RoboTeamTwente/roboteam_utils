@@ -8,19 +8,22 @@
 #include "Polygon.h"
 #include "Line.h"
 
-constexpr const int INSIDE = 0x00;
-constexpr const int LEFT = 0x01;
-constexpr const int RIGHT = 0x02;
-constexpr const int BOTTOM = 0x04;
-constexpr const int TOP = 0x08;
+constexpr const unsigned int INSIDE = 0x00;
+constexpr const unsigned int LEFT = 0x01;
+constexpr const unsigned int RIGHT = 0x02;
+constexpr const unsigned int BOTTOM = 0x04;
+constexpr const unsigned int TOP = 0x08;
 namespace rtt {
 Rectangle::Rectangle(const Vector2 &corner, const Vector2 &oppositeCorner)
         :corner1{corner}, corner2{oppositeCorner} {
 }
-int Rectangle::CohenSutherlandCode(const Vector2 &point) const {
+Rectangle::Rectangle(const Vector2& bottomLeft, double x, double y)
+        :corner1{bottomLeft}, corner2{Vector2(bottomLeft.x + x, bottomLeft.y + y)} {
+}
+unsigned int Rectangle::CohenSutherlandCode(const Vector2 &point) const {
     double x = point.x;
     double y = point.y;
-    int code = INSIDE; //initialize code as if it's inside the clip window
+    unsigned int code = INSIDE; //initialize code as if it's inside the clip window
     if (x < minX()) {
         code |= LEFT;
     }
@@ -74,8 +77,8 @@ Vector2 Rectangle::center() const {
 // code borrowed from https://www.geeksforgeeks.org/line-clipping-set-1-cohen-sutherland-algorithm/
 // and wikipedia. (I know it's way too long)
 std::vector<Vector2> Rectangle::intersects(const LineSegment &line) const {
-    int code0 = CohenSutherlandCode(line.start);
-    int code1 = CohenSutherlandCode(line.end);
+    unsigned int code0 = CohenSutherlandCode(line.start);
+    unsigned int code1 = CohenSutherlandCode(line.end);
     std::vector<Vector2> intersections;
     bool accept = false;
     double x0 = line.start.x;
@@ -99,7 +102,7 @@ std::vector<Vector2> Rectangle::intersects(const LineSegment &line) const {
             double x, y;
 
             // At least one endpoint is outside the clip rectangle; pick it.
-            int codeOut = code0 ? code0 : code1;
+            unsigned int codeOut = code0 ? code0 : code1;
 
             // Now find the intersection point;
             // use formulas:
@@ -155,7 +158,6 @@ bool Rectangle::doesIntersect(const LineSegment &line) const {
     return ! intersects(line).empty();
 }
 
-//Not the most efficient
 std::vector<Vector2> Rectangle::intersects(const Line &line) const {
     std::vector<LineSegment> boxLines = lines();
     std::vector<Vector2> intersections;
@@ -182,10 +184,10 @@ bool Rectangle::contains(const Vector2 &point) const {
     return maxX() >= point.x && minX() <= point.x && maxY() >= point.y && minY() <= point.y;
 }
 std::ostream &Rectangle::write(std::ostream &os) const {
-    return os << "Rect: "<< corner1 << corner2;
+    return os << "Rect: " << corner1 << corner2;
 }
 
-std::ostream &operator<<(std::ostream &out, const Rectangle &rect){
+std::ostream &operator<<(std::ostream &out, const Rectangle &rect) {
     return rect.write(out);
 }
 }

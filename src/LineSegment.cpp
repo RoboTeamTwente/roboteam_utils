@@ -7,8 +7,8 @@
 
 namespace rtt {
 LineSegment::LineSegment(const Line &line) {
-    start=line.start;
-    end=line.end;
+    start = line.start;
+    end = line.end;
 }
 double LineSegment::length() const {
     return (end - start).length();
@@ -86,11 +86,9 @@ bool LineSegment::doesIntersect(const LineSegment &line) const {
     }
     else {
         double u = numer/denom;
-        if (! (u < 0 || u > 1)) {
+        if (! (u < 0 || u > 1)) { //check if it's on the segment
             double t = (q - p).cross(s)/denom;
-            if (! (t < 0 || t > 1)) {
-                return true;
-            }
+            return (! (t < 0 || t > 1));//check if it's on the segment
         }
     }
     return false;

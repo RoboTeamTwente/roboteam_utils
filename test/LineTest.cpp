@@ -20,9 +20,10 @@ TEST(LineTests, direction) {
     EXPECT_FALSE(l1.isPoint());
     EXPECT_FALSE(l2.isPoint());
     Vector2 v4(0.0, 0.0), v5(0.0, 10.0), v6(2.0, 0.0), v7(2.0, 9.0);
-    Vector2 v8(2.0, 0.0), v9(3.0, 10.0);
+    Vector2 v8(2.0, 0.0), v9(3.0, 10.0), v10(0.0+std::numeric_limits<double>::epsilon(),10);
     Line l4(v4, v5), l5(v6, v7);
     Line l6(v4, v8), l7(v5, v9);
+    Line l8(v4,v10);
     EXPECT_TRUE(l4.isParallel(l5));
     EXPECT_TRUE(l5.isParallel(l4));
     EXPECT_TRUE(l6.isParallel(l7));
@@ -40,6 +41,7 @@ TEST(LineTests, direction) {
     EXPECT_FALSE(l5.isParallel(l7));
     EXPECT_FALSE(l7.isParallel(l4));
     EXPECT_FALSE(l7.isParallel(l5));
+    EXPECT_FALSE(l4.isParallel(l8));
 
 }
 TEST(LineTests, slopeAndIntercept) {

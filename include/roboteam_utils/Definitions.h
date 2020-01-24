@@ -17,7 +17,7 @@
  * If instances from Vector2 or Angle match to this degree we consider them 'equal' in length as a precaution against
  * floating point errors.
  */
-#define VECTOR_PRECISION 0.00001
+constexpr static double VECTOR_PRECISION=0.00001;
 
 
 #endif //RTT_DEFINITIONS_H

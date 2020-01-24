@@ -29,7 +29,7 @@ class Line {
          * @brief Construct a new Line object
          * 
          */
-        constexpr Line() : start{ 0.0, 0.0 }, end{ 0.0, 0.0 } {};
+        constexpr Line() = default;
 
         /**
          * @brief Constructs a new Line object
@@ -38,13 +38,13 @@ class Line {
          * @param _end End of the Line
          * 
          */
-        constexpr Line(const Vector2 &_start, const Vector2 &_end)
-                :start{_start}, end{_end} { };
+        constexpr Line(const Vector2 &_start, const Vector2 &_end) noexcept
+                :start{_start}, end{_end} { } ;
         /**
          * @brief Constructs a new Line from a LineSegment.
          * @param other LineSegment to use for construction
          */
-         explicit Line(const LineSegment &other);
+         explicit Line(const LineSegment &other) noexcept;
         /**
          * @brief Gets the length of the vector representation of this line.
          *        Note in this case it does not really make sense as this class represents lines of infinite length

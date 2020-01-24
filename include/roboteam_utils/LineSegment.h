@@ -17,7 +17,7 @@ class LineSegment {
          * @brief Constructs a new LineSegment
          *
          */
-        constexpr LineSegment() : start{ 0.0, 0.0 }, end{ 0.0, 0.0 } {};
+        constexpr LineSegment() = default;
 
         /**
          * @brief Constructs a LineSegment
@@ -27,7 +27,7 @@ class LineSegment {
          *
          */
         constexpr LineSegment(const Vector2 &_start, const Vector2 &_end)
-                : start{_start},end{_end} { };
+                :start{_start}, end{_end} { };
         /**
          * @brief Construct a LineSegment from a line.
          * @param line Line to construct LineSegment from

@@ -6,7 +6,7 @@
 #include "../include/roboteam_utils/LineSegment.h"
 
 namespace rtt {
-Line::Line(const LineSegment &other) {
+Line::Line(const LineSegment &other) noexcept {
     start=other.start;
     end=other.end;
 }

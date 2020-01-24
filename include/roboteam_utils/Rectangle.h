@@ -113,7 +113,6 @@ class Rectangle {
          * @brief Writes a textual representation of this rectangle to the given output stream.
          */
         std::ostream &write(std::ostream &out) const;
-
 };
 
 std::ostream &operator<<(std::ostream &out, const Rectangle &rect);

@@ -45,7 +45,7 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Statistics.h
         include/roboteam_utils/pid.h
         src/pid.cpp
-        )
+        include/roboteam_utils/Tube.cpp include/roboteam_utils/Tube.h)
 
 
 target_include_directories(roboteam_utils

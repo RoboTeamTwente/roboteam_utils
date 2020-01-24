@@ -80,12 +80,9 @@ add_executable(utils_tests
         test/PolygonTest.cpp
         test/PositionTest.cpp
         test/Vector2Test.cpp
-<<<<<<< HEAD
-        test/RectangleTest.cpp)
-=======
+        test/RectangleTest.cpp
         test/HungarianTest.cpp
         )
->>>>>>> master
 
 if (UNIX AND NOT APPLE)
     target_link_libraries(utils_tests

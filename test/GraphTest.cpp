@@ -1,13 +1,13 @@
-#include "roboteam_utils/Graph.h"
 #include <gtest/gtest.h>
-#include <vector>
-#include <list>
 #include <algorithm>
+#include <list>
 #include <optional>
+#include <vector>
+#include "roboteam_utils/Graph.h"
 
 using namespace rtt;
 
-template<typename C, typename T>
+template <typename C, typename T>
 void assert_contains(C c, T v, bool invert = false) {
     ASSERT_TRUE(invert == (std::find(c.begin(), c.end(), v) == c.end()));
 }
@@ -34,18 +34,18 @@ TEST(GraphTests, structure) {
     std::optional<std::list<Vertex<>>> found = g.find(v1, v3);
     ASSERT_TRUE((bool) found);
     ASSERT_EQ(*found, path);
-    
+
 }
 */
 
 void assert_path_equals(Graph<int> g, Vertex<int> start, Vertex<int> goal, std::list<Vertex<int>>* expected) {
-    std::optional<std::list<Vertex<int>>> found = g.astar(start, goal, [](const int& a, const int& b) { return b - a; } );
-    
+    std::optional<std::list<Vertex<int>>> found = g.astar(start, goal, [](const int& a, const int& b) { return b - a; });
+
     if (expected) {
-        ASSERT_TRUE((bool) found);
+        ASSERT_TRUE((bool)found);
         ASSERT_EQ(*expected, *found);
     } else {
-        ASSERT_FALSE((bool) found);
+        ASSERT_FALSE((bool)found);
     }
 }
 
@@ -62,7 +62,7 @@ TEST(GraphTests, astar) {
     g.connect(v3, v4, 1.0);
     g.connect(v4, v5, 1.5);
     g.connect(v3, v5, 4.0);
-    
+
     std::list<Vertex<int>> path_1_5, path_2_3, path_4_4;
     path_1_5.push_back(v1);
     path_1_5.push_back(v2);
@@ -72,7 +72,7 @@ TEST(GraphTests, astar) {
     path_2_3.push_back(v2);
     path_2_3.push_back(v3);
     path_4_4.push_back(v4);
-    
+
     assert_path_equals(g, v1, v5, &path_1_5);
     assert_path_equals(g, v2, v3, &path_2_3);
     assert_path_equals(g, v4, v4, &path_4_4);

@@ -1,6 +1,6 @@
-#include "roboteam_utils/Vector2.h"
 #include <gtest/gtest.h>
 #include <cmath>
+#include "roboteam_utils/Vector2.h"
 using namespace rtt;
 
 TEST(VectorTests, instantiation) {
@@ -42,34 +42,34 @@ TEST(VectorTests, math) {
     Vector2 def;
     Vector2 tenten(10, 10);
     Vector2 fivezero(5, 0);
-    
+
     ASSERT_DOUBLE_EQ(def.length(), 0);
     ASSERT_DOUBLE_EQ(tenten.length(), SQRT200);
     ASSERT_DOUBLE_EQ(fivezero.length(), 5);
-    
+
     ASSERT_DOUBLE_EQ(def.normalize().x, 0);
     ASSERT_DOUBLE_EQ(def.normalize().y, 0);
     ASSERT_DOUBLE_EQ(tenten.normalize().x, 10 / SQRT200);
     ASSERT_DOUBLE_EQ(tenten.normalize().y, 10 / SQRT200);
     ASSERT_DOUBLE_EQ(fivezero.normalize().x, 1);
     ASSERT_DOUBLE_EQ(fivezero.normalize().y, 0);
-    
+
     ASSERT_DOUBLE_EQ(def.scale(3.5).x, 0);
     ASSERT_DOUBLE_EQ(def.scale(3.5).y, 0);
     ASSERT_DOUBLE_EQ(tenten.scale(3.5).x, 35);
     ASSERT_DOUBLE_EQ(tenten.scale(3.5).y, 35);
     ASSERT_DOUBLE_EQ(fivezero.scale(3.5).x, 17.5);
     ASSERT_DOUBLE_EQ(fivezero.scale(3.5).y, 0);
-    
+
     ASSERT_DOUBLE_EQ(def.dist(tenten), SQRT200);
     ASSERT_DOUBLE_EQ(tenten.dist(fivezero), 11.1803398874989485);
-    
+
     ASSERT_DOUBLE_EQ(def.dot(tenten), 0);
     ASSERT_DOUBLE_EQ(tenten.dot(fivezero), 50);
-    
-    //ASSERT_DOUBLE_EQ(M_PI_4, tenten.angle()); //TODO: somehow is not compiling on macOS
+
+    // ASSERT_DOUBLE_EQ(M_PI_4, tenten.angle()); //TODO: somehow is not compiling on macOS
     ASSERT_DOUBLE_EQ(0, fivezero.angle());
-    
+
     Vector2 proj = fivezero.project(def, tenten);
     ASSERT_DOUBLE_EQ(2.5, proj.x);
     ASSERT_DOUBLE_EQ(2.5, proj.y);

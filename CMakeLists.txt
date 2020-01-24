@@ -28,6 +28,8 @@ add_library(roboteam_utils STATIC
         src/normalize.cpp
         include/roboteam_utils/normalize.h
         src/Clip.cpp
+        include/roboteam_utils/Hungarian.h
+        src/Hungarian.cpp
         include/roboteam_utils/Clip.h
         src/Optimization.cpp
         include/roboteam_utils/Optimization.h
@@ -39,10 +41,12 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/json.hpp
         #include/roboteam_utils/BiMap.h
         #include/roboteam_utils/Graph.h
-        include/roboteam_utils/Statistics.h
         include/roboteam_utils/Definitions.h
+        include/roboteam_utils/Statistics.h
         src/Rectangle.cpp
         include/roboteam_utils/Rectangle.h
+        include/roboteam_utils/pid.h
+        src/pid.cpp
         )
 
 
@@ -54,12 +58,11 @@ target_include_directories(roboteam_utils
 
 target_link_libraries(roboteam_utils
         PUBLIC roboteam_proto
-        #gtest
         )
 target_compile_options(roboteam_utils PRIVATE
         --std=c++17
         -Wall
-        -Werror
+#        -Werror
         -Wextra
         -Wno-unused-function
         -Wno-comment
@@ -77,7 +80,12 @@ add_executable(utils_tests
         test/PolygonTest.cpp
         test/PositionTest.cpp
         test/Vector2Test.cpp
+<<<<<<< HEAD
         test/RectangleTest.cpp)
+=======
+        test/HungarianTest.cpp
+        )
+>>>>>>> master
 
 if (UNIX AND NOT APPLE)
     target_link_libraries(utils_tests

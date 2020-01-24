@@ -181,6 +181,12 @@ bool Rectangle::doesIntersect(const Line &line) const {
 bool Rectangle::contains(const Vector2 &point) const {
     return maxX() >= point.x && minX() <= point.x && maxY() >= point.y && minY() <= point.y;
 }
+std::ostream &Rectangle::write(std::ostream &os) const {
+    return os << "Rect: "<< corner1 << corner2;
+}
 
+std::ostream &operator<<(std::ostream &out, const Rectangle &rect){
+    return rect.write(out);
+}
 }
 

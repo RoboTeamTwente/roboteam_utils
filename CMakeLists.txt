@@ -41,7 +41,7 @@ add_library(roboteam_utils STATIC
         #include/roboteam_utils/Graph.h
         include/roboteam_utils/Statistics.h
         include/roboteam_utils/Definitions.h
-        include/roboteam_utils/Rectangle.cpp
+        src/Rectangle.cpp
         include/roboteam_utils/Rectangle.h
         )
 

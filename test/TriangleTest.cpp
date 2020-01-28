@@ -48,6 +48,7 @@ TEST(Triangle, contains){
     EXPECT_TRUE(triangle.contains((point2+point3)*0.5));
     EXPECT_TRUE(triangle.contains((point3+point1)*0.5));
     EXPECT_TRUE(triangle.contains((point1+point2+point3)/3));
+    EXPECT_FALSE(triangle.contains(Vector2(1,0)));
 }
 //Can be better but this relies on line segment and line intersections which are very heavily tested so there is no need to overtest
 TEST(Triangle,intersections){

@@ -44,9 +44,9 @@ bool Triangle::doesIntersect(const LineSegment &line) const {
 }
 std::vector<Vector2> Triangle::intersects(const LineSegment &line) const {
     std::vector<Vector2> intersections;
-    for (const auto& triangleLine : lines()) {
-        std::optional<Vector2> intersection=line.intersects(triangleLine);
-        if (intersection){
+    for (const auto &triangleLine : lines()) {
+        std::optional<Vector2> intersection = line.intersects(triangleLine);
+        if (intersection) {
             intersections.push_back(*intersection);
         }
     }
@@ -54,9 +54,9 @@ std::vector<Vector2> Triangle::intersects(const LineSegment &line) const {
 }
 std::vector<Vector2> Triangle::intersects(const Line &line) const {
     std::vector<Vector2> intersections;
-    for (const auto& triangleLine : lines()) {
-        std::optional<Vector2> intersection=line.intersects(triangleLine);
-        if (intersection){
+    for (const auto &triangleLine : lines()) {
+        std::optional<Vector2> intersection = line.intersects(triangleLine);
+        if (intersection) {
             intersections.push_back(*intersection);
         }
     }

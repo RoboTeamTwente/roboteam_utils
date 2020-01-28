@@ -44,7 +44,7 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Statistics.h
         include/roboteam_utils/pid.h
         src/pid.cpp
-        include/roboteam_utils/Triangle.cpp include/roboteam_utils/Triangle.h)
+        src/Triangle.cpp include/roboteam_utils/Triangle.h)
 
 
 target_include_directories(roboteam_utils

@@ -23,7 +23,6 @@ class Triangle {
         [[nodiscard]] std::vector<Vector2> intersects(const Line& line) const;
         [[nodiscard]] bool doesIntersect(const LineSegment& line) const;
         [[nodiscard]] bool doesIntersect(const Line& line) const;
-
 };
 }
 #endif //RTT_TRIANGLE_H

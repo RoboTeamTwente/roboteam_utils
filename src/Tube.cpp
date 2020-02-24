@@ -16,7 +16,6 @@ bool Tube::isCircle() const {
 Tube::Tube(const LineSegment& line, double radius) : lineSegment{line}, radius{radius} {
 }
 Tube::Tube(const Vector2& start, const Vector2& end, double radius) : lineSegment{LineSegment(start,end)},radius{radius} {
-
 }
 }
 

@@ -47,7 +47,6 @@ class Tube {
          * @return true if tube is a circle, false if not
          */
         [[nodiscard]] bool isCircle() const;
-
 };
 }
 

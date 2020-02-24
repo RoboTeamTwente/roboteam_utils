@@ -47,7 +47,10 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/pid.h
         src/pid.cpp
         src/Triangle.cpp
-        include/roboteam_utils/Triangle.h)
+        include/roboteam_utils/Triangle.h
+        src/Tube.cpp
+        include/roboteam_utils/Tube.h
+        )
 
 
 

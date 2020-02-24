@@ -14,6 +14,10 @@ namespace rtt{
 class Tube {
     public:
         /**
+         * @brief Constructs a default Tube, which is simply a unit circle.
+         */
+        Tube();
+        /**
          * @brief Construct a tube around the line from start to end with radius
          * @param start Starting point
          * @param end  Ending point
@@ -36,11 +40,11 @@ class Tube {
          */
         [[nodiscard]] bool contains(const Vector2 &point) const;
         /**
-         * @brief checks if the line intersects with the tube
+         * @brief checks if the line intersects the tube or is contained within the tube
          * @param line to consider
          * @return True if the line intersects with the tube
          */
-        [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
+        [[nodiscard]] bool doesIntersectOrContain(const LineSegment &line) const;
 
         /**
          * @brief Checks if this tube is a circle (E.g. it's line is a point)

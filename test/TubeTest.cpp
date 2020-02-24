@@ -72,7 +72,6 @@ TEST(Tube,doesIntersect){
     EXPECT_TRUE(tube.doesIntersectOrContain(test4));
     EXPECT_TRUE(tube.doesIntersectOrContain(test5));
     EXPECT_TRUE(tube.doesIntersectOrContain(test6));
-
 }
 
 }

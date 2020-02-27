@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "roboteam_utils/Tube.h"
+#include "roboteam_utils/Circle.h"
 
 namespace rtt{
 
@@ -72,6 +73,22 @@ TEST(Tube,doesIntersect){
     EXPECT_TRUE(tube.doesIntersectOrContain(test4));
     EXPECT_TRUE(tube.doesIntersectOrContain(test5));
     EXPECT_TRUE(tube.doesIntersectOrContain(test6));
+}
+TEST(Tube,circleIntersect){
+    Vector2 start(1,1);
+    Vector2 end(9,1);
+    double radius = 1.0;
+    Tube tube(start,end,radius);
+
+    Circle circle(Vector2(0,0),1);
+    EXPECT_TRUE(tube.doesIntersectOrContain(circle));
+
+    Circle circle2(Vector2(0,0),sqrt(2)-1);
+    Circle circle3(Vector2(0,0),0.1);
+    EXPECT_TRUE(tube.doesIntersectOrContain(circle2)); //test if boundary intersection works, exactly touches the tube
+    EXPECT_FALSE(tube.doesIntersectOrContain(circle3));
+
+
 }
 
 }

@@ -6,6 +6,7 @@
 #define ROBOTEAM_UTILS_TUBE_H
 #include "LineSegment.h"
 namespace rtt{
+class Circle;
 /**
  * @author Rolf
  * @date 24-02-20
@@ -45,6 +46,12 @@ class Tube {
          * @return True if the line intersects with the tube
          */
         [[nodiscard]] bool doesIntersectOrContain(const LineSegment &line) const;
+        /**
+         * @brief checks if the tube and circle overlap
+         * @param circle Circle to check intersection with
+         * @return True if tube and circle intersect
+         */
+         [[nodiscard]] bool doesIntersectOrContain(const Circle &circle) const;
 
         /**
          * @brief Checks if this tube is a circle (E.g. it's line is a point)

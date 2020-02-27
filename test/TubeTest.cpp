@@ -87,8 +87,6 @@ TEST(Tube,circleIntersect){
     Circle circle3(Vector2(0,0),0.1);
     EXPECT_TRUE(tube.doesIntersectOrContain(circle2)); //test if boundary intersection works, exactly touches the tube
     EXPECT_FALSE(tube.doesIntersectOrContain(circle3));
-
-
 }
 
 }

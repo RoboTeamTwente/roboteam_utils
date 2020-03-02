@@ -40,47 +40,47 @@
 #if RTT_FANCY_LOGS
 
 #if RTT_DEBUG_LOGS
-#define RTT_DEBUG(...) { Printer::print("\033[35m", "DEBUG", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
+#define RTT_DEBUG(...) { Printer::fancy_print("\033[35m", "DEBUG", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
 #else
 #define RTT_DEBUG(...)
 #endif
 
 #if RTT_WARNING_LOGS
-#define RTT_WARNING(...) { Printer::print("\033[93;3m", "WARNING", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
+#define RTT_WARNING(...) { Printer::fancy_print("\033[93;3m", "WARNING", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
 #else
 #define RTT_WARNING(...)
 #endif
 
 #if RTT_ERROR_LOGS
-#define RTT_ERROR(...) { Printer::print("\033[31;1m","ERROR", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
+#define RTT_ERROR(...) { Printer::fancy_print("\033[31;1m","ERROR", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
 #else
 #define RTT_ERROR(...)
 #endif
 
 #if RTT_INFO_LOGS
-#define RTT_INFO(...) { Printer::print("\033[37m", "INFO", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
+#define RTT_INFO(...) { Printer::fancy_print("\033[37m", "INFO", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
 #else
 #define RTT_INFO(...)
 #endif
 
 #if RTT_SUCCESS_LOGS
-#define RTT_SUCCESS(...) { Printer::print("\033[32m", "SUCCESS", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
+#define RTT_SUCCESS(...) { Printer::fancy_print("\033[32m", "SUCCESS", __FILENAME__, __FUNCTION__, __LINE__, __VA_ARGS__); }
 #else
 #define RTT_SUCCESS(...)
 #endif
 
 #else
-    #define RTT_DEBUG(...) { std::cout << __VA_ARGS__ << std::endl; }
-    #define RTT_ERROR(...) { std::cerr << __VA_ARGS__ << std::endl; }
-    #define RTT_WARNING(...) { std::cout << __VA_ARGS__ << std::endl; }
-    #define RTT_INFO(...) { std::cout << __VA_ARGS__ << std::endl; }
-    #define RTT_SUCCESS(...) { std::cout << __VA_ARGS__ << std::endl; }
+    #define RTT_DEBUG(...) { Printer::simple_print(__VA_ARGS__); }
+    #define RTT_ERROR(...) { Printer::simple_print(__VA_ARGS__); }
+    #define RTT_WARNING(...) { Printer::simple_print(__VA_ARGS__); }
+    #define RTT_INFO(...) { Printer::simple_print(__VA_ARGS__); }
+    #define RTT_SUCCESS(...) { Printer::simple_print(__VA_ARGS__); }
 #endif
 
 class Printer {
  public:
   template <typename...Args>
-  static void print(const char * color, const char * type, const std::string& file, const char * func, int line, Args&&... args) noexcept {
+  static void fancy_print(const char * color, const char * type, const std::string& file, const char * func, int line, Args&&... args) noexcept {
       auto fileTxt = file + ":" + std::to_string(line);
 #if RTT_COLORED_LOGS
       std::cout << color;
@@ -92,6 +92,12 @@ class Printer {
 #if RTT_COLORED_LOGS
       std::cout << "\033[0m"; // reset the string formatting
 #endif
+      std::cout << std::endl;
+  }
+
+  template <typename...Args>
+  static void simple_print(Args&&... args) noexcept {
+      ((std::cout << std::forward<Args>(args)), ...);
       std::cout << std::endl;
   }
 };

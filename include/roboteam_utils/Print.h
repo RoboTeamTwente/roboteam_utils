@@ -79,15 +79,17 @@
 
 class Printer {
  public:
-  static void print(const char * color, const char * type, const std::string& file, const char * func, int line, const std::string& txt) {
+
+  template <typename...Args>
+  static void print(const char * color, const char * type, const std::string& file, const char * func, int line, Args... args) noexcept {
       auto fileTxt = file + ":" + std::to_string(line);
 #if RTT_COLORED_LOGS
       std::cout << color;
 #endif
       std::cout << std::setw(10) << std::left;
       std::cout << type << std::setw(32) << std::left;
-      std::cout << fileTxt << std::setw(32) << std::left;
-      std::cout << txt;
+      std::cout << fileTxt << std::left;
+      ((std::cout << std::forward<Args>(args)), ...);
 #if RTT_COLORED_LOGS
       std::cout << "\033[0m"; // reset the string formatting
 #endif

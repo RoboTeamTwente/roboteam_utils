@@ -79,9 +79,8 @@
 
 class Printer {
  public:
-
   template <typename...Args>
-  static void print(const char * color, const char * type, const std::string& file, const char * func, int line, Args... args) noexcept {
+  static void print(const char * color, const char * type, const std::string& file, const char * func, int line, Args&&... args) noexcept {
       auto fileTxt = file + ":" + std::to_string(line);
 #if RTT_COLORED_LOGS
       std::cout << color;

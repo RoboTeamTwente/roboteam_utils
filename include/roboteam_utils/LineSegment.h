@@ -208,6 +208,16 @@ class LineSegment {
         [[nodiscard]] std::optional<Vector2> nonSimpleIntersects(const LineSegment &line) const;
 
         /**
+         * Get a relative position between the start and end point on the line.
+         * @param relative A double value between 0.0 and 1.0 which indicates the relative position on the line that should be returned from the start of the line to the end of the
+         * line, e.g. 0.5 is the position halve way past the line segment. If relative is smaller than 0.0 then it is set to 0.0 and if relative is larger than 1.0 then it is set
+         * to 1.0.
+         * @param reverse If set to True then the relative position is taken from the end of the line towards the start of the line instead.
+         * @return The relative position on the line.
+         */
+        [[nodiscard]] Vector2 getRelativePosition(double relative, bool reverse = false) const;
+
+        /**
          * @brief Destroy the Line Segment object
          * 
          */

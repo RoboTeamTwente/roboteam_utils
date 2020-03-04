@@ -273,4 +273,13 @@ double LineSegment::distanceToLine(const LineSegment &line) const {
     return diff.length();
 }
 
+Vector2 LineSegment::getRelativePosition(double relative, bool reverse) const {
+    if (reverse) {
+        return end + (start - end) * relative;
+    }
+    else {
+        return start + (end - start) * relative;
+    }
+}
+
 }

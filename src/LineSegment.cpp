@@ -273,4 +273,29 @@ double LineSegment::distanceToLine(const LineSegment &line) const {
     return diff.length();
 }
 
+std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const LineSegment &obstacle, float negligible_shadow_length) const {
+    // If the source is on the obstacle line then the entire line is in the shadow, because every line from the source intersects with the obstacle line.
+    if (obstacle.isOnLine(source)) {
+        return length() > negligible_shadow_length ? std::optional(*this) : std::nullopt;
+    }
+    std::optional<Vector2> firstIntersect = Line(source, obstacle.start).forwardIntersect(Line(*this));
+    std::optional<Vector2> secondIntersect = Line(source, obstacle.end).forwardIntersect(Line(*this));
+    if (!firstIntersect.has_value() && !secondIntersect.has_value()) {
+        return std::nullopt;
+    }
+    LineSegment shadow;
+    if (firstIntersect.has_value() && secondIntersect.has_value()) {
+        shadow = LineSegment(project(firstIntersect.value()), project(secondIntersect.value()));
+    } else {
+        Vector2 onlyIntersection = project(firstIntersect.has_value() ? firstIntersect.value() : secondIntersect.value());
+        double distanceIntersectionToStart = (start - onlyIntersection).length();
+        double distanceIntersectionToEnd = (end - onlyIntersection).length();
+        Vector2 closest = distanceIntersectionToStart < distanceIntersectionToEnd ? start : end;
+        Vector2 furthest = distanceIntersectionToStart < distanceIntersectionToEnd ? end : start;
+        bool furthestInShadow = LineSegment(source, furthest).doesIntersect(obstacle);
+        shadow = furthestInShadow ? LineSegment(onlyIntersection, furthest) : LineSegment(onlyIntersection, closest);
+    }
+    return shadow.length() > negligible_shadow_length ? std::optional(shadow) : std::nullopt;
+}
+
 }

@@ -164,6 +164,14 @@ class Line {
          */
         [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const ;
 
+       /**
+        * @brief Compute the line intersection of this line in positive direction, i.e. in the direction from the start to the end of the given line.
+        *
+        * @param line The line of which the positive direction intersection is computed.
+        * @return No vector if the lines do not intersect in positive direction. Otherwise it returns a vector which represents the position of intersection.
+        */
+        [[nodiscard]] std::optional<Vector2> forwardIntersect(const Line &line) const;
+
         /**
          * @brief Checks whether \ref line intersects `this`
          * 
@@ -182,6 +190,16 @@ class Line {
          */
         [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
 
+    private:
+        /**
+         * Get the intersection point between this line and the given line as parameter. Moreover compute how much the given line is extended relatively in the direction of
+         * the start of the line towards the end of the line to find the intersection point.
+         *
+         * @param line Line to check against.
+         * @return std::nullopt if the lines do not intersect. Otherwise returns the intersection point and the relative extension of the given line to reach the intersection
+         * point.
+         */
+        [[nodiscard]] std::optional<std::pair<Vector2, float>> generalIntersect(const Line &line) const;
 };
 
 }

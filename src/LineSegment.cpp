@@ -277,6 +277,8 @@ std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const Line
     // If the source is on the obstacle line then the entire line is in the shadow, because every line from the source intersects with the obstacle line.
     if (obstacle.isOnLine(source)) {
         return length() > negligible_shadow_length ? std::optional(*this) : std::nullopt;
+    } else if (isPoint()) {
+        return std::nullopt;
     }
     std::optional<Vector2> firstIntersect = Line(source, obstacle.start).forwardIntersect(Line(*this));
     std::optional<Vector2> secondIntersect = Line(source, obstacle.end).forwardIntersect(Line(*this));

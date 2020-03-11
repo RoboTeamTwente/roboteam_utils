@@ -283,8 +283,8 @@ std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const Line
     } else if (isPoint()) {
         return std::nullopt;
     }
-    std::optional<Vector2> firstIntersect = Line(source, obstacle.start).forwardIntersect(Line(*this));
-    std::optional<Vector2> secondIntersect = Line(source, obstacle.end).forwardIntersect(Line(*this));
+    std::optional<Vector2> firstIntersect = Line(*this).forwardIntersect(Line(source, obstacle.start));
+    std::optional<Vector2> secondIntersect = Line(*this).forwardIntersect(Line(source, obstacle.end));
     if (!firstIntersect.has_value() && !secondIntersect.has_value()) {
         return std::nullopt;
     }
@@ -303,4 +303,13 @@ std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const Line
     return shadow.length() > negligible_shadow_length ? std::optional(shadow) : std::nullopt;
 }
 
+bool LineSegment::operator==(const LineSegment &other) const {
+    if (start == other.start && end == other.end) {
+        return true;
+    } else if (start == other.end && end == other.start) {
+        return true;
+    } else {
+        return false;
+    }
+}
 }

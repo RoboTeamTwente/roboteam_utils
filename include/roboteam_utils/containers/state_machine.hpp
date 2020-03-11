@@ -6,8 +6,8 @@
 #define RTT_STATE_MACHINE_HPP
 
 #include <vector>
+#include <memory>
 #include <algorithm>
-#include <memory_resource>
 
 #include "type_traits.hpp"
 
@@ -181,7 +181,8 @@ namespace rtt::collections {
             auto value = begin()[current_num()]->update(data);
             if (value == Enum::Success) {
                 terminate();
-                initialize();
+                if (!finished())
+			initialize();
             }
             return value;
         }

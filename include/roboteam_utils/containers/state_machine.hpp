@@ -189,6 +189,7 @@ namespace rtt::collections {
                 if (!finished()) {
                     initialize();
                 }
+
             }
             return value;
         }
@@ -227,6 +228,12 @@ namespace rtt::collections {
                 return nullptr;
             }
             return begin()[curr_index].get();
+        }
+        /**
+         * @return vector.size()
+         */
+        void reset() noexcept {
+            skip_n(-current_num());
         }
     };
 } // namespace rtt::collections

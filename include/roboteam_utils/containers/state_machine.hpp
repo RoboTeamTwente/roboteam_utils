@@ -189,7 +189,6 @@ namespace rtt::collections {
                 if (!finished()) {
                     initialize();
                 }
-
             }
             return value;
         }
@@ -230,7 +229,7 @@ namespace rtt::collections {
             return begin()[curr_index].get();
         }
         /**
-         * @return vector.size()
+         * Resets the state machine
          */
         void reset() noexcept {
             skip_n(-current_num());

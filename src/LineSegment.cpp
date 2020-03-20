@@ -174,7 +174,7 @@ Vector2 LineSegment::project(const Vector2 &point) const {
 
 bool LineSegment::isOnLine(const Vector2 &point) const {
     if (isPoint()) {
-        return start == point;
+        return (start == point || end == point);
     }
     Vector2 A = end - start;
     Vector2 B = point - start;

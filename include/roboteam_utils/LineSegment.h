@@ -220,7 +220,8 @@ class LineSegment {
     [[nodiscard]] std::optional<LineSegment> shadow(const Vector2 &source, const LineSegment &obstacle, float negligible_shadow_length = 1e-6) const;
 
     /**
-     * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations
+     * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directionns of the lines might be
+     * different in case of equality.
      * @param other The other LineSegment to which comparisons are made.
      * @return True if the LineSegments are the same, false otherwise.
      */

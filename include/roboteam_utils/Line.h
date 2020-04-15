@@ -195,7 +195,7 @@ class Line {
    private:
     /**
      * Get the intersection point between this line and the given line as parameter. Moreover compute how far the given intersection is located relatively in the direction of the
-     * start of the line towards the end of the line. Note if the line given as parameter is equal to this line then no intersection is returned.
+     * start parameter of the line towards the end parameter of the line. Note if the line given as parameter is equal to this line then no intersection is returned.
      *
      * @param line Line to check against.
      * @return std::nullopt if the lines do not intersect. Otherwise returns the intersection point and the relative extension of the given line to reach the intersection

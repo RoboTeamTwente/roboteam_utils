@@ -164,9 +164,8 @@ class Line {
     [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
 
     /**
-     * @brief Compute the line intersection of this line and the given as parameter line in positive direction.
-     * Which means in the direction from the start to the end of the given parameter line. The intersection position does not have to be in positive direction compared to this
-     * line, only to the given parameter line. Note if the line given as parameter is equal to this line then no intersection is returned.
+     * @brief Compute the intersection of this, and the line given as parameter. The parameter line is treated as half-line, so for a line a + tb, with b the direction vector and
+     * a the start parameter of this line, any point on the line where t<0 is not included in the calculation of the intersection.
      *
      * @param line The line of which the positive direction intersection is computed.
      * @return No vector if the lines do not intersect in positive direction. Otherwise it returns a vector which represents the position of intersection.

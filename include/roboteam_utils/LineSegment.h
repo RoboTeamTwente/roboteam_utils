@@ -205,6 +205,18 @@ class LineSegment {
      * @return std::shared_ptr<Vector2> Returns a shared_ptr to a Vector2 that represents the intersection
      */
     [[nodiscard]] std::optional<Vector2> nonSimpleIntersects(const LineSegment &line) const;
+    /**
+     * @brief Return the intersection(s) of two LineSegments.
+     *
+     * This is the only correct implementation of intersects that works for every case, e.g. parallel lines and LineSegments that are actually points. In case:
+     * - The LineSegments do not intersect, it returns an empty set.
+     * - The LineSegments do only intersect once, it returns a set with the intersection location as Vector2.
+     * - The intersection of these LineSegments is a LineSegment L, then it returns the start and end points of this LineSegment L.
+     *
+     * @param line Line to check against.
+     * @return std::set<Vector2> Returns a set of the intersections (Vector2).
+     */
+    [[nodiscard]] std::vector<Vector2> correctIntersects(const LineSegment &line) const;
 
     /**
      * @brief Computes the shadow caused by an obstacle (LineSegment) and light source on this LineSegment.

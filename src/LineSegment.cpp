@@ -193,19 +193,40 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     return true;
 }
 
-std::optional<Vector2> LineSegment::nonSimpleIntersects(const LineSegment &line) const {
+std::vector<Vector2> LineSegment::correctIntersects(const LineSegment &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;
     Vector2 C = start - line.start;
     double denom = A.cross(B);
-    if (denom != 0) {
+    if (denom == 0) {
+        /* The only possible cases are that one/both of the LineSegments are actually points, the LineSegments have a shared LineSegment part or the LineSegments are distinct and
+         * parallel. */
+        std::vector<Vector2> intersections = {};
+        if (line.isOnLine(start)) {
+            intersections.push_back(start);
+        }
+        if (line.isOnLine(end)) {
+            intersections.push_back(end);
+        }
+        if (isOnLine(line.start)) {
+            intersections.push_back(line.start);
+        }
+        if (isOnLine(line.end)) {
+            intersections.push_back(line.end);
+        }
+        std::sort(intersections.begin(), intersections.end());
+        intersections.erase(std::unique(intersections.begin(), intersections.end()), intersections.end());
+        return intersections;
+    } else {
+        // The lines are not parallel, so the only possible cases are that they either intersect or intersect when the lines are extended.
         double t = C.cross(B)/denom;
-        double u = - A.cross(C)/denom;
-        if (! (t <= 0 || t >= 1) && ! (u <= 0 || u >= 1)) {
-            return start - A*t;
+        double u = -A.cross(C)/denom;
+        if (! (t < 0 || t > 1) && ! (u < 0 || u > 1)) {
+            return {start - A*t};
+        } else {
+            return {};
         }
     }
-    return std::nullopt;
 }
 
 // http://geomalgorithms.com/a07-_distance.html#dist3D_Segment_to_Segment

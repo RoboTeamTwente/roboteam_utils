@@ -97,6 +97,9 @@ namespace rtt::collections {
              * int result = (args + ...);
              */
             (_data.emplace_back(std::make_unique<Tys>(std::forward<Tys>(args))), ...);
+
+            // Call initialize on the first element if there is an element to initialize
+            if (size()) initialize();
         }
 
         /**
@@ -137,6 +140,15 @@ namespace rtt::collections {
          */
         void skip_n(int n) noexcept {
             current += n;
+            current = std::clamp<size_t>(current, 0, _data.size());
+        }
+
+        /**
+         * Skips to element n, sets current to clamp(n, _data.size())
+         * @param n Element to skip to
+         */
+        void skip_to(int n) noexcept {
+            current = n;
             current = std::clamp<size_t>(current, 0, _data.size());
         }
 

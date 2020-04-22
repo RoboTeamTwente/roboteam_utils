@@ -81,24 +81,15 @@ bool Line::isOnLine(const Vector2 &point) const {
 
 // see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
 std::optional<Vector2> Line::intersects(const Line &line) const {
-    auto result = generalIntersect(Line(line));
-    return result.has_value() ? std::optional(result.value().first) : std::nullopt;
+    auto result = generalIntersect(start, end, line.start, line.end);
+    return result.has_value() ? std::optional(std::get<0>(result.value())) : std::nullopt;
 }
 
 std::optional<Vector2> Line::intersects(const LineSegment &line) const {
-    auto result = generalIntersect(Line(line));
+    auto result = generalIntersect(start, end, line.start, line.end);
     if (result.has_value()) {
-        float u = result.value().second;
-        if (u >= 0 && u <= 1) return std::optional(result.value().first);
-    }
-    return std::nullopt;
-}
-
-std::optional<Vector2> Line::forwardIntersect(const Line &line) const {
-    auto result = generalIntersect(Line(line));
-    if (result.has_value()) {
-        float u = result.value().second;
-        if (u >= 0) return std::optional(result.value().first);
+        float u = std::get<2>(result.value());
+        if (u >= 0 && u <= 1) return std::optional(std::get<0>(result.value()));
     }
     return std::nullopt;
 }
@@ -111,15 +102,16 @@ bool Line::doesIntersect(const LineSegment &line) const {
     return intersects(line).has_value();
 }
 
-std::optional<std::pair<Vector2, float>> Line::generalIntersect(const Line &line) const {
-    Vector2 A = start - end;
-    Vector2 B = line.start - line.end;
+std::optional<std::tuple<Vector2, float, float>> Line::generalIntersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End) {
+    Vector2 A = line1Start - line1End;
+    Vector2 B = line2Start - line2End;
     double denom = A.cross(B);
     if (denom != 0) {
-        Vector2 C = start - line.start;
-        double numer = C.cross(A);
-        double u = numer / denom;
-        return std::pair(line.start - B*u, u);
+        Vector2 C = line1Start - line2Start;
+        double numer = C.cross(B);
+        double t = numer / denom;
+        double u = -A.cross(C) / denom;
+        return std::tuple(line1Start - A*t, t, u);
     }
     return std::nullopt;
 }

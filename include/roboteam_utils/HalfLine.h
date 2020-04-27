@@ -13,8 +13,8 @@ namespace rtt {
  */
 class HalfLine {
     private:
-        const Vector2 start; // The location where the HalfLine starts
-        const Vector2 direction; // This vector indicates in which direction the HalfLine is infinite long
+        Vector2 start; // The location where the HalfLine starts
+        Vector2 direction; // This vector indicates in which direction the HalfLine is infinite long
 
     public:
         /**

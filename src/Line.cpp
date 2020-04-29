@@ -116,7 +116,12 @@ std::optional<Vector2> Line::intersect(const Vector2 line1Start, const Vector2 l
 }
 
 float Line::relativePosition(Vector2 line1Start, Vector2 line1End, Vector2 pointOnLine) {
-    return (pointOnLine.x - line1Start.x) / (line1End.x - line1Start.x);
+    float xDiff = line1End.x - line1Start.x;
+    if (xDiff == 0) {
+        return (pointOnLine.y - line1Start.y) / (line1End.y - line1Start.y);
+    } else {
+        return (pointOnLine.x - line1Start.x) / xDiff;
+    }
 }
 
 }

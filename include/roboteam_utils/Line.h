@@ -14,7 +14,7 @@ class LineSegment;
  *
  */
 class Line {
-   public:
+    public:
     /**
      * @brief Start of the line
      *
@@ -38,7 +38,7 @@ class Line {
      * @param _end End of the Line
      *
      */
-    constexpr Line(const Vector2 &_start, const Vector2 &_end) noexcept : start{_start}, end{_end} {};
+    constexpr Line(const Vector2 &_start, const Vector2 &_end) noexcept: start{_start}, end{_end} {};
     /**
      * @brief Constructs a new Line from a LineSegment.
      * @param other LineSegment to use for construction
@@ -183,18 +183,26 @@ class Line {
     [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
 
     /**
-     * Get the intersection point between two infinite lines and compute t, u such that line1Start + (line1End - line1Start) * t = line2Start + (line2End - line2Start) * u. No
-     * intersection point is returned in case the lines are equal or parallel.
+     * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
      *
      * @param line1Start An arbitrary point on the first line.
      * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
      * @param line2Start An arbitrary point on the second line.
      * @param line2End An arbitrary other point on the second line (make sure that it is different than line2Start).
-     * @return std::nullopt if the lines do not intersect. Otherwise return the intersection point, t and u (in this given order).
+     * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
      */
-    static std::optional<std::tuple<Vector2, float, float>> generalIntersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
-};
+    static std::optional<Vector2> intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
 
+    /**
+     * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Start + (line1End - line1Start) * t = pointOnLine
+     *
+     * @param line1Start An arbitrary point on the first line.
+     * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
+     * @param pointOnLine A point that is located on the given line.
+     * @return The value t such that line1Start + (line1End - line1Start) * t = pointOnLine
+     */
+    static float relativePosition(const Vector2 line1Start, const Vector2 line1End, const Vector2 pointOnLine);
+};
 }  // namespace rtt
 
 #endif  // ROBOTEAM_UTILS_LINE_H

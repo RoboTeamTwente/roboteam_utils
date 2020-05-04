@@ -42,6 +42,13 @@ namespace rtt {
         return this->angleDiff(other);
     }
 
+    bool Angle::rotateDirection(const Angle &other) const noexcept {
+        double angleDiff = other.angle - this->angle;
+        bool sign = angleDiff >= 0;
+        bool large = fabs(angleDiff) >= M_PI;
+        return sign ^ large;
+    }
+
     double Angle::shortestAngleDiff(Angle const &other) const noexcept {
         if (this->angleDiff(other) > other.angleDiff(*this))
             return other.angleDiff(*this);
@@ -124,5 +131,4 @@ namespace rtt {
     Angle::operator double() const noexcept {
         return this->angle;
     }
-
 }

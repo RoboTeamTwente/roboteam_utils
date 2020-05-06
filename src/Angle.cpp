@@ -33,13 +33,9 @@ namespace rtt {
         return *this;
     }
 
-    double Angle::angleDiff(Angle const &other) const noexcept {
-        return abs((*this - other).angle);
-    }
-
     double Angle::shortestAngleDiff(Angle const &other) const noexcept {
-        double thisDiff = angleDiff(other);
-        double otherDiff = other.angleDiff(*this);
+        double thisDiff = abs((*this - other).angle);
+        double otherDiff = abs((other - *this).angle);
         return std::min(thisDiff, otherDiff);
     }
 

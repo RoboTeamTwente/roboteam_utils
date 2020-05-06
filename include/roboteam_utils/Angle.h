@@ -217,14 +217,6 @@ namespace rtt {
          * @return Angle A copy of `*this`
          */
         Angle constrain() noexcept;
-
-        /**
-         * @brief Gets the absolute difference in angle between this angle and other
-         *
-         * @param other Other angle
-         * @return double angle
-         */
-        [[nodiscard]] double angleDiff(Angle const &other) const noexcept;
     };
 
 } // rtt

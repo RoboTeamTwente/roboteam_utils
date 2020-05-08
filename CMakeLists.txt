@@ -23,8 +23,6 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Position.h
         src/Mathematics.cpp
         include/roboteam_utils/Mathematics.h
-        #        src/Cone.cpp
-        #        include/roboteam_utils/Cone.h
         src/normalize.cpp
         include/roboteam_utils/normalize.h
         include/roboteam_utils/Hungarian.h

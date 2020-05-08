@@ -34,7 +34,6 @@ add_library(roboteam_utils STATIC
         src/Timer.cpp
         include/roboteam_utils/Timer.h
         include/roboteam_utils/type_traits.h
-        #include/roboteam_utils/BiMap.h
         include/roboteam_utils/Definitions.h
         include/roboteam_utils/Statistics.h
         include/roboteam_utils/Print.h

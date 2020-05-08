@@ -35,7 +35,6 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Timer.h
         include/roboteam_utils/type_traits.h
         #include/roboteam_utils/BiMap.h
-        #include/roboteam_utils/Graph.h
         include/roboteam_utils/Definitions.h
         include/roboteam_utils/Statistics.h
         include/roboteam_utils/Print.h
@@ -75,7 +74,6 @@ add_executable(utils_tests
         test/main.cpp
         test/ArcTest.cpp
         #test/BiMapTest.cpp
-        #test/GraphTest.cpp
         test/LineTest.cpp
         test/CircleTest.cpp
         test/normaliseTest.cpp

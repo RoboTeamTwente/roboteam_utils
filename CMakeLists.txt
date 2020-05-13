@@ -44,6 +44,8 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/pid.h
         src/Triangle.cpp
         include/roboteam_utils/Triangle.h
+        src/Tube.cpp
+        include/roboteam_utils/Tube.h
         src/HalfLine.cpp
         include/roboteam_utils/HalfLine.h
         )
@@ -82,6 +84,7 @@ add_executable(utils_tests
         test/RectangleTest.cpp
         test/HungarianTest.cpp
         test/TriangleTest.cpp
+        test/TubeTest.cpp
         test/StateMachineTest.cpp)
 
 if (UNIX AND NOT APPLE)

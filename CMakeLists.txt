@@ -31,8 +31,8 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Hungarian.h
         src/Hungarian.cpp
         # include/roboteam_utils/Clip.h
-        src/Optimization.cpp
-        include/roboteam_utils/Optimization.h
+        # src/Optimization.cpp
+        # include/roboteam_utils/Optimization.h
         src/Arc.cpp
         include/roboteam_utils/Arc.h
         src/Timer.cpp
@@ -85,7 +85,7 @@ add_executable(utils_tests
         test/LineTest.cpp
         test/CircleTest.cpp
         test/normaliseTest.cpp
-        test/OptimizationTest.cpp
+        # test/OptimizationTest.cpp
         test/PolygonTest.cpp
         test/PositionTest.cpp
         test/Vector2Test.cpp

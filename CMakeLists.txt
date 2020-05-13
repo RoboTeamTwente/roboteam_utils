@@ -27,8 +27,10 @@ add_library(roboteam_utils STATIC
         #        include/roboteam_utils/Cone.h
         src/normalize.cpp
         include/roboteam_utils/normalize.h
+        src/Clip.cpp
         include/roboteam_utils/Hungarian.h
         src/Hungarian.cpp
+        include/roboteam_utils/Clip.h
         src/Optimization.cpp
         include/roboteam_utils/Optimization.h
         src/Arc.cpp

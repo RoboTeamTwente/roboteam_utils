@@ -42,6 +42,8 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/Circle.h
         src/pid.cpp
         include/roboteam_utils/pid.h
+        src/Triangle.cpp
+        include/roboteam_utils/Triangle.h
         src/Tube.cpp
         include/roboteam_utils/Tube.h
         src/HalfLine.cpp
@@ -81,6 +83,7 @@ add_executable(utils_tests
         test/Vector2Test.cpp
         test/RectangleTest.cpp
         test/HungarianTest.cpp
+        test/TriangleTest.cpp
         test/TubeTest.cpp
         test/StateMachineTest.cpp)
 

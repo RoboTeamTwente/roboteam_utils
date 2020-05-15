@@ -12,8 +12,10 @@ namespace rtt {
     class Vector2;
 
 /**
- * @brief Angle class, mostly used for angle calculation
- * 
+ * The Angle class is a modular class on the interval [-PI, PI) that deals with addition, subtractions, distances and comparisons on this scale.
+ * @author Created by: Thijs Luttikhuis <br>
+ *         Recreated by: Haico Dorenbos
+ * @since 2019-02-28
  */
 class Angle {
     public:
@@ -48,109 +50,76 @@ class Angle {
          * @return double The angle
          */
         [[nodiscard]] double getAngle() const noexcept;
-
+        
         /**
-         * @brief Gets the angleDiff of the shortest angle (*this vs other)
-         *
-         * @param other Other angle to get from
-         * @return double
+         * Compute the shortest absolute angle difference (modular difference) between this Angle and the other Angle.
+         * @param other The other Angle.
+         * @return A double value in the range [0, PI]
          */
         [[nodiscard]] double shortestAngleDiff(Angle const &other) const noexcept;
 
         /**
-         * @brief Converts the current Angle to a Vector2, does not consume
-         *
-         * @param length Length of the vector
-         * @return rtt::Vector2 The new angle representation
+         * Create a new Vector2 using an absolute distance from the origin and this as given Angle.
+         * @param length The distance from the origin.
+         * @return Vector2 representing this position.
          */
         [[nodiscard]] rtt::Vector2 toVector2(double length = 1.0) const noexcept;
 
         /**
-         * @brief Compares two angles against each other
-         *
-         * @param other Rhs angle
-         * @return true If this->angle - other.angle < epsilon
-         * @return false if it's larger
+         * Check if two Angle instances represents the same angle value. This function is protected against double/float rounding issues.
+         * @param other The other Angle.
+         * @return True if the Angle instances represents the same angle value, false otherwise.
          */
         bool operator==(const Angle &other) const noexcept;
 
         /**
-         * @brief Not equals operator
-         *
-         * @param other Other angle to compare against
-         * @return bool !(*this == other)
+         * Check if two Angle instances represents the same angle value. This function is protected against double/float rounding issues.
+         * @param other The other Angle.
+         * @return False if the Angle instances represents the same angle value, true otherwise.
          */
         bool operator!=(const Angle &other) const noexcept;
 
         /**
-         * @brief Smaller than operator
-         *
-         * @param other Other angle to compare against
-         * @return true If `this` is smaller than `other`
-         * @return false If `other` is bigger or equal to `this`
-         */
-        bool operator<(const Angle &other) const noexcept;
-
-        /**
-         * @brief Combines two angles
-         *
-         * @param other Other angle
-         * @return Angle this->angle + other.angle
+         * Compute the addition between this Angle and the other Angle, and directly rescale the angle value.
+         * @param other The other Angle.
+         * @return A new Angle instance which is the result of the addition.
          */
         Angle operator+(const Angle &other) const noexcept;
 
         /**
-         * @brief Subtracts two angles
-         *
-         * @param other Angle to subtract
-         * @return Angle this->angle - other.angle
+         * Compute the subtraction between this Angle and the other Angle, and directly rescale the angle value.
+         * @param other The other Angle.
+         * @return A new Angle instance which is the result of the subtraction.
          */
         Angle operator-(const Angle &other) const noexcept;
 
         /**
-         * @brief Sets the current angle equal to`this->angle + other.angle`
-         *
-         * @param other Other angle to add to `this`
-         * @return Angle A copy of `*this`
+         * Add the other Angle to this Angle, and directly rescale the angle value.
+         * @param other The other Angle.
+         * @return A reference to this updated Angle instance.
          */
         Angle operator+=(const Angle &other) noexcept;
 
         /**
-         * @brief Sets the current angle equal to `this->angle - other.angle`
-         *
-         * @param other Other angle to subtract from `this`
-         * @return Angle A copy of `*this`
+         * Subtract the other Angle from this Angle, and directly rescale the angle value.
+         * @param other The other Angle.
+         * @return A reference to this updated Angle instance.
          */
         Angle operator-=(const Angle &other) noexcept;
 
         /**
-         * @brief Copy assignment operator
-         *
-         * Explicitly constraints.
-         *
-         * @param scalar Scalar to set `this->angle` to
+         * Set the angle value of this Angle instance, which will be directly rescaled.
+         * @param scalar A double value which represent the new angle value. It is allowed to use a value outside the range [-PI, PI).
+         * @return A reference to this updated Angle instance.
          */
         Angle &operator=(const double &scalar) noexcept;
 
-        /**
-         * @brief Convert the Angle to a double.
-         *
-         * TODO: explicit
-         *
-         * @return double `this->angle`
-         */
-        operator double() const noexcept;
-
     private:
-        /**
-         * @brief Current angle stored
-         */
-        double angle;
+        double angle; // The current angle value, which is a value in the range [-PI, PI).
 
         /**
-         * @brief Constrains the angle between 0 and 2 pi
-         *
-         * @return Angle A copy of `*this`
+         * Rescale the angle value to the range [-PI, PI).
+         * @return A reference to this rescaled Angle instance.
          */
         Angle constrain() noexcept;
     };

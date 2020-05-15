@@ -1,10 +1,7 @@
-//
-// Created by thijs on 28-2-19.
-//
-
 #include "../include/roboteam_utils/Angle.h"
 #include "../include/roboteam_utils/Vector2.h"
 #include "../include/roboteam_utils/Definitions.h"
+
 namespace rtt {
     Angle::Angle(double angle) : angle(angle) {
         this->constrain();
@@ -44,10 +41,6 @@ namespace rtt {
 
     bool Angle::operator!=(const Angle &other) const noexcept {
         return !(*this == other);
-    }
-
-    bool Angle::operator<(const Angle &other) const noexcept {
-        return abs(this->angle) < abs(other.angle);
     }
 
     Angle Angle::operator+(const Angle &other) const noexcept {

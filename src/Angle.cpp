@@ -6,9 +6,7 @@
 #include "../include/roboteam_utils/Vector2.h"
 #include "../include/roboteam_utils/Definitions.h"
 namespace rtt {
-
-    Angle::Angle(double angle)
-        : angle(angle) {
+    Angle::Angle(double angle) : angle(angle) {
         this->constrain();
     }
 
@@ -50,7 +48,7 @@ namespace rtt {
     }
 
     bool Angle::operator==(const Angle &other) const noexcept {
-        return fabs(this->angle - other.angle) < VECTOR_PRECISION;
+        return this->shortestAngleDiff(other) < VECTOR_PRECISION;
     }
 
     bool Angle::operator==(const double &scalar) const noexcept {

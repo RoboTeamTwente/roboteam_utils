@@ -58,14 +58,6 @@ namespace rtt {
         [[nodiscard]] double shortestAngleDiff(Angle const &other) const noexcept;
 
         /**
-         * @brief Gets the shortest angle difference between `other` and `*this`
-         *
-         * @param other Other angle to compare against
-         * @return double value of the shortest angle diff
-         */
-        double shortestAngleDiff(double &other) const noexcept;
-
-        /**
          * @brief Converts the current Angle to a Vector2, does not consume
          *
          * @param length Length of the vector
@@ -106,14 +98,6 @@ namespace rtt {
          * @return Angle this->angle + other.angle
          */
         Angle operator+(const Angle &other) const noexcept;
-
-        /**
-         * @brief Combines two angles
-         *
-         * @param scalar Other angle
-         * @return Angle this->angle + scalar
-         */
-        Angle operator+(const double &scalar) const noexcept;
 
         /**
          * @brief Subtracts two angles

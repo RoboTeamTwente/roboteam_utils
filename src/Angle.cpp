@@ -33,11 +33,6 @@ namespace rtt {
         return std::min(thisDiff, otherDiff);
     }
 
-    double Angle::shortestAngleDiff(double &scalar) const noexcept {
-        Angle other = Angle(scalar);
-        return this->shortestAngleDiff(other);
-    }
-
     rtt::Vector2 Angle::toVector2(double length) const noexcept {
         rtt::Vector2 vec = rtt::Vector2(cos(this->angle), sin(this->angle));
         return vec.stretchToLength(length);
@@ -57,10 +52,6 @@ namespace rtt {
 
     Angle Angle::operator+(const Angle &other) const noexcept {
         return Angle(this->angle + other.angle);
-    }
-
-    Angle Angle::operator+(const double &scalar) const noexcept {
-        return Angle(this->angle + scalar);
     }
 
     Angle Angle::operator-(const Angle &other) const noexcept {

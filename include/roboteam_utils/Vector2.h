@@ -105,11 +105,11 @@ class Vector2 {
 
         /**
          * \brief Rotates this vector around another vector
-         * @param radials Rotation in radians
-         * @param other Pivot point
+         * @param radians Rotation
+         * @param pivot Pivot point
          * @return Rotated vector
          */
-        [[nodiscard]] Vector2 rotateAroundPoint(double radials, const Vector2& other) const;
+        [[nodiscard]] Vector2 rotateAroundPoint(double radians, const Vector2& pivot) const;
 
         /**
          * \brief Projects this vector onto a line segment defined by two other vectors.

@@ -151,7 +151,6 @@ TEST(VectorTests, rotateAroundPoint) {
     EXPECT_DOUBLE_EQ(rotatedPosition1.x, 3);
     EXPECT_DOUBLE_EQ(rotatedPosition1.y, 1);
 
-
     // Rotate Pi/2 around -1,-1
     Vector2 f2(1, 1);
     Vector2 pivot2(-1, -1);

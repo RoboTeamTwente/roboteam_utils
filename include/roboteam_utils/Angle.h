@@ -31,30 +31,27 @@ class Angle {
         Angle(const Angle &copy) = default;
 
         /**
-         * @brief Construct a new Angle object
-         *
-         * @param angle Angle to set the initial angle to
+         * Construct a new Angle instance by using a double value representing the angle value, which will be directly rescaled.
+         * @param angle The given double value. It is allowed to use a value outside the range [-PI, PI).
          */
         Angle(double angle);
 
         /**
-         * @brief Construct a new Angle object from an rtt::Vector2
-         *
-         * @param vec vector to construct from
+         * Construct a new Angle instance by using the angle of a Vector2 (compared to the origin).
+         * @param vec The given Vector2.
          */
         Angle(const rtt::Vector2 &vec);
 
         /**
-         * @brief Get the Angle as double
-         *
-         * @return double The angle
+         * Get the angle value in the range [-PI, PI).
+         * @return The angle value.
          */
         [[nodiscard]] double getAngle() const noexcept;
-        
+
         /**
          * Compute the shortest absolute angle difference (modular difference) between this Angle and the other Angle.
          * @param other The other Angle.
-         * @return A double value in the range [0, PI]
+         * @return A double value in the range [0, PI].
          */
         [[nodiscard]] double shortestAngleDiff(Angle const &other) const noexcept;
 

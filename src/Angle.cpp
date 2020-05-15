@@ -21,10 +21,6 @@ namespace rtt {
         return angle;
     }
 
-    void Angle::setAngle(double other) noexcept {
-        *this = Angle(other);
-    }
-
     Angle Angle::constrain() noexcept {
         this->angle = fmod(angle + M_PI, 2 * M_PI);
         this->angle = (angle < 0) ? angle + M_PI : angle - M_PI;
@@ -51,16 +47,8 @@ namespace rtt {
         return this->shortestAngleDiff(other) < VECTOR_PRECISION;
     }
 
-    bool Angle::operator==(const double &scalar) const noexcept {
-        return *this == Angle(scalar);
-    }
-
     bool Angle::operator!=(const Angle &other) const noexcept {
         return !(*this == other);
-    }
-
-    bool Angle::operator!=(const double &scalar) const noexcept {
-        return *this != Angle(scalar);
     }
 
     bool Angle::operator<(const Angle &other) const noexcept {
@@ -79,18 +67,9 @@ namespace rtt {
         return Angle(this->angle - other.angle);
     }
 
-    Angle Angle::operator-(const double &scalar) const noexcept {
-        return Angle(this->angle - scalar);
-    }
-
     Angle Angle::operator+=(const Angle &other) noexcept {
         *this = *this + other;
         return *this;
-    }
-
-    Angle Angle::operator+=(const double &scalar) noexcept {
-        Angle other = Angle(scalar);
-        return *this += other;
     }
 
     Angle Angle::operator-=(const Angle &other) noexcept {
@@ -98,19 +77,9 @@ namespace rtt {
         return *this;
     }
 
-    Angle Angle::operator-=(const double &scalar) noexcept {
-        Angle other = Angle(scalar);
-        return *this -= other;
-    }
-
     Angle &Angle::operator=(const double &scalar) noexcept {
         this->angle = scalar;
         this->constrain();
         return *this;
     }
-
-    Angle::operator double() const noexcept {
-        return this->angle;
-    }
-
 }

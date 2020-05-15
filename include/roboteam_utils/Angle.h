@@ -50,13 +50,6 @@ namespace rtt {
         [[nodiscard]] double getAngle() const noexcept;
 
         /**
-         * @brief Set the Angle object's angle
-         *
-         * @param other Angle to set the angle to
-         */
-        void setAngle(double other) noexcept;
-
-        /**
          * @brief Gets the angleDiff of the shortest angle (*this vs other)
          *
          * @param other Other angle to get from
@@ -90,29 +83,12 @@ namespace rtt {
         bool operator==(const Angle &other) const noexcept;
 
         /**
-         * @brief Compares two angles against each other
-         *
-         * @param scalar Other angle to compare against
-         * @return true If the angle is equal to `this->angle`
-         * @return false If it's not equal to this->angle
-         */
-        bool operator==(const double &scalar) const noexcept;
-
-        /**
          * @brief Not equals operator
          *
          * @param other Other angle to compare against
          * @return bool !(*this == other)
          */
         bool operator!=(const Angle &other) const noexcept;
-
-        /**
-         * @brief Not equals operator
-         *
-         * @param scalar Other angle to compare against
-         * @return bool !(*this == scalar)
-         */
-        bool operator!=(const double &scalar) const noexcept;
 
         /**
          * @brief Smaller than operator
@@ -148,14 +124,6 @@ namespace rtt {
         Angle operator-(const Angle &other) const noexcept;
 
         /**
-         * @brief Subtracts two angles
-         *
-         * @param scalar Angle to subtract
-         * @return Angle this->angle - other.angle
-         */
-        Angle operator-(const double &scalar) const noexcept;
-
-        /**
          * @brief Sets the current angle equal to`this->angle + other.angle`
          *
          * @param other Other angle to add to `this`
@@ -164,28 +132,12 @@ namespace rtt {
         Angle operator+=(const Angle &other) noexcept;
 
         /**
-         * @brief Sets the current angle equal to `this->angle + scalar`
-         *
-         * @param scalar Other angle to add to `this`
-         * @return Angle A copy of `*this`
-         */
-        Angle operator+=(const double &scalar) noexcept;
-
-        /**
          * @brief Sets the current angle equal to `this->angle - other.angle`
          *
          * @param other Other angle to subtract from `this`
          * @return Angle A copy of `*this`
          */
         Angle operator-=(const Angle &other) noexcept;
-
-        /**
-         * @brief Sets the current angle equal to `this->angle - scalar`
-         *
-         * @param scalar Other angle to subtract from `this`
-         * @return Angle A copy of `*this`
-         */
-        Angle operator-=(const double &scalar) noexcept;
 
         /**
          * @brief Copy assignment operator

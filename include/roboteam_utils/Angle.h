@@ -118,7 +118,7 @@ class Angle {
          * Rescale the angle value to the range [-PI, PI).
          * @return A reference to this rescaled Angle instance.
          */
-        Angle constrain() noexcept;
+        Angle rescale() noexcept;
     };
 
 } // rtt

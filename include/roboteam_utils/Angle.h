@@ -31,7 +31,7 @@ class Angle {
         Angle(double angle);
 
         /**
-         * Construct a new Angle instance by using the angle of a Vector2 (compared to the origin).
+         * Construct a new Angle instance by using the angle of a Vector2 (compared to the origin). In case the Angle is the origin then construct the zero Angle.
          * @param vec The given Vector2.
          */
         Angle(const rtt::Vector2 &vec);

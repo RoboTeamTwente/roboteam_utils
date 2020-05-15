@@ -43,6 +43,20 @@ class Angle {
         [[nodiscard]] double getAngle() const noexcept;
 
         /**
+         * @brief Set the Angle object's angle
+         *
+         * @param other Angle to set the angle to
+         */
+        void setAngle(double other) noexcept;
+
+        /**
+         * Check what is the shortest direction to move from this angle to the other angle.
+         * @param other The other angle
+         * @return True if the positive direction is the shortest (which is counterclockwise), false if the negative direction is the shortest (which is clockwise).
+         */
+        [[nodiscard]] bool rotateDirection(const Angle &other) const noexcept;
+
+        /**
          * Compute the shortest absolute angle difference (modular difference) between this Angle and the other Angle.
          * @param other The other Angle.
          * @return A double value in the range [0, PI].

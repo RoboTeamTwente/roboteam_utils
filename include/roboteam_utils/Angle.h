@@ -20,15 +20,9 @@ namespace rtt {
 class Angle {
     public:
         /**
-         * @brief Default constructs an Angle
-         * sets angle to 0 and epsilon to 0.00001
+         * Construct the zero Angle, i.e. the Angle with 0 as angle value.
          */
         Angle() = default;
-
-        /**
-         * @brief Copy constructor
-         */
-        Angle(const Angle &copy) = default;
 
         /**
          * Construct a new Angle instance by using a double value representing the angle value, which will be directly rescaled.

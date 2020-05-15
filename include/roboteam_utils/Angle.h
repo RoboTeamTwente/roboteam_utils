@@ -15,7 +15,7 @@ namespace rtt {
  * @brief Angle class, mostly used for angle calculation
  * 
  */
-    class Angle {
+class Angle {
     public:
         /**
          * @brief Default constructs an Angle

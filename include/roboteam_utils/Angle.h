@@ -25,7 +25,8 @@ class Angle {
         Angle() = default;
 
         /**
-         * Construct a new Angle instance by using a double value representing the angle value, which will be directly rescaled.
+         * Construct a new Angle instance by using a double value representing the angle value, which will be directly rescaled. However you should be cautious with float values
+         * close to -MAX_FLOAT and close to MAX_FLOAT.
          * @param angle The given double value. It is allowed to use a value outside the range [-PI, PI).
          */
         Angle(double angle);
@@ -43,7 +44,8 @@ class Angle {
         [[nodiscard]] double getAngle() const noexcept;
 
         /**
-         * Check what is the shortest direction to move from this angle to the other angle.
+         * Check what is the shortest direction to move from this angle to the other angle. In case the distance between both angles is 0 then we prefer the positive direction,
+         * so in this case we return true. In case the distance between both angles is PI then we prefer the negative direction, so in this case we return false.
          * @param other The other angle
          * @return True if the positive direction is the shortest (which is counterclockwise), false if the negative direction is the shortest (which is clockwise).
          */
@@ -107,7 +109,8 @@ class Angle {
 
         /**
          * Set the angle value of this Angle instance, which will be directly rescaled.
-         * @param scalar A double value which represent the new angle value. It is allowed to use a value outside the range [-PI, PI).
+         * @param scalar A double value which represent the new angle value. It is allowed to use a value outside the range [-PI, PI). However you should be cautious with float
+         * values close to -MAX_FLOAT and close to MAX_FLOAT.
          * @return A reference to this updated Angle instance.
          */
         Angle &operator=(const double &scalar) noexcept;

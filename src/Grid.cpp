@@ -26,6 +26,11 @@ namespace rtt {
         }
     }
 
+    /**
+     * Remember this vector returns a nested list of points,
+     * so you will want to loop through both vectors to get the full grid
+     * @return points, the nested vector containing all Vector2 points within this grid
+     */
     const std::vector<std::vector<Vector2>> &Grid::getPoints() const {
         return points;
     }

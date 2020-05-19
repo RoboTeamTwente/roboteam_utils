@@ -44,9 +44,6 @@ namespace rtt {
         int numStepsY;
         double stepSizeX;
         double stepSizeY;
-
-
-
     };
 }
 

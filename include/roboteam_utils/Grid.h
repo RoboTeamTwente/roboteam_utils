@@ -21,13 +21,6 @@ namespace rtt {
          */
         Grid(double offSetX, double offSetY, double regionWidth, double regionHeight, int numStepsX, int numStepsY);
 
-    private:
-        /**
-         * nested vector, first index corresponds to nth x element, second to nth y element
-         */
-        std::vector<std::vector<Vector2>> points;
-        double offSetX;
-    public:
         double getOffSetX() const;
         double getOffSetY() const;
         double getRegionWidth() const;
@@ -36,8 +29,14 @@ namespace rtt {
         int getNumStepsY() const;
         double getStepSizeX() const;
         double getStepSizeY() const;
+        const std::vector<std::vector<Vector2>> &getPoints() const;
 
     private:
+        /**
+         * nested vector, first index corresponds to nth x element, second to nth y element
+         */
+        std::vector<std::vector<Vector2>> points;
+        double offSetX;
         double offSetY;
         double regionWidth;
         double regionHeight;
@@ -46,8 +45,6 @@ namespace rtt {
         double stepSizeX;
         double stepSizeY;
 
-    public:
-        const std::vector<std::vector<Vector2>> &getPoints() const;
 
 
     };

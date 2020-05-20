@@ -3,7 +3,7 @@
 #include "../include/roboteam_utils/Definitions.h"
 
 namespace rtt {
-    Angle::Angle(double angle) : angle(angle) {
+    Angle::Angle(const double &angle) : angle(angle) {
         this->normalize();
     }
 

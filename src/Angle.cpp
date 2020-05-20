@@ -4,7 +4,7 @@
 
 namespace rtt {
     Angle::Angle(double angle) : angle(angle) {
-        this->rescale();
+        this->normalize();
     }
 
     Angle::Angle(const rtt::Vector2 &vec) {
@@ -18,7 +18,7 @@ namespace rtt {
         return angle;
     }
 
-    Angle Angle::rescale() noexcept {
+    Angle Angle::normalize() noexcept {
         this->angle = fmod(angle + M_PI, 2 * M_PI);
         this->angle = (angle < 0) ? angle + M_PI : angle - M_PI;
         return *this;
@@ -60,19 +60,19 @@ namespace rtt {
 
     Angle &Angle::operator+=(const Angle &other) noexcept {
         this->angle += other.angle;
-        this->rescale();
+        this->normalize();
         return *this;
     }
 
     Angle &Angle::operator-=(const Angle &other) noexcept {
         this->angle -= other.angle;
-        this->rescale();
+        this->normalize();
         return *this;
     }
 
     Angle &Angle::operator=(const double &scalar) noexcept {
         this->angle = scalar;
-        this->rescale();
+        this->normalize();
         return *this;
     }
 }

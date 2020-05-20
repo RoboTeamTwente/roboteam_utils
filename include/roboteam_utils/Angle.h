@@ -25,7 +25,7 @@ class Angle {
         Angle() = default;
 
         /**
-         * Construct a new Angle instance by using a double value representing the angle value, which will be directly rescaled. However you should be cautious with float values
+         * Construct a new Angle instance by using a double value representing the angle value, which will be directly normalized. However you should be cautious with float values
          * close to -MAX_FLOAT and close to MAX_FLOAT.
          * @param angle The given double value. It is allowed to use a value outside the range [-PI, PI).
          */
@@ -80,35 +80,35 @@ class Angle {
         bool operator!=(const Angle &other) const noexcept;
 
         /**
-         * Compute the addition between this Angle and the other Angle, and directly rescale the angle value.
+         * Compute the addition between this Angle and the other Angle, and directly normalize the angle value.
          * @param other The other Angle.
          * @return A new Angle instance which is the result of the addition.
          */
         Angle operator+(const Angle &other) const noexcept;
 
         /**
-         * Compute the subtraction between this Angle and the other Angle, and directly rescale the angle value.
+         * Compute the subtraction between this Angle and the other Angle, and directly normalize the angle value.
          * @param other The other Angle.
          * @return A new Angle instance which is the result of the subtraction.
          */
         Angle operator-(const Angle &other) const noexcept;
 
         /**
-         * Add the other Angle to this Angle, and directly rescale the angle value.
+         * Add the other Angle to this Angle, and directly normalize the angle value.
          * @param other The other Angle.
          * @return A reference to this updated Angle instance.
          */
         Angle &operator+=(const Angle &other) noexcept;
 
         /**
-         * Subtract the other Angle from this Angle, and directly rescale the angle value.
+         * Subtract the other Angle from this Angle, and directly normalize the angle value.
          * @param other The other Angle.
          * @return A reference to this updated Angle instance.
          */
         Angle &operator-=(const Angle &other) noexcept;
 
         /**
-         * Set the angle value of this Angle instance, which will be directly rescaled.
+         * Set the angle value of this Angle instance, which will be directly normalized.
          * @param scalar A double value which represent the new angle value. It is allowed to use a value outside the range [-PI, PI). However you should be cautious with float
          * values close to -MAX_FLOAT and close to MAX_FLOAT.
          * @return A reference to this updated Angle instance.
@@ -119,10 +119,10 @@ class Angle {
         double angle; // The current angle value, which is a value in the range [-PI, PI).
 
         /**
-         * Rescale the angle value to the range [-PI, PI).
-         * @return A reference to this rescaled Angle instance.
+         * Normalize the angle value to the range [-PI, PI).
+         * @return A reference to this normalized Angle instance.
          */
-        Angle rescale() noexcept;
+        Angle normalize() noexcept;
     };
 
 } // rtt

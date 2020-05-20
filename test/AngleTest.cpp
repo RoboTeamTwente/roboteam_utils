@@ -14,55 +14,55 @@ TEST(AngleTests, rescale) {
     // Partition tests for: angle < -PI
     double testAngle = -372349.9654;  // A random large negative number
     double expectedRescale = -2.120912;
-    double actualRescale = Angle(testAngle).getAngle();
+    double actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = -M_PI - SUPREME_EPSILON;
     expectedRescale = M_PI;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
 
     // Partition tests for: -PI <= angle < 0
     testAngle = -M_PI;
     expectedRescale = -M_PI;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = -M_PI / 3;
     expectedRescale = -M_PI / 3;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = -SUPREME_EPSILON;
     expectedRescale = 0.0;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
 
     // Partition tests for: angle = 0
     testAngle = 0.0;
     expectedRescale = 0.0;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
 
     // Partition tests for: 0 < angle < PI
     testAngle = SUPREME_EPSILON;
     expectedRescale = 0.0;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = 3 * M_PI / 4;
     expectedRescale = 3 * M_PI / 4;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = M_PI - SUPREME_EPSILON;
     expectedRescale = M_PI;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
 
     // Partition tests for: angle >= PI
     testAngle = M_PI;
     expectedRescale = -M_PI;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
     testAngle = 20128.1969;  // A random large positive number
     expectedRescale = -3.128824207;
-    actualRescale = Angle(testAngle).getAngle();
+    actualRescale = Angle(testAngle);
     ASSERT_TRUE(fabs(actualRescale - expectedRescale) < EPSILON);
 }
 

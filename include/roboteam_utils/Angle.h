@@ -29,7 +29,7 @@ class Angle {
          * close to -MAX_FLOAT and close to MAX_FLOAT.
          * @param angle The given double value. It is allowed to use a value outside the range [-PI, PI).
          */
-        Angle(double angle);
+        Angle(const double angle);
 
         /**
          * Construct a new Angle instance by using the angle of a Vector2 (compared to the origin). In case the Angle is the origin then construct the zero Angle.

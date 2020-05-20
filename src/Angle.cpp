@@ -11,10 +11,10 @@ namespace rtt {
         if (vec.length() < VECTOR_PRECISION)
             angle = 0.0;
         else
-            angle = vec.toAngle().getAngle();
+            angle = vec.toAngle();
     }
 
-    double Angle::getAngle() const noexcept {
+    Angle::operator double() const noexcept {
         return angle;
     }
 

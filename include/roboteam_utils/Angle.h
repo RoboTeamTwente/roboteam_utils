@@ -41,7 +41,7 @@ class Angle {
          * Get the angle value in the range [-PI, PI).
          * @return The angle value.
          */
-        [[nodiscard]] double getAngle() const noexcept;
+        operator double() const noexcept;
 
         /**
          * Check what is the shortest direction to move from this angle to the other angle. In case the distance between both angles is 0 then we prefer the positive direction,

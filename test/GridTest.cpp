@@ -28,8 +28,19 @@ namespace rtt{
         Grid grid = Grid(2, 2, 1, 1, 4, 4);
         for (auto nestedPoints : grid.getPoints()) {
             for (auto point : nestedPoints) {
-                EXPECT_TRUE(point.x >= 2 && point.x < 3);
-                EXPECT_TRUE(point.y >= 2 && point.y < 3);
+                EXPECT_TRUE(point.x >= 2 && (point.x < 3));
+                EXPECT_TRUE(point.y >= 2 && (point.y < 3));
+            }
+        }
+    }
+
+    // A grid that spans both the positive and negative axes.
+    TEST(Grid, unitGrid) {
+        Grid grid = Grid(-2, -2, 4, 4, 5, 5);
+        for (auto nestedPoints : grid.getPoints()) {
+            for (auto point : nestedPoints) {
+                EXPECT_TRUE(point.x >= -2 && point.x < 2);
+                EXPECT_TRUE(point.y >= -2 && point.y < 4);
             }
         }
     }

@@ -58,13 +58,13 @@ namespace rtt {
         return Angle(this->angle - other.angle);
     }
 
-    Angle Angle::operator+=(const Angle &other) noexcept {
+    Angle &Angle::operator+=(const Angle &other) noexcept {
         this->angle += other.angle;
         this->rescale();
         return *this;
     }
 
-    Angle Angle::operator-=(const Angle &other) noexcept {
+    Angle &Angle::operator-=(const Angle &other) noexcept {
         this->angle -= other.angle;
         this->rescale();
         return *this;

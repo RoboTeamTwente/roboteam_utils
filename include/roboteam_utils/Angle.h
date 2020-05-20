@@ -98,14 +98,14 @@ class Angle {
          * @param other The other Angle.
          * @return A reference to this updated Angle instance.
          */
-        Angle operator+=(const Angle &other) noexcept;
+        Angle &operator+=(const Angle &other) noexcept;
 
         /**
          * Subtract the other Angle from this Angle, and directly rescale the angle value.
          * @param other The other Angle.
          * @return A reference to this updated Angle instance.
          */
-        Angle operator-=(const Angle &other) noexcept;
+        Angle &operator-=(const Angle &other) noexcept;
 
         /**
          * Set the angle value of this Angle instance, which will be directly rescaled.

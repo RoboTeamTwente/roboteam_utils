@@ -60,7 +60,7 @@ class Angle {
 
         /**
          * Create a new Vector2 using an absolute distance from the origin and this as given Angle.
-         * @param length The distance from the origin.
+         * @param length The distance from the origin, which should be >= 0.
          * @return Vector2 representing this position.
          */
         [[nodiscard]] rtt::Vector2 toVector2(double length = 1.0) const noexcept;

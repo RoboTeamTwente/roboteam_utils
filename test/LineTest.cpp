@@ -91,9 +91,9 @@ TEST(LineTests, slopeAndIntercept) {
 }
 TEST(LineTests, lineLengths) {
     Vector2 A(0.0, 0.0), B(2.0, 0.0), C(1.0, 2.0);
-    Line D(A, B);
-    Line E(A, C);
-    Line F(B, C);
+    LineSegment D(A, B);
+    LineSegment E(A, C);
+    LineSegment F(B, C);
     EXPECT_DOUBLE_EQ(D.length(), 2.0);
     EXPECT_DOUBLE_EQ(D.length2(), 4.0);
     EXPECT_DOUBLE_EQ(E.length(), sqrt(5));

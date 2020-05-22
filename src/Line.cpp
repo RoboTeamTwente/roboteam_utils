@@ -10,13 +10,6 @@ Line::Line(const LineSegment &other) noexcept {
     start=other.start;
     end=other.end;
 }
-double Line::length() const {
-    return (end - start).length();
-}
-
-double Line::length2() const {
-    return (end - start).length2();
-}
 
 double Line::slope() const {
     return (end.y - start.y)/(end.x - start.x);
@@ -67,7 +60,7 @@ Vector2 Line::project(const Vector2 &point) const {
 
     Vector2 AB = direction();
     Vector2 AP = point - start;
-    return Vector2(start + AB*AP.dot(AB)/length2());
+    return Vector2(start + AB * AP.dot(AB) / (end - start).length2());
 }
 
 bool Line::isOnLine(const Vector2 &point) const {

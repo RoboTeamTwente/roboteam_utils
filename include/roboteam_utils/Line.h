@@ -44,21 +44,6 @@ class Line {
      * @param other LineSegment to use for construction
      */
     explicit Line(const LineSegment &other) noexcept;
-    /**
-     * @brief Gets the length of the vector representation of this line.
-     *        Note in this case it does not really make sense as this class represents lines of infinite length
-     * Literally:
-     *      (end - start).length()
-     * @return double Gets the length of the line
-     */
-    [[nodiscard]] double length() const;
-
-    /**
-     * @brief Gets the length of the vector representation of this line
-     *
-     * @return double Length of this Line
-     */
-    [[nodiscard]] double length2() const;
 
     /**
      * @brief Gets the slope of this line

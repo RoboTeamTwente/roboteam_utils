@@ -81,8 +81,7 @@ bool Line::isOnLine(const Vector2 &point) const {
 
 // see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
 std::optional<Vector2> Line::intersects(const Line &line) const {
-    auto result = intersect(start, end, line.start, line.end);
-    return result.has_value() ? std::optional(result.value()) : std::nullopt;
+    return intersect(start, end, line.start, line.end);
 }
 
 std::optional<Vector2> Line::intersects(const LineSegment &line) const {
@@ -95,7 +94,7 @@ std::optional<Vector2> Line::intersects(const LineSegment &line) const {
 }
 
 bool Line::doesIntersect(const Line &line) const {
-    return !this->isParallel(line);
+    return this->intersects(line).has_value();
 }
 
 bool Line::doesIntersect(const LineSegment &line) const {

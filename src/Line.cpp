@@ -7,48 +7,18 @@
 
 namespace rtt {
 Line::Line(const LineSegment &other) noexcept {
-    start=other.start;
-    end=other.end;
-}
-
-double Line::slope() const {
-    return (end.y - start.y)/(end.x - start.x);
-}
-
-bool Line::isVertical() const {
-    return (end.x == start.x) && (end.y != start.y);
+    start = other.start;
+    end = other.end;
 }
 
 Vector2 Line::direction() const {
     return Vector2(end - start);
 }
 
-double Line::intercept() const {
-    return start.y - this->slope()*start.x;
-}
-
-std::pair<double, double> Line::coefficients() const {
-    return {slope(), intercept()};
-}
-
 bool Line::isPoint() const {
     return start == end;
 }
 
-bool Line::isParallel(const Line &line) const {
-    // check if line is vertical, otherwise check the slope
-    if (this->isVertical() || line.isVertical()) {
-        return this->isVertical() && line.isVertical();
-    }
-    return this->slope() == line.slope();
-}
-bool Line::isParallel(const LineSegment &line) const {
-    // check if line is vertical, otherwise check the slope
-    if (this->isVertical() || line.isVertical()) {
-        return this->isVertical() && line.isVertical();
-    }
-    return this->slope() == line.slope();
-}
 double Line::distanceToLine(const Vector2 &point) const {
     return (this->project(point) - point).length();
 }
@@ -63,20 +33,6 @@ Vector2 Line::project(const Vector2 &point) const {
     return Vector2(start + AB * AP.dot(AB) / (end - start).length2());
 }
 
-bool Line::isOnLine(const Vector2 &point) const {
-    if (isPoint()){
-        return (start == point || end == point);
-    }
-    Vector2 A = end - start;
-    Vector2 B = point - start;
-    return A.cross(B) == 0;
-}
-
-// see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
-std::optional<Vector2> Line::intersects(const Line &line) const {
-    return intersect(start, end, line.start, line.end);
-}
-
 std::optional<Vector2> Line::intersects(const LineSegment &line) const {
     auto result = intersect(start, end, line.start, line.end);
     if (result.has_value()) {
@@ -84,10 +40,6 @@ std::optional<Vector2> Line::intersects(const LineSegment &line) const {
         if (u >= 0 && u <= 1) return std::optional(result.value());
     }
     return std::nullopt;
-}
-
-bool Line::doesIntersect(const Line &line) const {
-    return this->intersects(line).has_value();
 }
 
 bool Line::doesIntersect(const LineSegment &line) const {
@@ -116,4 +68,69 @@ float Line::relativePosition(Vector2 line1Start, Vector2 line1End, Vector2 point
     }
 }
 
+/* 	 ______   _______  _______  ______     _______  _______  ______   _______
+ *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
+ *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/
+ *	| |   ) || (__    | (___) || |   ) |  | |      | |   | || |   ) || (__
+ *	| |   | ||  __)   |  ___  || |   | |  | |      | |   | || |   | ||  __)
+ *	| |   ) || (      | (   ) || |   ) |  | |      | |   | || |   ) || (
+ *	| (__/  )| (____/\| )   ( || (__/  )  | (____/\| (___) || (__/  )| (____/\
+ *	(______/ (_______/|/     \|(______/   (_______/(_______)(______/ (_______/
+ *
+ * The functions below are dead. Remove this tag if you use any of the functions and make sure to remove this tag at other places as well that will become alive by using any of the
+ * function below. Do not read/document/redesign/analyse/test/optimize/etc. any of this code, because it is a waste of your time! This code was not removed or placed at another
+ * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
+ * be removed).
+ */
+
+/*
+double Line::intercept() const {
+    return start.y - this->slope()*start.x;
+}
+
+std::pair<double, double> Line::coefficients() const {
+    return {slope(), intercept()};
+}
+
+bool Line::isParallel(const Line &line) const {
+    // check if line is vertical, otherwise check the slope
+    if (this->isVertical() || line.isVertical()) {
+        return this->isVertical() && line.isVertical();
+    }
+    return this->slope() == line.slope();
+}
+bool Line::isParallel(const LineSegment &line) const {
+    // check if line is vertical, otherwise check the slope
+    if (this->isVertical() || line.isVertical()) {
+        return this->isVertical() && line.isVertical();
+    }
+    return this->slope() == line.slope();
+}
+
+bool Line::isOnLine(const Vector2 &point) const {
+    if (isPoint()){
+        return (start == point || end == point);
+    }
+    Vector2 A = end - start;
+    Vector2 B = point - start;
+    return A.cross(B) == 0;
+}
+
+double Line::slope() const {
+    return (end.y - start.y) / (end.x - start.x);
+}
+
+bool Line::isVertical() const {
+    return (end.x == start.x) && (end.y != start.y);
+}
+
+bool Line::doesIntersect(const Line &line) const {
+    return this->intersects(line).has_value();
+}
+
+// see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
+std::optional<Vector2> Line::intersects(const Line &line) const {
+    return intersect(start, end, line.start, line.end);
+}
+*/
 }

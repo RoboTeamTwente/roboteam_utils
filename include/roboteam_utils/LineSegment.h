@@ -81,37 +81,6 @@ class LineSegment {
     [[nodiscard]] Vector2 direction() const;
 
     /**
-     * @brief Gets a pair of coefficients
-     *
-     * @return std::pair<double, double> Pair of doubles where .first == slope() and .second == intercept()
-     */
-    [[nodiscard]] std::pair<double, double> coefficients() const;
-
-    /**
-     * @brief Checks whether line is vertical
-     *
-     * @return true True if line is vertical, will be true if isPoint is true
-     * @return false False if line is not vertical
-     */
-    [[nodiscard]] bool isVertical() const;
-
-    /**
-     * @brief Checks whether 2 lines are parallel
-     *
-     * @param line Other line to check against
-     * @return true True if this->slope() == line.slope()
-     * @return false False if this->slope() != line.slope()
-     */
-    [[nodiscard]] bool isParallel(const Line &line) const;
-    /**
-     * @brief Checks whether 2 lines are parallel
-     *
-     * @param line Other line to check against
-     * @return true True if this->slope() == line.slope()
-     * @return false False if this->slope() != line.slope()
-     */
-    [[nodiscard]] bool isParallel(const LineSegment &line) const;
-    /**
      * @brief Checks whether line is a single point
      *
      * @return true True if start == end
@@ -196,16 +165,6 @@ class LineSegment {
     [[nodiscard]] bool nonSimpleDoesIntersect(const LineSegment &line) const;
 
     /**
-     * @brief Gets a vector representation of an intersection
-     *
-     * same as normal intersect, but always returns false if the lines are parallel
-     * intersection points of non-parallel lines are called non-simple (hence the name)
-     *
-     * @param line Line to check against
-     * @return std::shared_ptr<Vector2> Returns a shared_ptr to a Vector2 that represents the intersection
-     */
-    [[nodiscard]] std::optional<Vector2> nonSimpleIntersects(const LineSegment &line) const;
-    /**
      * @brief Return the intersection(s) of two LineSegments.
      *
      * This is the only correct implementation of intersects that works for every case, e.g. parallel lines and LineSegments that are actually points. In case:
@@ -244,6 +203,65 @@ class LineSegment {
      *
      */
     virtual ~LineSegment() = default;
+
+    /* 	 ______   _______  _______  ______     _______  _______  ______   _______
+     *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
+     *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/
+     *	| |   ) || (__    | (___) || |   ) |  | |      | |   | || |   ) || (__
+     *	| |   | ||  __)   |  ___  || |   | |  | |      | |   | || |   | ||  __)
+     *	| |   ) || (      | (   ) || |   ) |  | |      | |   | || |   ) || (
+     *	| (__/  )| (____/\| )   ( || (__/  )  | (____/\| (___) || (__/  )| (____/\
+     *	(______/ (_______/|/     \|(______/   (_______/(_______)(______/ (_______/
+     *
+     * The functions below are dead. Remove this tag if you use any of the functions and make sure to remove this tag at other places as well that will become alive by using any of the
+     * function below. Do not read/document/redesign/analyse/test/optimize/etc. any of this code, because it is a waste of your time! This code was not removed or placed at another
+     * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
+     * be removed).
+     */
+
+    /**
+     * @brief Checks whether 2 lines are parallel
+     *
+     * @param line Other line to check against
+     * @return true True if this->slope() == line.slope()
+     * @return false False if this->slope() != line.slope()
+     */
+    // [[nodiscard]] bool isParallel(const Line &line) const;
+
+    /**
+     * @brief Checks whether 2 lines are parallel
+     *
+     * @param line Other line to check against
+     * @return true True if this->slope() == line.slope()
+     * @return false False if this->slope() != line.slope()
+     */
+    // [[nodiscard]] bool isParallel(const LineSegment &line) const;
+
+    /**
+     * @brief Gets a pair of coefficients
+     *
+     * @return std::pair<double, double> Pair of doubles where .first == slope() and .second == intercept()
+     */
+    // [[nodiscard]] std::pair<double, double> coefficients() const;
+
+    /**
+     * @brief Checks whether line is vertical
+     *
+     * @return true True if line is vertical, will be true if isPoint is true
+     * @return false False if line is not vertical
+     */
+    // [[nodiscard]] bool isVertical() const;
+
+    /**
+     * @brief Gets a vector representation of an intersection
+     *
+     * same as normal intersect, but always returns false if the lines are parallel
+     * intersection points of non-parallel lines are called non-simple (hence the name)
+     *
+     * @param line Line to check against
+     * @return std::shared_ptr<Vector2> Returns a shared_ptr to a Vector2 that represents the intersection
+     */
+    // [[nodiscard]] std::optional<Vector2> nonSimpleIntersects(const LineSegment &line) const;
 };
 }  // namespace rtt
 #endif  // ROBOTEAM_UTILS_LINESEGMENT_H

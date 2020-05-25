@@ -33,19 +33,6 @@ Vector2 Line::project(const Vector2 &point) const {
     return Vector2(start + AB * AP.dot(AB) / (end - start).length2());
 }
 
-std::optional<Vector2> Line::intersects(const LineSegment &line) const {
-    auto result = intersect(start, end, line.start, line.end);
-    if (result.has_value()) {
-        float u = relativePosition(line.start, line.end, result.value());
-        if (u >= 0 && u <= 1) return std::optional(result.value());
-    }
-    return std::nullopt;
-}
-
-bool Line::doesIntersect(const LineSegment &line) const {
-    return intersects(line).has_value();
-}
-
 std::optional<Vector2> Line::intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End) {
     Vector2 A = line1Start - line1End;
     Vector2 B = line2Start - line2End;
@@ -84,6 +71,19 @@ float Line::relativePosition(Vector2 line1Start, Vector2 line1End, Vector2 point
  */
 
 /*
+std::optional<Vector2> Line::intersects(const LineSegment &line) const {
+    auto result = intersect(start, end, line.start, line.end);
+    if (result.has_value()) {
+        float u = relativePosition(line.start, line.end, result.value());
+        if (u >= 0 && u <= 1) return std::optional(result.value());
+    }
+    return std::nullopt;
+}
+
+bool Line::doesIntersect(const LineSegment &line) const {
+    return intersects(line).has_value();
+}
+
 double Line::intercept() const {
     return start.y - this->slope()*start.x;
 }

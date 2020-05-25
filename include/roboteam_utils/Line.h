@@ -78,24 +78,6 @@ class Line {
     [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
     /**
-     * @brief Gets the intersection of the lines
-     * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
-     *
-     * @param line LineSegment to get an intersection from
-     * @return std::shared_ptr<Vector2> Vector representation of this intersection
-     */
-    [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
-
-    /**
-     * @brief Checks whether \ref line intersects `this`
-     *
-     * @param line Line to check against
-     * @return true True if \ref line intersects `this`
-     * @return false False if \ref line does not intersect `this`
-     */
-    [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
-
-    /**
      * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
      *
      * @param line1Start An arbitrary point on the first line.
@@ -130,6 +112,24 @@ class Line {
      * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
      * be removed).
      */
+
+    /**
+     * @brief Gets the intersection of the lines
+     * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
+     *
+     * @param line LineSegment to get an intersection from
+     * @return std::shared_ptr<Vector2> Vector representation of this intersection
+     */
+    // [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
+
+    /**
+     * @brief Checks whether \ref line intersects `this`
+     *
+     * @param line Line to check against
+     * @return true True if \ref line intersects `this`
+     * @return false False if \ref line does not intersect `this`
+     */
+    // [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
 
     /**
      * @brief Checks whether a \ref point is on the line

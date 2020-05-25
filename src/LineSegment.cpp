@@ -125,12 +125,17 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     return true;
 }
 
-std::vector<Vector2> LineSegment::correctIntersects(const LineSegment &line) const {
-    Vector2 A = start - end;
-    Vector2 B = line.start - line.end;
-    Vector2 C = start - line.start;
-    double denom = A.cross(B);
-    if (denom == 0) {
+std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const {
+    auto result = Line::intersect(start, end, line.start, line.end);
+    if (result.has_value()) {
+        float t = Line::relativePosition(start, end, result.value());
+        float u = Line::relativePosition(line.start, line.end, result.value());
+        if (t >= 0 & t <= 1 && u >= 0 && u <= 1) {
+            return {result.value()};
+        } else {
+            return {};
+        }
+    } else {
         /* The only possible cases are that one/both of the LineSegments are actually points, the LineSegments have a shared LineSegment part or the LineSegments are distinct and
          * parallel. */
         std::vector<Vector2> intersections = {};
@@ -149,15 +154,6 @@ std::vector<Vector2> LineSegment::correctIntersects(const LineSegment &line) con
         std::sort(intersections.begin(), intersections.end());
         intersections.erase(std::unique(intersections.begin(), intersections.end()), intersections.end());
         return intersections;
-    } else {
-        // The lines are not parallel, so the only possible cases are that they either intersect or intersect when the lines are extended.
-        double t = C.cross(B)/denom;
-        double u = -A.cross(C)/denom;
-        if (! (t < 0 || t > 1) && ! (u < 0 || u > 1)) {
-            return {start - A*t};
-        } else {
-            return {};
-        }
     }
 }
 

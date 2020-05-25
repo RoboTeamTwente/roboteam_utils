@@ -125,9 +125,9 @@ class LineSegment {
      * - The intersection of these LineSegments is a LineSegment L, then it returns the start and end points of this LineSegment L.
      *
      * @param line Line to check against.
-     * @return std::set<Vector2> Returns a set of the intersections (Vector2).
+     * @return std::vector<Vector2> Returns a list of the intersections (Vector2).
      */
-    [[nodiscard]] std::vector<Vector2> correctIntersects(const LineSegment &line) const;
+    [[nodiscard]] std::vector<Vector2> multiIntersect(const LineSegment &line) const;
 
     /**
      * @brief Computes the shadow caused by an obstacle (LineSegment) and light source on this LineSegment.

@@ -130,7 +130,7 @@ namespace rtt {
         size_t n = vertices.size();
         for (size_t i = 0; i < n; i++) {
             LineSegment segment(vertices[i], vertices[(i + 1) % n]);
-            std::vector<Vector2> line_intersections = line.correctIntersects(segment);
+            std::vector<Vector2> line_intersections = line.multiIntersect(segment);
             intersections.insert(intersections.end(), line_intersections.begin(), line_intersections.end());
         }
         std::sort(intersections.begin(), intersections.end());

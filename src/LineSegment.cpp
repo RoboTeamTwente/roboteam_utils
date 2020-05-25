@@ -116,13 +116,7 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     }
     //check if the point is in between the two points
     double dot = A.dot(B);
-    if (dot < 0) {
-        return false;
-    }
-    if (dot > A.dot(A)) {
-        return false;
-    }
-    return true;
+    return dot >= 0 && dot <= A.dot(A);
 }
 
 std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const {

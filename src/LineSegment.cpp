@@ -35,13 +35,6 @@ bool LineSegment::isPoint() const {
     return start == end;
 }
 
-bool LineSegment::doesIntersect(const Line &line) const {
-    if (intersects(line)) {
-        return true;
-    }
-    return false;
-}
-
 //this is the algorithm from
 // https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 //takes overlaps into account in contrast to the intersect() function
@@ -87,22 +80,6 @@ bool LineSegment::nonSimpleDoesIntersect(const LineSegment &line) const {
         }
     }
     return false;
-}
-
-std::optional<Vector2> LineSegment::intersects(const Line &line) const {
-    Vector2 A = start - end;
-    Vector2 B = line.start - line.end;
-    double denom = A.cross(B);
-    if (denom != 0) {
-        Vector2 C = start - line.start;
-        double numer = C.cross(B);
-        double t = numer/denom;
-        if (! (t < 0 || t > 1)) {
-            return start - A*t;
-        }
-    }
-    return std::nullopt;
-
 }
 
 // only returns a vector if there is a point intersection. If a segment intersects does not return anything
@@ -208,6 +185,83 @@ std::vector<Vector2> LineSegment::correctIntersects(const LineSegment &line) con
     }
 }
 
+std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const LineSegment &obstacle, float negligible_shadow_length) const {
+    if (obstacle.isOnLine(source)) {
+        // If the source is on the obstacle line then the entire line is in the shadow, because every line from the source intersects with the obstacle line.
+        return length() > negligible_shadow_length ? std::optional(*this) : std::nullopt;
+    } else if (isPoint()) {
+        /* If the projection LineSegment is a point then there is no shadow on this LineSegment. This case is needed, because a point cannot be changed into an infinite line,
+         * since the direction of a point is not known. */
+        return std::nullopt;
+    }
+    std::optional<Vector2> firstIntersect = HalfLine(source, obstacle.start).intersect(Line(*this));
+    std::optional<Vector2> secondIntersect = HalfLine(source, obstacle.end).intersect(Line(*this));
+    if (!firstIntersect.has_value() && !secondIntersect.has_value()) {
+        // If both lines from the sources to the start and end of the obstacle do not intersect with the infinite line expansion of this projection line then there is no shadow.
+        return std::nullopt;
+    }
+    LineSegment shadow;
+    if (firstIntersect.has_value() && secondIntersect.has_value()) {
+        /* If they do intersect then we can compute the shadow by projecting points in the infinite expansion of the LineSegments to either endings of the LineSegment (note
+         * projection does not change the intersection location if the location is already at the LineSegment). */
+        shadow = LineSegment(project(firstIntersect.value()), project(secondIntersect.value()));
+    } else {
+        /* If there is only one intersection then the shadow is unbounded in one direction. By only checking if the ending furthest away from the intersection point is visible you
+        know for all cases (both for the cases where the intersection point is outside the LineSegment and at the LineSegment) where the shadow is. Moreover you do this quite
+        efficiently, because you only have to check for one LienSegment whether it intersects with the obstacle. */
+        Vector2 onlyIntersection = project(firstIntersect.has_value() ? firstIntersect.value() : secondIntersect.value());
+        double distanceIntersectionToStart = (start - onlyIntersection).length();
+        double distanceIntersectionToEnd = (end - onlyIntersection).length();
+        Vector2 closest = distanceIntersectionToStart < distanceIntersectionToEnd ? start : end;
+        Vector2 furthest = distanceIntersectionToStart < distanceIntersectionToEnd ? end : start;
+        bool furthestInShadow = LineSegment(source, furthest).doesIntersect(obstacle);
+        shadow = furthestInShadow ? LineSegment(onlyIntersection, furthest) : LineSegment(onlyIntersection, closest);
+    }
+    return shadow.length() > negligible_shadow_length ? std::optional(shadow) : std::nullopt;
+}
+
+bool LineSegment::operator==(const LineSegment &other) const {
+    return ((start == other.start && end == other.end) || (start == other.end && end == other.start));
+}
+
+/* 	 ______   _______  _______  ______     _______  _______  ______   _______
+ *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
+ *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/
+ *	| |   ) || (__    | (___) || |   ) |  | |      | |   | || |   ) || (__
+ *	| |   | ||  __)   |  ___  || |   | |  | |      | |   | || |   | ||  __)
+ *	| |   ) || (      | (   ) || |   ) |  | |      | |   | || |   ) || (
+ *	| (__/  )| (____/\| )   ( || (__/  )  | (____/\| (___) || (__/  )| (____/\
+ *	(______/ (_______/|/     \|(______/   (_______/(_______)(______/ (_______/
+ *
+ * The functions below are dead. Remove this tag if you use any of the functions and make sure to remove this tag at other places as well that will become alive by using any of the
+ * function below. Do not read/document/redesign/analyse/test/optimize/etc. any of this code, because it is a waste of your time! This code was not removed or placed at another
+ * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
+ * be removed).
+ */
+
+/*
+std::optional<Vector2> LineSegment::intersects(const Line &line) const {
+    Vector2 A = start - end;
+    Vector2 B = line.start - line.end;
+    double denom = A.cross(B);
+    if (denom != 0) {
+        Vector2 C = start - line.start;
+        double numer = C.cross(B);
+        double t = numer/denom;
+        if (! (t < 0 || t > 1)) {
+            return start - A*t;
+        }
+    }
+    return std::nullopt;
+}
+
+bool LineSegment::doesIntersect(const Line &line) const {
+    if (intersects(line)) {
+        return true;
+    }
+    return false;
+}
+
 // http://geomalgorithms.com/a07-_distance.html#dist3D_Segment_to_Segment
 // for implementation hints. This is complicated unfortunately.
 double LineSegment::distanceToLine(const LineSegment &line) const {
@@ -276,61 +330,6 @@ double LineSegment::distanceToLine(const LineSegment &line) const {
     return diff.length();
 }
 
-std::optional<LineSegment> LineSegment::shadow(const Vector2 &source, const LineSegment &obstacle, float negligible_shadow_length) const {
-    if (obstacle.isOnLine(source)) {
-        // If the source is on the obstacle line then the entire line is in the shadow, because every line from the source intersects with the obstacle line.
-        return length() > negligible_shadow_length ? std::optional(*this) : std::nullopt;
-    } else if (isPoint()) {
-        /* If the projection LineSegment is a point then there is no shadow on this LineSegment. This case is needed, because a point cannot be changed into an infinite line,
-         * since the direction of a point is not known. */
-        return std::nullopt;
-    }
-    std::optional<Vector2> firstIntersect = HalfLine(source, obstacle.start).intersect(Line(*this));
-    std::optional<Vector2> secondIntersect = HalfLine(source, obstacle.end).intersect(Line(*this));
-    if (!firstIntersect.has_value() && !secondIntersect.has_value()) {
-        // If both lines from the sources to the start and end of the obstacle do not intersect with the infinite line expansion of this projection line then there is no shadow.
-        return std::nullopt;
-    }
-    LineSegment shadow;
-    if (firstIntersect.has_value() && secondIntersect.has_value()) {
-        /* If they do intersect then we can compute the shadow by projecting points in the infinite expansion of the LineSegments to either endings of the LineSegment (note
-         * projection does not change the intersection location if the location is already at the LineSegment). */
-        shadow = LineSegment(project(firstIntersect.value()), project(secondIntersect.value()));
-    } else {
-        /* If there is only one intersection then the shadow is unbounded in one direction. By only checking if the ending furthest away from the intersection point is visible you
-        know for all cases (both for the cases where the intersection point is outside the LineSegment and at the LineSegment) where the shadow is. Moreover you do this quite
-        efficiently, because you only have to check for one LienSegment whether it intersects with the obstacle. */
-        Vector2 onlyIntersection = project(firstIntersect.has_value() ? firstIntersect.value() : secondIntersect.value());
-        double distanceIntersectionToStart = (start - onlyIntersection).length();
-        double distanceIntersectionToEnd = (end - onlyIntersection).length();
-        Vector2 closest = distanceIntersectionToStart < distanceIntersectionToEnd ? start : end;
-        Vector2 furthest = distanceIntersectionToStart < distanceIntersectionToEnd ? end : start;
-        bool furthestInShadow = LineSegment(source, furthest).doesIntersect(obstacle);
-        shadow = furthestInShadow ? LineSegment(onlyIntersection, furthest) : LineSegment(onlyIntersection, closest);
-    }
-    return shadow.length() > negligible_shadow_length ? std::optional(shadow) : std::nullopt;
-}
-
-bool LineSegment::operator==(const LineSegment &other) const {
-    return ((start == other.start && end == other.end) || (start == other.end && end == other.start));
-}
-
-/* 	 ______   _______  _______  ______     _______  _______  ______   _______
- *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
- *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/
- *	| |   ) || (__    | (___) || |   ) |  | |      | |   | || |   ) || (__
- *	| |   | ||  __)   |  ___  || |   | |  | |      | |   | || |   | ||  __)
- *	| |   ) || (      | (   ) || |   ) |  | |      | |   | || |   ) || (
- *	| (__/  )| (____/\| )   ( || (__/  )  | (____/\| (___) || (__/  )| (____/\
- *	(______/ (_______/|/     \|(______/   (_______/(_______)(______/ (_______/
- *
- * The functions below are dead. Remove this tag if you use any of the functions and make sure to remove this tag at other places as well that will become alive by using any of the
- * function below. Do not read/document/redesign/analyse/test/optimize/etc. any of this code, because it is a waste of your time! This code was not removed or placed at another
- * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
- * be removed).
- */
-
-/*
 bool LineSegment::isParallel(const LineSegment &line) const {
     // check if line is vertical, otherwise check the slope
     if (this->isVertical() || line.isVertical()) {

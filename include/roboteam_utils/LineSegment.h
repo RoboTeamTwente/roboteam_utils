@@ -95,12 +95,7 @@ class LineSegment {
      * @return double distance between line and point
      */
     [[nodiscard]] double distanceToLine(const Vector2 &point) const;
-    /**
-     * @brief Gets the shortest distance between any two points on both line segments
-     * @param point Point to get distance to
-     * @return distance between this line and the passed line.
-     */
-    [[nodiscard]] double distanceToLine(const LineSegment &line) const;
+
     /**
      * @brief Checks whether a point is on the line
      *
@@ -122,28 +117,10 @@ class LineSegment {
      * @brief Gets the intersection of the lines
      * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
      *
-     * @param line Line to get an intersection from
-     * @return std::shared_ptr<Vector2> Vector representation of this intersection
-     */
-    [[nodiscard]] std::optional<Vector2> intersects(const Line &line) const;
-
-    /**
-     * @brief Gets the intersection of the lines
-     * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
-     *
      * @param line LineSegment to get an intersection from
      * @return std::shared_ptr<Vector2> Vector representation of this intersection
      */
     [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
-
-    /**
-     * @brief Checks whether \ref line intersects `this`
-     *
-     * @param line Line to check against
-     * @return true if \ref line intersects `this`
-     * @return false False if \ref line does not intersect `this`
-     */
-    [[nodiscard]] bool doesIntersect(const Line &line) const;
 
     /**
      * @brief Checks whether \ref line intersects `this`
@@ -218,6 +195,31 @@ class LineSegment {
      * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
      * be removed).
      */
+
+    /**
+     * @brief Gets the intersection of the lines
+     * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
+     *
+     * @param line Line to get an intersection from
+     * @return std::shared_ptr<Vector2> Vector representation of this intersection
+     */
+    // [[nodiscard]] std::optional<Vector2> intersects(const Line &line) const;
+
+    /**
+     * @brief Gets the shortest distance between any two points on both line segments
+     * @param point Point to get distance to
+     * @return distance between this line and the passed line.
+     */
+    // [[nodiscard]] double distanceToLine(const LineSegment &line) const;
+
+    /**
+     * @brief Checks whether \ref line intersects `this`
+     *
+     * @param line Line to check against
+     * @return true if \ref line intersects `this`
+     * @return false False if \ref line does not intersect `this`
+     */
+    // [[nodiscard]] bool doesIntersect(const Line &line) const;
 
     /**
      * @brief Checks whether 2 lines are parallel

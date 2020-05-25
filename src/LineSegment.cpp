@@ -19,16 +19,8 @@ double LineSegment::length2() const {
     return (end - start).length2();
 }
 
-double LineSegment::slope() const {
-    return (end.y - start.y)/(end.x - start.x);
-}
-
 Vector2 LineSegment::direction() const {
     return Vector2(end - start);
-}
-
-double LineSegment::intercept() const {
-    return start.y - this->slope()*start.x;
 }
 
 bool LineSegment::isPoint() const {
@@ -61,22 +53,6 @@ bool LineSegment::doesIntersect(const LineSegment &line) const {
         if (! (u < 0 || u > 1)) { //check if it's on the segment
             double t = (q - p).cross(s)/denom;
             return (! (t < 0 || t > 1));//check if it's on the segment
-        }
-    }
-    return false;
-}
-
-bool LineSegment::nonSimpleDoesIntersect(const LineSegment &line) const {
-    Vector2 p = start, q = line.start, r = direction(), s = line.direction();
-    double denom = r.cross(s);
-    double numer = (q - p).cross(r);
-    if (denom != 0) {
-        double u = numer/denom;
-        if (! (u <= 0 || u >= 1)) {
-            double t = (q - p).cross(s)/denom;
-            if (! (t <= 0 || t >= 1)) {
-                return true;
-            }
         }
     }
     return false;
@@ -240,6 +216,30 @@ bool LineSegment::operator==(const LineSegment &other) const {
  */
 
 /*
+bool LineSegment::nonSimpleDoesIntersect(const LineSegment &line) const {
+    Vector2 p = start, q = line.start, r = direction(), s = line.direction();
+    double denom = r.cross(s);
+    double numer = (q - p).cross(r);
+    if (denom != 0) {
+        double u = numer/denom;
+        if (! (u <= 0 || u >= 1)) {
+            double t = (q - p).cross(s)/denom;
+            if (! (t <= 0 || t >= 1)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+double LineSegment::slope() const {
+    return (end.y - start.y)/(end.x - start.x);
+}
+
+double LineSegment::intercept() const {
+    return start.y - this->slope()*start.x;
+}
+
 std::optional<Vector2> LineSegment::intersects(const Line &line) const {
     Vector2 A = start - end;
     Vector2 B = line.start - line.end;

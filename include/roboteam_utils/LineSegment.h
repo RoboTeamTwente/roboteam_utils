@@ -59,21 +59,6 @@ class LineSegment {
     [[nodiscard]] double length2() const;
 
     /**
-     * @brief Gets the slope of this line
-     *
-     * @return double Slope of the line
-     */
-    [[nodiscard]] double slope() const;
-
-    /**
-     * @brief Gets the intercept of this line
-     * Literally:
-     *      start.y - slope() * start.x;
-     * @return double Intercept of this line
-     */
-    [[nodiscard]] double intercept() const;
-
-    /**
      * @brief Gets the direction of the Line
      *
      * @return Vector2 Vector representation of the direction of this vector
@@ -132,16 +117,6 @@ class LineSegment {
     [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
 
     /**
-     * @brief Same as normal intersect, but always returns false if the lines are parallel.
-     * intersection points of non-parallel lines are called non-simple (hence the name)
-     *
-     * @param line Line to check against
-     * @return true True if \ref line intersects `this`
-     * @return false False if \ref `line` does not intersect `this`
-     */
-    [[nodiscard]] bool nonSimpleDoesIntersect(const LineSegment &line) const;
-
-    /**
      * @brief Return the intersection(s) of two LineSegments.
      *
      * This is the only correct implementation of intersects that works for every case, e.g. parallel lines and LineSegments that are actually points. In case:
@@ -195,6 +170,31 @@ class LineSegment {
      * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
      * be removed).
      */
+
+    /**
+     * @brief Same as normal intersect, but always returns false if the lines are parallel.
+     * intersection points of non-parallel lines are called non-simple (hence the name)
+     *
+     * @param line Line to check against
+     * @return true True if \ref line intersects `this`
+     * @return false False if \ref `line` does not intersect `this`
+     */
+    // [[nodiscard]] bool nonSimpleDoesIntersect(const LineSegment &line) const;
+
+    /**
+     * @brief Gets the slope of this line
+     *
+     * @return double Slope of the line
+     */
+    // [[nodiscard]] double slope() const;
+
+    /**
+     * @brief Gets the intercept of this line
+     * Literally:
+     *      start.y - slope() * start.x;
+     * @return double Intercept of this line
+     */
+    // [[nodiscard]] double intercept() const;
 
     /**
      * @brief Gets the intersection of the lines

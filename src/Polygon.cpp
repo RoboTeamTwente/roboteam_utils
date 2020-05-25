@@ -84,29 +84,6 @@ namespace rtt {
         return true;
     }
 
-    // there are multiple possible algorithms, see
-    //https://www.quora.com/What-is-the-simplest-algorithm-to-know-if-a-polygon-is-simple-or-not
-    // this is the 'naive' O(N^2) approach which is fine for small cases (polygons with less than say 8-10 vertices)
-    bool Polygon::isSimple() const {
-        // we loop over every unique pair
-        std::vector<LineSegment> lines{ };
-        for (auto first = vertices.begin(); first != vertices.end(); first++) {
-            LineSegment boundarySegment;
-            if (first == std::prev(vertices.end())) {
-                boundarySegment = LineSegment(*first, vertices[0]);
-            } else {
-                boundarySegment = LineSegment(*first, *(first + 1));
-            }
-            for (auto line : lines) {
-                if (boundarySegment.nonSimpleDoesIntersect(line)) {
-                    return false;
-                }
-            }
-            lines.push_back(boundarySegment);
-        }
-        return true;
-    }
-
     //https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
     // this is black magic but if it works it works
     /// on the boundary this function does not work!! see documentation if you are interested
@@ -201,4 +178,44 @@ namespace rtt {
     Vector2 Polygon::verticeCentroid() const {
         return std::accumulate(vertices.begin(), vertices.end(), Vector2(0, 0)) /= vertices.size();
     }
+
+    /* 	 ______   _______  _______  ______     _______  _______  ______   _______
+     *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
+     *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/
+     *	| |   ) || (__    | (___) || |   ) |  | |      | |   | || |   ) || (__
+     *	| |   | ||  __)   |  ___  || |   | |  | |      | |   | || |   | ||  __)
+     *	| |   ) || (      | (   ) || |   ) |  | |      | |   | || |   ) || (
+     *	| (__/  )| (____/\| )   ( || (__/  )  | (____/\| (___) || (__/  )| (____/\
+     *	(______/ (_______/|/     \|(______/   (_______/(_______)(______/ (_______/
+     *
+     * The functions below are dead. Remove this tag if you use any of the functions and make sure to remove this tag at other places as well that will become alive by using any of the
+     * function below. Do not read/document/redesign/analyse/test/optimize/etc. any of this code, because it is a waste of your time! This code was not removed or placed at another
+     * branch, because other software developers are very attached to this code and are afraid that this code might be used at some day (but I think it won't be used at all and should
+     * be removed).
+     */
+
+    // there are multiple possible algorithms, see
+    //https://www.quora.com/What-is-the-simplest-algorithm-to-know-if-a-polygon-is-simple-or-not
+    // this is the 'naive' O(N^2) approach which is fine for small cases (polygons with less than say 8-10 vertices)
+    /*
+    bool Polygon::isSimple() const {
+        // we loop over every unique pair
+        std::vector<LineSegment> lines{ };
+        for (auto first = vertices.begin(); first != vertices.end(); first++) {
+            LineSegment boundarySegment;
+            if (first == std::prev(vertices.end())) {
+                boundarySegment = LineSegment(*first, vertices[0]);
+            } else {
+                boundarySegment = LineSegment(*first, *(first + 1));
+            }
+            for (auto line : lines) {
+                if (boundarySegment.nonSimpleDoesIntersect(line)) {
+                    return false;
+                }
+            }
+            lines.push_back(boundarySegment);
+        }
+        return true;
+    }
+    */
 }//rtt

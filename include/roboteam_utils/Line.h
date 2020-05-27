@@ -25,20 +25,14 @@ class Line {
      *
      */
     Vector2 end;
-    /**
-     * @brief Construct a new Line object
-     *
-     */
-    constexpr Line() = default;
-
+    
     /**
      * @brief Constructs a new Line object
      *
-     * @param _start Start of the Line
-     * @param _end End of the Line
-     *
+     * @param start Start of the Line
+     * @param end End of the Line
      */
-    constexpr Line(const Vector2 &_start, const Vector2 &_end) noexcept: start{_start}, end{_end} {};
+    explicit Line(const Vector2 &start, const Vector2 &end);
 
     /**
      * @brief Constructs a new Line from a LineSegment.

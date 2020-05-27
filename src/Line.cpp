@@ -6,9 +6,22 @@
 #include "../include/roboteam_utils/LineSegment.h"
 
 namespace rtt {
+Line::Line(const Vector2 &start, const Vector2 &end) {
+    this->start = start;
+    this->end = end;
+    if (start == end) {
+        std::cout << "Warning: you created an undefined line, because start == end. Note that Lines have an infinite length. If you want to have a Line with finite length then use"
+                     " the LineSegment class instead." << std::endl;
+    }
+}
+
 Line::Line(const LineSegment &other) noexcept {
     start = other.start;
     end = other.end;
+    if (start == end) {
+        std::cout << "Warning: you created an undefined line, because start == end. Note that Lines have an infinite length. If you want to have a Line with finite length then use"
+                     " the LineSegment class instead." << std::endl;
+    }
 }
 
 Vector2 Line::direction() const {

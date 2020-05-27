@@ -54,6 +54,7 @@ class Line {
      * @return false False if start != end
      */
     [[nodiscard]] bool isPoint() const;
+
     /**
      * @brief Gets the distance from \ref point to the line.
      * The theory behind it is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/

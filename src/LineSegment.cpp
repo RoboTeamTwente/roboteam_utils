@@ -12,11 +12,11 @@ LineSegment::LineSegment(const Line &line) {
     end = line.end;
 }
 double LineSegment::length() const {
-    return (end - start).length();
+    return direction().length();
 }
 
 double LineSegment::length2() const {
-    return (end - start).length2();
+    return direction().length2();
 }
 
 Vector2 LineSegment::direction() const {
@@ -31,59 +31,31 @@ bool LineSegment::isPoint() const {
 // https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 //takes overlaps into account in contrast to the intersect() function
 bool LineSegment::doesIntersect(const LineSegment &line) const {
-    Vector2 p = start, q = line.start, r = direction(), s = line.direction();
-    double denom = r.cross(s);
-    double numer = (q - p).cross(r);
-    if (denom == 0) {
-        if (numer == 0) {
-            // lines are colinear
-            double t0 = (q - p).dot(r)/r.length2();
-            double t1 = t0 + s.dot(r)/r.length2();
-            if (t0 < 0) {
-                return t1 >= 0;
-            }
-            else if (t0 > 1) {
-                return t1 <= 1;
-            }
-            return true;
-        }
-    }
-    else {
-        double u = numer/denom;
-        if (! (u < 0 || u > 1)) { //check if it's on the segment
-            double t = (q - p).cross(s)/denom;
-            return (! (t < 0 || t > 1));//check if it's on the segment
-        }
-    }
-    return false;
+    return intersects(line).has_value();
 }
 
 // only returns a vector if there is a point intersection. If a segment intersects does not return anything
 std::optional<Vector2> LineSegment::intersects(const LineSegment &line) const {
-    Vector2 A = start - end;
-    Vector2 B = line.start - line.end;
-    Vector2 C = start - line.start;
-    double numer = C.cross(B);
-    double denom = A.cross(B);
-    if (denom != 0) {
-        double t = numer/denom;
-        double u = - A.cross(C)/denom;
-        if (! (t < 0 || t > 1) && ! (u < 0 || u > 1)) {
-            return start - A*t;
+    auto result = Line::intersect(start, end, line.start, line.end);
+    if (result.has_value()) {
+        float t = Line::relativePosition(start, end, result.value());
+        float u = Line::relativePosition(line.start, line.end, result.value());
+        if (t >= 0 & t <= 1 && u >= 0 && u <= 1) {
+            return result;
+        } else {
+            return std::nullopt;
         }
-    }
-    else if (numer == 0) {
-        double t0 = C.dot(A)/A.length2();
-        double t1 = t0 + B.dot(A)/A.length2();
-        //check the ends for point intersections
-        if ((t0 == 0 && t1 < 0) || (t1 == 0 && t0 < 0)) {
+    } else {
+        if (line.isOnLine(start)) {
             return start;
-        }
-        else if ((t0 == 1 && t1 > 1) || (t1 == 1 && t0 > 1)) {
+        } else if (line.isOnLine(end)) {
             return end;
+        } else if (isOnLine(line.start)) {
+            return line.start;
+        } else {
+            return std::nullopt;
         }
     }
-    return std::nullopt;
 }
 
 double LineSegment::distanceToLine(const Vector2 &point) const {

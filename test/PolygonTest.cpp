@@ -169,8 +169,8 @@ TEST(areas, PolygonTest) {
     // below should hold for any random 3 points (could randomly generate some later perhaps)
     Vector2 G(-3.57,0.4);
     Polygon triangleE({A,D,G});
-    Line l(A,D);
-    EXPECT_EQ(triangleE.area(),0.5 * LineSegment(l).length() * l.distanceToLine(G));
+    LineSegment l(A,D);
+    EXPECT_EQ(triangleE.area(), 0.5 * l.length() * Line(l).distanceToLine(G));
 }
 TEST(intersections, PolygonTest) {
     Vector2 leftCorner(1.0, 1.0), rightBottom(3.0, 1.0), rightTop(3.0, 3.0), leftTop(1.0, 3.0);

@@ -25,7 +25,7 @@ class Line {
      *
      */
     Vector2 end;
-    
+
     /**
      * @brief Constructs a new Line object
      *

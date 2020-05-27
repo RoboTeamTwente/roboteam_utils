@@ -130,19 +130,6 @@ class LineSegment {
     [[nodiscard]] std::vector<Vector2> multiIntersect(const LineSegment &line) const;
 
     /**
-     * @brief Computes the shadow caused by an obstacle (LineSegment) and light source on this LineSegment.
-     * The shadow is a part of this LineSegment. And something is considered to be in the shadow if the line between the source and the position on the line intersects with
-     * the obstacle LineSegment (so if the source is on the obstacle LineSegment then everything is in the shadow).
-     *
-     * @param source The place where the 'light source' is located, i.d. the position from which the projected shadow is computed.
-     * @param obstacle The obstacle LineSegment which blocks the 'lights' and therefore might cause a shadow on this LineSegment.
-     * @param negligible_shadow_length If the length of the shadow is smaller than this value then there is no shadow (if not set then the negligible shadow length is 1e-6).
-     * @return No Linesegment if there is no shadow or if the shadow is smaller than the negligible length. Otherwise return the Linesegment that represents the shadow on this
-     * LineSegment.
-     */
-    [[nodiscard]] std::optional<LineSegment> shadow(const Vector2 &source, const LineSegment &obstacle, float negligible_shadow_length = 1e-6) const;
-
-    /**
      * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directionns of the lines might be
      * different in case of equality.
      * @param other The other LineSegment to which comparisons are made.

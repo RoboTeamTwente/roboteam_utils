@@ -188,35 +188,6 @@ TEST(LineTests, ForwardIntersect) {
     EXPECT_FALSE(result.has_value());  // No intersection is returned in case the lines are the same
 }
 
-TEST(LineTests, Shadow) {
-    Vector2 source(1.0, 2.0), projectLine_start(-4.0, -6.0), projectLine_end(-4.0, 6.0), blockLine1_start(0.0, 2.0), blockLine1_end(0.0, 2.0), blockLine2_start(-1.0, 0.0),
-        blockLine2_end(-1.0, 2.0), blockLine3_start(1.0, 1.0), blockLine3_end(0.0, 0.0), blockLine4_start(1.0, 3.0), blockLine4_end(0.0, 2.0), blockLine5_start(0.0, -4.0),
-        blockLine5_end(0.0, 4.0), blockLine6_start(1.0, 2.0), blockLine6_end(1.0, 2.0), blockLine7_start(1.0, 0.0), blockLine7_end(1000000000.0, 0.0), blockLine8_start(-1.0, 1.0),
-        blockLine8_end(-3.0, -1.0), checkLine2_start(-4.0, -3.0), checkLine2_end(-4.0, 2.0), checkLine4_start(-4.0, 2.0), checkLine4_end(-4.0, 6.0), checkLine8_start(-4.0, -0.5),
-        checkLine8_end(-4.0, -1.75);
-    LineSegment projectLine(projectLine_start, projectLine_end), blockLine1(blockLine1_start, blockLine1_end), blockLine2(blockLine2_start, blockLine2_end),
-        blockLine3(blockLine3_start, blockLine3_end), blockLine4(blockLine4_start, blockLine4_end), blockLine5(blockLine5_start, blockLine5_end),
-        blockLine6(blockLine6_start, blockLine6_end), blockLine7(blockLine7_start, blockLine7_end), blockLine8(blockLine8_start, blockLine8_end),
-        checkLine2(checkLine2_start, checkLine2_end), checkLine4(checkLine4_start, checkLine4_end), checkLine8(checkLine8_start, checkLine8_end);
-
-    std::optional<LineSegment> result = projectLine.shadow(source, blockLine1);
-    EXPECT_FALSE(result.has_value());  // A single point cannot cause a shadow (except if it lies at the source)
-    result = projectLine.shadow(source, blockLine2);
-    EXPECT_TRUE(result.value() == checkLine2);  // Part of the line is covered by a shadow
-    result = projectLine.shadow(source, blockLine3);
-    EXPECT_FALSE(result.has_value());  // Line that does not cause a shadow at all
-    result = projectLine.shadow(source, blockLine4);
-    EXPECT_TRUE(result.value() == checkLine4);  // Only shadow at upper part, projected line on the end of the blockline goes parallel to the projection line
-    result = projectLine.shadow(source, blockLine5);
-    EXPECT_TRUE(result.value() == projectLine);  // Entire project line is shadowed by obstacle
-    result = projectLine.shadow(source, blockLine6);
-    EXPECT_TRUE(result.value() == projectLine);  // The source is in the obstacle so everything is in the shadow
-    result = projectLine.shadow(source, blockLine7);
-    EXPECT_FALSE(result.has_value());  // Line that is very long, but does not cause a shadow at all because it is not in between the project line and source
-    result = projectLine.shadow(source, blockLine8);
-    EXPECT_TRUE(result.value() == checkLine8);
-}
-
 /*
 TEST(LineTests, Intersections) {
     Vector2 P1(0.0, 0.0), P2(1.0, 1.0), P3(4.0, 0.0), P4(0.0, 4.0), P5(4.0, 4.0);

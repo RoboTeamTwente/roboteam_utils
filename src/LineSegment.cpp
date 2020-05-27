@@ -20,7 +20,7 @@ double LineSegment::length2() const {
 }
 
 Vector2 LineSegment::direction() const {
-    return Vector2(end - start);
+    return end - start;
 }
 
 bool LineSegment::isPoint() const {
@@ -111,7 +111,7 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     if (isPoint()) {
         return (start == point || end == point);
     }
-    Vector2 A = end - start;
+    Vector2 A = direction();
     Vector2 B = point - start;
     double cross = A.cross(B);
     if (cross != 0) {

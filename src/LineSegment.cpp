@@ -76,7 +76,7 @@ Vector2 LineSegment::project(const Vector2 &point) const {
     else if (t > 1) {
         return end;
     }
-    return start + AB*t;
+    return start + AB * t;
 }
 
 bool LineSegment::isOnLine(const Vector2 &point) const {

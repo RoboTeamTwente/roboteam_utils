@@ -92,9 +92,12 @@ double LineSegment::distanceToLine(const Vector2 &point) const {
 
 //same principle but now we do not necessarily have an orthogonal vector but just pick the closest point on the segment
 Vector2 LineSegment::project(const Vector2 &point) const {
+    if (isPoint()) {
+        return start;
+    }
     Vector2 AB = direction();
     Vector2 AP = point - start;
-    double t = AP.dot(AB)/length2();
+    double t = AP.dot(AB) / length2();
     if (t < 0) {
         return Vector2(start);
     }

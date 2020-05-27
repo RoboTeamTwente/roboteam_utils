@@ -99,12 +99,12 @@ Vector2 LineSegment::project(const Vector2 &point) const {
     Vector2 AP = point - start;
     double t = AP.dot(AB) / length2();
     if (t < 0) {
-        return Vector2(start);
+        return start;
     }
     else if (t > 1) {
-        return Vector2(end);
+        return end;
     }
-    return Vector2(start + AB*t);
+    return start + AB*t;
 }
 
 bool LineSegment::isOnLine(const Vector2 &point) const {

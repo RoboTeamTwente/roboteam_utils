@@ -25,7 +25,7 @@ Line::Line(const LineSegment &other) noexcept {
 }
 
 Vector2 Line::direction() const {
-    return Vector2(end - start);
+    return end - start;
 }
 
 bool Line::isPoint() const {
@@ -41,7 +41,7 @@ double Line::distanceToLine(const Vector2 &point) const {
 Vector2 Line::project(const Vector2 &point) const {
     Vector2 AB = direction();
     Vector2 AP = point - start;
-    return Vector2(start + AB * AP.dot(AB) / (end - start).length2());
+    return (start + AB * AP.dot(AB)) / (end - start).length2();
 }
 
 std::optional<Vector2> Line::intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End) {

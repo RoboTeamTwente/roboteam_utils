@@ -50,13 +50,14 @@ class Line {
         [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
         /**
-         * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
+         * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal, parallel or if one of the lines is undefined
+         * (a line is undefined if the 2 given points are equal).
          *
          * @param line1Start An arbitrary point on the first line.
-         * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
+         * @param line1End An arbitrary other point on the first line.
          * @param line2Start An arbitrary point on the second line.
-         * @param line2End An arbitrary other point on the second line (make sure that it is different than line2Start).
-         * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
+         * @param line2End An arbitrary other point on the second line.
+         * @return std::nullopt if the lines do not intersect, are equal or if one of the lines is undefined. Otherwise return the intersection point.
          */
         static std::optional<Vector2> intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
 

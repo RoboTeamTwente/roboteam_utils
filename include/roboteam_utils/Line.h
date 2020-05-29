@@ -10,7 +10,7 @@ class LineSegment;
  * The Line class represents an infinite length Line, it is encoded by two different points through which the Line is infinitely extended in both directions. If you want to use
  * a finite length Line instead then use LineSegment instead.
  * @author Created by: Rolf van der Hulst <br>
- *         Documented and refactored by: Haico Dorenbos
+ *         Documented and redesigned by: Haico Dorenbos
  * @since 2019-04-18
  */
 class Line {

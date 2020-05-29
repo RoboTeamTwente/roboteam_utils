@@ -18,17 +18,17 @@ class HalfLine {
 
     public:
         /**
-         * Construct a new HalfLine object
-         * @param start The location where the HalfLine starts
-         * @param direction This vector indicates in which direction the HalfLine is infinite long
+         * Construct a new HalfLine object by using 2 different points on that Line. Make sure that the given points are different.
+         * @param start The location where the HalfLine starts.
+         * @param direction This vector indicates in which direction the HalfLine is infinite long (make sure that it is different than the start point).
          */
         constexpr HalfLine(const Vector2 &start, const Vector2 &direction) noexcept : start{start}, direction{direction} {};
 
         /**
-         * Compute the intersection point between this HalfLine and the parameter Line.
+         * Compute the intersection point between this HalfLine and the given Line.
          *
-         * @param line The other line
-         * @return std::nullopt in case of no intersection or in case the Halfline lies into the parameter line. Otherwise return the intersection point.
+         * @param line The given Line
+         * @return std::nullopt in case of no intersection or in case the Halfline lies into the parameter line. Otherwise return the unique intersection point.
          */
         std::optional<Vector2> intersect(Line line);
 };

@@ -27,7 +27,7 @@ class HalfLine {
         /**
          * Compute the intersection point between this HalfLine and the given Line.
          *
-         * @param line The given Line
+         * @param line The given Line.
          * @return std::nullopt in case of no intersection or in case the HalfLine lies into the parameter line. Otherwise return the unique intersection point.
          */
         std::optional<Vector2> intersect(const Line &line);

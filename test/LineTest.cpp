@@ -11,23 +11,15 @@
 
 using namespace rtt;
 TEST(LineTests, direction) {
+    /*
     Vector2 v1(0.0, 0.0), v2(1.0, 1.0), v3(0.0, 0.0);
-    Line l1(v1, v2), l2(v2, v1);
-    l1.direction();
-    EXPECT_EQ(l1.direction(), v2);
-    EXPECT_EQ(l2.direction(), v2 * -1.0);
-    EXPECT_NE(l1.direction(), l2.direction());
-    Line l3(v1, v3);
-    EXPECT_TRUE(l3.isPoint());
-    EXPECT_FALSE(l1.isPoint());
-    EXPECT_FALSE(l2.isPoint());
+    Line l1(v1, v2), l2(v2, v1), l3(v1, v3);
     Vector2 v4(0.0, 0.0), v5(0.0, 10.0), v6(2.0, 0.0), v7(2.0, 9.0);
     Vector2 v8(2.0, 0.0), v9(3.0, 10.0), v10(0.0 + std::numeric_limits<double>::epsilon(), 10);
     Line l4(v4, v5), l5(v6, v7);
     LineSegment l6(v4, v8), l7(v5, v9);
     Line l8(v4,v10);
 
-    /*
     EXPECT_TRUE(l4.isParallel(l5));
     EXPECT_TRUE(l5.isParallel(l4));
     EXPECT_TRUE(l6.isParallel(l7));

@@ -1,7 +1,3 @@
-//
-// Created by rolf on 18-4-19.
-//
-
 #ifndef ROBOTEAM_UTILS_LINE_H
 #define ROBOTEAM_UTILS_LINE_H
 
@@ -9,89 +5,70 @@
 
 namespace rtt {
 class LineSegment;
+
 /**
- * @brief Line class, inherits from Base
- *
+ * The Line class represents an infinite length Line, it is encoded by two different points through which the Line is infinitely extended in both directions. If you want to use
+ * a finite length Line instead then use LineSegment instead.
+ * @author Created by: Rolf van der Hulst <br>
+ *         Documented and refactored by: Haico Dorenbos
+ * @since 2019-04-18
  */
 class Line {
     public:
-    /**
-     * @brief Start of the line
-     *
-     */
-    Vector2 start;
-    /**
-     * @brief End of the line
-     *
-     */
-    Vector2 end;
+        Vector2 location; // One of the points located on the line, which represents the location of the line.
+        Vector2 direction; // Another point located on the line, which should be different than the location. It represents the direction of the line.
 
-    /**
-     * @brief Constructs a new Line object
-     *
-     * @param start Start of the Line
-     * @param end End of the Line
-     */
-    explicit Line(const Vector2 &start, const Vector2 &end);
+        /**
+         * @brief Constructs a new Line object
+         *
+         * @param start Start of the Line
+         * @param end End of the Line
+         */
+        explicit Line(const Vector2 &start, const Vector2 &end);
 
-    /**
-     * @brief Constructs a new Line from a LineSegment.
-     * @param other LineSegment to use for construction
-     */
-    explicit Line(const LineSegment &other) noexcept;
-    
-    /**
-     * @brief Gets the direction of the Line
-     *
-     * @return Vector2 Vector representation of the direction of this vector
-     */
-    [[nodiscard]] Vector2 direction() const;
+        /**
+         * @brief Constructs a new Line from a LineSegment.
+         * @param other LineSegment to use for construction
+         */
+        explicit Line(const LineSegment &other) noexcept;
 
-    /**
-     * @brief Checks whether line is a single point
-     *
-     * @return true True if start == end
-     * @return false False if start != end
-     */
-    [[nodiscard]] bool isPoint() const;
+        /**
+         * @brief Gets the distance from \ref point to the line.
+         * The theory behind it is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
+         *
+         * @param point Point to get distance to
+         * @return double Distance to line
+         */
+        [[nodiscard]] double distanceToLine(const Vector2 &point) const;
 
-    /**
-     * @brief Gets the distance from \ref point to the line.
-     * The theory behind it is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
-     *
-     * @param point Point to get distance to
-     * @return double Distance to line
-     */
-    [[nodiscard]] double distanceToLine(const Vector2 &point) const;
+        /**
+         * @brief Projects the point onto the line
+         *
+         * @param point Point to get the projection to
+         * @return Vector2 Vector projection from the line to the point
+         */
+        [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
-    /**
-     * @brief Projects the point onto the line
-     *
-     * @param point Point to get the projection to
-     * @return Vector2 Vector projection from the line to the point
-     */
-    [[nodiscard]] Vector2 project(const Vector2 &point) const;
+        /**
+         * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
+         *
+         * @param line1Start An arbitrary point on the first line.
+         * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
+         * @param line2Start An arbitrary point on the second line.
+         * @param line2End An arbitrary other point on the second line (make sure that it is different than line2Start).
+         * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
+         */
+        static std::optional<Vector2> intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
 
-    /**
-     * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
-     *
-     * @param line1Start An arbitrary point on the first line.
-     * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
-     * @param line2Start An arbitrary point on the second line.
-     * @param line2End An arbitrary other point on the second line (make sure that it is different than line2Start).
-     * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
-     */
-    static std::optional<Vector2> intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
-
-    /**
-     * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Start + (line1End - line1Start) * t = pointOnLine
-     *
-     * @param line1Start An arbitrary point on the first line.
-     * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
-     * @param pointOnLine A point that is located on the given line.
-     * @return The value t such that line1Start + (line1End - line1Start) * t = pointOnLine
-     */
-    static float relativePosition(const Vector2 line1Start, const Vector2 line1End, const Vector2 pointOnLine);
+        /**
+         * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Start + (line1End - line1Start) * t = pointOnLine
+         *
+         * @param line1Start An arbitrary point on the first line.
+         * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
+         * @param pointOnLine A point that is located on the given line.
+         * @return The value t such that line1Start + (line1End - line1Start) * t = pointOnLine
+         */
+        static float relativePosition(const Vector2 line1Start, const Vector2 line1End, const Vector2 pointOnLine);
 
     /* 	 ______   _______  _______  ______     _______  _______  ______   _______
      *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \

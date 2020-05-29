@@ -7,8 +7,8 @@
 
 namespace rtt {
 Line::Line(const Vector2 &start, const Vector2 &end) {
-    this->start = start;
-    this->end = end;
+    this->location = start;
+    this->direction = end;
     if (start == end) {
         std::cout << "Warning: you created an undefined line, because start == end. Note that Lines have an infinite length. If you want to have a Line with finite length then use"
                      " the LineSegment class instead." << std::endl;
@@ -16,20 +16,12 @@ Line::Line(const Vector2 &start, const Vector2 &end) {
 }
 
 Line::Line(const LineSegment &other) noexcept {
-    start = other.start;
-    end = other.end;
-    if (start == end) {
+    location = other.start;
+    direction = other.end;
+    if (location == direction) {
         std::cout << "Warning: you created an undefined line, because start == end. Note that Lines have an infinite length. If you want to have a Line with finite length then use"
                      " the LineSegment class instead." << std::endl;
     }
-}
-
-Vector2 Line::direction() const {
-    return end - start;
-}
-
-bool Line::isPoint() const {
-    return start == end;
 }
 
 double Line::distanceToLine(const Vector2 &point) const {
@@ -39,9 +31,9 @@ double Line::distanceToLine(const Vector2 &point) const {
 ///Computes the projection of point onto the line. This is identical to picking the closest point on the line
 // if we project point P onto AB we can compute as A + dot(AP,AB) / dot(AB,AB) * AB
 Vector2 Line::project(const Vector2 &point) const {
-    Vector2 AB = direction();
-    Vector2 AP = point - start;
-    return (start + AB * AP.dot(AB)) / (end - start).length2();
+    Vector2 AB = direction - location;
+    Vector2 AP = point - location;
+    return (location + AB * AP.dot(AB)) / (direction - location).length2();
 }
 
 std::optional<Vector2> Line::intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End) {

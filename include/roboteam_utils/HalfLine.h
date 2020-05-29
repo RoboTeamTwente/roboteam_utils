@@ -22,7 +22,7 @@ class HalfLine {
          * @param start The location where the HalfLine starts.
          * @param direction This vector indicates in which direction the HalfLine is infinite long (make sure that it is different than the start point).
          */
-        constexpr HalfLine(const Vector2 &start, const Vector2 &direction) noexcept : start{start}, direction{direction} {};
+        explicit HalfLine(const Vector2 &start, const Vector2 &direction);
 
         /**
          * Compute the intersection point between this HalfLine and the given Line.
@@ -30,7 +30,7 @@ class HalfLine {
          * @param line The given Line
          * @return std::nullopt in case of no intersection or in case the Halfline lies into the parameter line. Otherwise return the unique intersection point.
          */
-        std::optional<Vector2> intersect(Line line);
+        std::optional<Vector2> intersect(const Line &line);
 };
 }
 #endif //RTT_ROBOTEAM_UTILS_SRC_HALFLINE_H_

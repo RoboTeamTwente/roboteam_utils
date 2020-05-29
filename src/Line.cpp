@@ -1,7 +1,3 @@
-//
-// Created by rolf on 18-4-19.
-//
-
 #include "../include/roboteam_utils/Line.h"
 #include "../include/roboteam_utils/LineSegment.h"
 
@@ -28,12 +24,14 @@ double Line::distanceToLine(const Vector2 &point) const {
     return (this->project(point) - point).length();
 }
 
-///Computes the projection of point onto the line. This is identical to picking the closest point on the line
-// if we project point P onto AB we can compute as A + dot(AP,AB) / dot(AB,AB) * AB
 Vector2 Line::project(const Vector2 &point) const {
     Vector2 AB = direction - location;
     Vector2 AP = point - location;
     return (location + AB * AP.dot(AB)) / (direction - location).length2();
+}
+
+std::optional<Vector2> Line::intersect(const Line &line) const {
+    return intersect(location, direction, line.location, line.direction);
 }
 
 std::optional<Vector2> Line::intersect(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 line2Location, const Vector2 line2Direction) {
@@ -129,11 +127,6 @@ bool Line::isVertical() const {
 
 bool Line::doesIntersect(const Line &line) const {
     return this->intersects(line).has_value();
-}
-
-// see https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help. These should be thoroughly tested
-std::optional<Vector2> Line::intersects(const Line &line) const {
-    return intersect(start, end, line.start, line.end);
 }
 */
 }

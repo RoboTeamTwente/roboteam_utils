@@ -14,10 +14,11 @@ class LineSegment;
  * @since 2019-04-18
  */
 class Line {
-    public:
+    private:
         Vector2 location; // One of the points located on the line, which represents the location of the line.
         Vector2 direction; // Another point located on the line, which should be different than the location. It represents the direction of the line.
 
+    public:
         /**
          * Creates a new Line instance by using 2 different points on that Line. Make sure that the given points are different.
          *
@@ -50,8 +51,16 @@ class Line {
         [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
         /**
+         * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal or parallel.
+         *
+         * @param line The other infinite Line.
+         * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
+         */
+        [[nodiscard]] std::optional<Vector2> intersect(const Line &line) const;
+
+        /**
          * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal, parallel or if one of the lines is undefined
-         * (a line is undefined if the 2 given points, which define the line, are equal).
+         * (a line is undefined if the 2 given points, which define the line, are equal). See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for more information.
          *
          * @param line1Location An arbitrary point on the first line.
          * @param line1Direction An arbitrary other point on the first line.
@@ -170,15 +179,6 @@ class Line {
  * @return false False if \ref line does not intersect `this`
  */
 // [[nodiscard]] bool doesIntersect(const Line &line) const;
-
-/**
- * @brief Gets the intersection of the lines
- * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
- *
- * @param line Line to get an intersection from
- * @return std::shared_ptr<Vector2> Vector representation of this intersection
- */
-// [[nodiscard]] std::optional<Vector2> intersects(const Line &line) const;
 };
 }  // namespace rtt
 

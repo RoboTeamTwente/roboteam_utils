@@ -19,8 +19,8 @@ Line::Line(const LineSegment &other) noexcept {
     location = other.start;
     direction = other.end;
     if (location == direction) {
-        std::cout << "Warning: you created an undefined line, because start == end. Note that Lines have an infinite length. If you want to have a Line with finite length then use"
-                     " the LineSegment class instead." << std::endl;
+        std::cout << "Warning: you created an undefined line, because location == direction. Note that Lines have an infinite length. If you want to have a Line with finite length"
+                     " then use the LineSegment class instead." << std::endl;
     }
 }
 
@@ -36,25 +36,25 @@ Vector2 Line::project(const Vector2 &point) const {
     return (location + AB * AP.dot(AB)) / (direction - location).length2();
 }
 
-std::optional<Vector2> Line::intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End) {
-    Vector2 A = line1Start - line1End;
-    Vector2 B = line2Start - line2End;
+std::optional<Vector2> Line::intersect(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 line2Location, const Vector2 line2Direction) {
+    Vector2 A = line1Location - line1Direction;
+    Vector2 B = line2Location - line2Direction;
     double denom = A.cross(B);
     if (denom != 0) {
-        Vector2 C = line1Start - line2Start;
+        Vector2 C = line1Location - line2Location;
         double numer = C.cross(A);
         double u = numer / denom;
-        return line2Start - B * u;
+        return line2Location - B * u;
     }
     return std::nullopt;
 }
 
-float Line::relativePosition(Vector2 line1Start, Vector2 line1End, Vector2 pointOnLine) {
-    float xDiff = line1End.x - line1Start.x;
+float Line::relativePosition(Vector2 line1Location, Vector2 line1Direction, Vector2 pointOnLine) {
+    float xDiff = line1Direction.x - line1Location.x;
     if (xDiff == 0) {
-        return (pointOnLine.y - line1Start.y) / (line1End.y - line1Start.y);
+        return (pointOnLine.y - line1Location.y) / (line1Direction.y - line1Location.y);
     } else {
-        return (pointOnLine.x - line1Start.x) / xDiff;
+        return (pointOnLine.x - line1Location.x) / xDiff;
     }
 }
 

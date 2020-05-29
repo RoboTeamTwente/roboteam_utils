@@ -53,23 +53,24 @@ class Line {
          * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal, parallel or if one of the lines is undefined
          * (a line is undefined if the 2 given points are equal).
          *
-         * @param line1Start An arbitrary point on the first line.
-         * @param line1End An arbitrary other point on the first line.
-         * @param line2Start An arbitrary point on the second line.
-         * @param line2End An arbitrary other point on the second line.
+         * @param line1Location An arbitrary point on the first line.
+         * @param line1Direction An arbitrary other point on the first line.
+         * @param line2Location An arbitrary point on the second line.
+         * @param line2Direction An arbitrary other point on the second line.
          * @return std::nullopt if the lines do not intersect, are equal or if one of the lines is undefined. Otherwise return the intersection point.
          */
-        static std::optional<Vector2> intersect(const Vector2 line1Start, const Vector2 line1End, const Vector2 line2Start, const Vector2 line2End);
+        static std::optional<Vector2> intersect(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 line2Location, const Vector2 line2Direction);
 
         /**
-         * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Start + (line1End - line1Start) * t = pointOnLine
+         * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Location + (line1Direction - line1Location) * t = pointOnLine. Make sure
+         * that the given parameters line1Location and line1Direction are different.
          *
-         * @param line1Start An arbitrary point on the first line.
-         * @param line1End An arbitrary other point on the first line (make sure that it is different than line1Start).
+         * @param line1Location An arbitrary point on the first line.
+         * @param line1Direction An arbitrary other point on the first line (make sure that it is different than line1Location).
          * @param pointOnLine A point that is located on the given line.
-         * @return The value t such that line1Start + (line1End - line1Start) * t = pointOnLine
+         * @return The value t such that line1Location + (line1Direction - line1Location) * t = pointOnLine
          */
-        static float relativePosition(const Vector2 line1Start, const Vector2 line1End, const Vector2 pointOnLine);
+        static float relativePosition(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 pointOnLine);
 
     /* 	 ______   _______  _______  ______     _______  _______  ______   _______
      *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \

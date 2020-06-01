@@ -17,7 +17,7 @@ std::optional<LineSegment> Shadow::shadow(const Vector2 &source, const LineSegme
         // If both lines from the sources to the start and end of the obstacle do not intersect with the infinite line expansion of this projection line then there is no shadow.
         return std::nullopt;
     }
-    std::shared_ptr<LineSegment> shadow;
+    std::shared_ptr<LineSegment> shadow = nullptr;
     if (firstIntersect.has_value() && secondIntersect.has_value()) {
         /* If they do intersect then we can compute the shadow by projecting points in the infinite expansion of the LineSegments to either endings of the LineSegment (note
          * projection does not change the intersection location if the location is already at the LineSegment). */

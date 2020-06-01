@@ -38,7 +38,7 @@ class Line {
      * Computes the distance from point to the Line. The theory behind this algorithm is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
      *
      * @param point Point to which the distance is computed.
-     * @return double Distance to line which is a value >= 0.0
+     * @return double Distance to the Line which is a value >= 0.0
      */
     [[nodiscard]] double distanceToLine(const Vector2 &point) const;
 
@@ -54,7 +54,7 @@ class Line {
      * Get the intersection point between two (infinite) Line instances. No intersection point is returned in case the Line instances are equal or parallel.
      *
      * @param line The other infinite Line.
-     * @return std::nullopt if the lines do not intersect or are equal. Otherwise return the intersection point.
+     * @return std::nullopt if the Line instances do not intersect or are equal. Otherwise return the intersection point.
      */
     [[nodiscard]] std::optional<Vector2> intersect(const Line &line) const;
 

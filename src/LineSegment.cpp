@@ -51,7 +51,7 @@ std::optional<Vector2> LineSegment::intersects(const LineSegment &line) const {
 }
 
 double LineSegment::distanceToLine(const Vector2 &point) const {
-    return (this->project(point) - point).length();
+    return (project(point) - point).length();
 }
 
 //same principle but now we do not necessarily have an orthogonal vector but just pick the closest point on the segment
@@ -72,17 +72,7 @@ Vector2 LineSegment::project(const Vector2 &point) const {
 }
 
 bool LineSegment::isOnLine(const Vector2 &point) const {
-    if (isPoint()) {
-        return (start == point || end == point);
-    }
-    Vector2 A = end - start;
-    Vector2 B = point - start;
-    double cross = A.cross(B);
-    if (cross != 0) {
-        return false;
-    }
-    float t = Line::relativePosition(start, end, point);
-    return t >= 0 && t <= 1;
+    return project(point) == point;
 }
 
 std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const {

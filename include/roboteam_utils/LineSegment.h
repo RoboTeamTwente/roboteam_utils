@@ -59,11 +59,10 @@ class LineSegment {
     [[nodiscard]] double distanceToLine(const Vector2 &point) const;
 
     /**
-     * @brief Checks whether a point is on the line
+     * Checks whether a point lies on this LineSegment. This function is protected against double/float rounding issues.
      *
-     * @param point Point to check
-     * @return true True if the point is on this line
-     * @return false False if the point is not on this line
+     * @param point Point which being checked if it lies at this LineSegment.
+     * @return True if the point lies on this LineSegment and false otherwise.
      */
     [[nodiscard]] bool isOnLine(const Vector2 &point) const;
 

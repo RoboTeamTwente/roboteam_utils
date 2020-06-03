@@ -35,7 +35,7 @@ class Line {
     explicit Line(const LineSegment &other) noexcept;
 
     /**
-     * Computes the distance from point to the Line. The theory behind this algorithm is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
+     * Computes the Euclidean distance from point to the Line. The theory behind this algorithm is explained in: http://www.randygaul.net/2014/07/23/distance-point-to-line-segment/
      *
      * @param point Point to which the distance is computed.
      * @return double Distance to the Line which is a value >= 0.0

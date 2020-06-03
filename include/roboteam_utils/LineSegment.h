@@ -67,55 +67,58 @@ class LineSegment {
     [[nodiscard]] bool isOnLine(const Vector2 &point) const;
 
     /**
-     * Projects the point onto this Line, i.e. find the location on this Line closest to that point.
+     * Projects the point onto this LineSegment, i.e. find the location on this LineSegment closest to that point.
      *
-     * @param point Point that is projected on this Line.
-     * @return Vector2 The Vector projection. Note that this point is located on this Line.
+     * @param point Point that is projected on this LineSegment.
+     * @return The projection point. Note that this point is located on this LineSegment, but it does NOT have to be orthogonal to the given point.
      */
     [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
     /**
-     * @brief Gets the intersection of the lines
-     * See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for help
+     * Get the intersection between two (finite) LineSegment. Note that this function knows how to deal with LineSegments that are points and how to deal with parallel
+     * LineSegments. Moreover this function guarantees to return an intersection point if the LineSegments intersects. In case:
+     * - There is no intersection then std:nullopt is returned.
+     * - There is a single intersection point then that intersection point is returned.
+     * - There are multiple intersection points (infinitely many) which happens when the LineSegments overlap then it prefers to returns 1: start, 2: end, 3: line.start of which
+     *  the first most option is selected that lies on both LineSegments. Note that if none of these points lie on both LineSegments and if both the LineSegments are parallel then
+     *  the LineSegments cannot intersect.
      *
-     * @param line LineSegment to get an intersection from
-     * @return std::shared_ptr<Vector2> Vector representation of this intersection
+     * @param line The other (finite) LineSegment.
+     * @return std::nullopt if the LineSegments do not intersect. Otherwise return an intersection point.
      */
     [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
 
     /**
-     * @brief Checks whether \ref line intersects `this`
+     * Check if two LineSegment intersect. Note that this function knows how to deal with LineSegments that are points and how to deal with parallel LineSegments.
      *
-     * @param line Line to check against
-     * @return true True if \ref line intersects `this`
-     * @return false False if \ref line does not intersect `this`
+     * @param line The other (finite) LineSegment.
+     * @return True if the LineSegments have any type of intersection (overlap is also considered as intersection) and false otherwise.
      */
     [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
 
     /**
-     * @brief Return the intersection(s) of two LineSegments.
+     * Return the intersection(s) of two LineSegments. This is function is similar to the intersects function in the sense that it knows how to deal with parallel LineSegments and
+     * LineSegments that are actually points. But it is different from the intersects function in the sense that it can return up to 2 intersections. In case:
+     * - The LineSegments do not intersect, it returns an empty list.
+     * - The LineSegments do only intersect once, it returns a list with only that intersection point.
+     * - The LineSegments intersect multiple times (infinitely often), then these intersections form a LineSegment L. In this case it returns the start and end points of
+     *  LineSegment L.
      *
-     * This is the only correct implementation of intersects that works for every case, e.g. parallel lines and LineSegments that are actually points. In case:
-     * - The LineSegments do not intersect, it returns an empty set.
-     * - The LineSegments do only intersect once, it returns a set with the intersection location as Vector2.
-     * - The intersection of these LineSegments is a LineSegment L, then it returns the start and end points of this LineSegment L.
-     *
-     * @param line Line to check against.
-     * @return std::vector<Vector2> Returns a list of the intersections (Vector2).
+     * @param line The other (finite) LineSegment.
+     * @return Returns a list of the intersections.
      */
     [[nodiscard]] std::vector<Vector2> multiIntersect(const LineSegment &line) const;
 
     /**
-     * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directionns of the lines might be
-     * different in case of equality.
+     * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directions of the LineSegments
+     * might be different in case of equality.
      * @param other The other LineSegment to which comparisons are made.
      * @return True if the LineSegments are the same, false otherwise.
      */
     [[nodiscard]] bool operator==(const LineSegment &other) const;
 
     /**
-     * @brief Destroy the Line Segment object
-     *
+     * Destructor of the LineSegment.
      */
     virtual ~LineSegment() = default;
 

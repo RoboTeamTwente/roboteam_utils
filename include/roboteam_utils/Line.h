@@ -43,7 +43,7 @@ class Line {
     [[nodiscard]] double distanceToLine(const Vector2 &point) const;
 
     /**
-     * @brief Projects the point onto this Line, i.e. find the location on this Line closest to that point.
+     * Projects the point onto this Line, i.e. find the location on this Line closest to that point.
      *
      * @param point Point that is projected on this Line.
      * @return Vector2 The Vector projection. Note that this point is located on this Line.

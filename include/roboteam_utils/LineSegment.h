@@ -17,47 +17,30 @@ class Line;
  */
 class LineSegment {
    public:
-    /**
-     * @brief Constructs a LineSegment
-     *
-     * @param _start Start of the Line
-     * @param _end End of the Line
-     *
-     */
-    constexpr LineSegment(const Vector2 &_start, const Vector2 &_end) : start{_start}, end{_end} {};
+    Vector2 start; // One of the endings of this LineSegment (which we define as the start of this LineSegment).
+    Vector2 end; // Another ending of this LineSegment (which we define as the end of this LineSegment).
 
     /**
-     * @brief Start of the line
-     */
-    Vector2 start;
-
-    /**
-     * @brief End of the line
+     * Creates a new LineSegment instance by giving 2 points which represents the locations between which the LineSegment is created.
      *
+     * @param start One of the endings of this LineSegment.
+     * @param end Another ending of this LineSegment (it is allowed to use the same location as start).
      */
-    Vector2 end;
+    constexpr LineSegment(const Vector2 &start, const Vector2 &end) : start{start}, end{end} {};
 
     /**
-     * @brief Gets the length of the vector representation of this line
-     * Literally:
-     *      (end - start).length()
-     * @return double Gets the length of the line
+     * Computes the length of this line, which is the Euclidean distance between both endings of this LineSegment.
+     *
+     * @return A double value >= 0.0 which represents the length.
      */
     [[nodiscard]] double length() const;
 
     /**
-     * @brief Gets the length of the vector representation of this line
+     * Computes the squared length of this line, which is the square of the Euclidean distance between both endings of this LineSegment.
      *
-     * @return double Length of this Line
+     * @return A double value >= 0.0 which represents the squared length.
      */
     [[nodiscard]] double length2() const;
-
-    /**
-     * @brief Gets the direction of the Line
-     *
-     * @return Vector2 Vector representation of the direction of this vector
-     */
-    [[nodiscard]] Vector2 direction() const;
 
     /**
      * @brief Checks whether line is a single point

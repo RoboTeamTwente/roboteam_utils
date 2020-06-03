@@ -8,15 +8,11 @@
 
 namespace rtt {
 double LineSegment::length() const {
-    return direction().length();
+    return (end - start).length();
 }
 
 double LineSegment::length2() const {
-    return direction().length2();
-}
-
-Vector2 LineSegment::direction() const {
-    return end - start;
+    return (end - start).length2();
 }
 
 bool LineSegment::isPoint() const {
@@ -63,7 +59,7 @@ Vector2 LineSegment::project(const Vector2 &point) const {
     if (isPoint()) {
         return start;
     }
-    Vector2 AB = direction();
+    Vector2 AB = end - start;
     Vector2 AP = point - start;
     double t = AP.dot(AB) / length2();
     if (t < 0) {
@@ -79,7 +75,7 @@ bool LineSegment::isOnLine(const Vector2 &point) const {
     if (isPoint()) {
         return (start == point || end == point);
     }
-    Vector2 A = direction();
+    Vector2 A = end - start;
     Vector2 B = point - start;
     double cross = A.cross(B);
     if (cross != 0) {

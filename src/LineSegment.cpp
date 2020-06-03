@@ -1,7 +1,3 @@
-//
-// Created by rolf on 15-5-19.
-//
-
 #include "HalfLine.h"
 #include "../include/roboteam_utils/Line.h"
 #include "../include/roboteam_utils/LineSegment.h"
@@ -19,14 +15,10 @@ bool LineSegment::isPoint() const {
     return start == end;
 }
 
-//this is the algorithm from
-// https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
-//takes overlaps into account in contrast to the intersect() function
 bool LineSegment::doesIntersect(const LineSegment &line) const {
     return intersects(line).has_value();
 }
 
-// only returns a vector if there is a point intersection. If a segment intersects does not return anything
 std::optional<Vector2> LineSegment::intersects(const LineSegment &line) const {
     auto result = Line::intersect(start, end, line.start, line.end);
     if (result.has_value()) {

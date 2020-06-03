@@ -1,7 +1,3 @@
-//
-// Created by rolf on 15-5-19.
-//
-
 #ifndef ROBOTEAM_UTILS_LINESEGMENT_H
 #define ROBOTEAM_UTILS_LINESEGMENT_H
 #include "Vector2.h"

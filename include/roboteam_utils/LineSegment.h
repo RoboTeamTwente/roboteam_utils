@@ -43,18 +43,18 @@ class LineSegment {
     [[nodiscard]] double length2() const;
 
     /**
-     * @brief Checks whether line is a single point
+     * Checks whether this LineSegment is also a point, i.e. check if both of the endings of this LineSegment are the same. This function is protected against double/float rounding
+     * issues.
      *
-     * @return true True if start == end
-     * @return false False if start != end
+     * @return True if the LineSegment is a point and false otherwise.
      */
     [[nodiscard]] bool isPoint() const;
 
     /**
-     * @brief Gets the distance from the line to a point
+     * Get the Euclidean distance from a point to this LineSegment.
      *
-     * @param point Point to get distance to
-     * @return double distance between line and point
+     * @param point Point to which the distance is measured.
+     * @return A double value >= 0.0 which represents the distance to this LineSegment.
      */
     [[nodiscard]] double distanceToLine(const Vector2 &point) const;
 
@@ -68,10 +68,10 @@ class LineSegment {
     [[nodiscard]] bool isOnLine(const Vector2 &point) const;
 
     /**
-     * @brief Gets the projection of \ref point to `this`
+     * Projects the point onto this Line, i.e. find the location on this Line closest to that point.
      *
-     * @param point Point to project
-     * @return Vector2 Vector representation of this projectoin
+     * @param point Point that is projected on this Line.
+     * @return Vector2 The Vector projection. Note that this point is located on this Line.
      */
     [[nodiscard]] Vector2 project(const Vector2 &point) const;
 

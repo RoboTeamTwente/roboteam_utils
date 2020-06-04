@@ -99,17 +99,7 @@ add_executable(utils_tests
         test/StateMachineTest.cpp
         test/GridTest.cpp)
 
-if (UNIX AND NOT APPLE)
-    target_link_libraries(utils_tests
-            PRIVATE roboteam_utils
-            PRIVATE gtest
-            )
-endif ()
-
-if (APPLE)
-    target_link_libraries(utils_tests
-            PRIVATE roboteam_utils
-            PRIVATE /usr/local/lib/libgtest.a
-            PRIVATE /usr/local/lib/libgtest_main.a
-            )
-endif ()
+target_link_libraries(utils_tests
+        PRIVATE roboteam_utils
+        PRIVATE gtest
+        )

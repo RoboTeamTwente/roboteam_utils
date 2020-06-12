@@ -27,7 +27,7 @@ double Line::distanceToLine(const Vector2 &point) const {
 Vector2 Line::project(const Vector2 &point) const {
     Vector2 AB = direction - location;
     Vector2 AP = point - location;
-    return (location + AB * AP.dot(AB)) / (direction - location).length2();
+    return location + AB * (AP.dot(AB) / AB.length2());
 }
 
 std::optional<Vector2> Line::intersect(const Line &line) const {

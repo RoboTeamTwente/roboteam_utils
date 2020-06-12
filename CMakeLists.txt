@@ -88,6 +88,8 @@ add_executable(utils_tests
         #test/BiMapTest.cpp
         #test/GraphTest.cpp
         test/LineTest.cpp
+        test/LineIntersectionTest.cpp
+        test/LineProjectionTest.cpp
         test/CircleTest.cpp
         test/normaliseTest.cpp
         # test/OptimizationTest.cpp

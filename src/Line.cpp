@@ -3,8 +3,8 @@
 
 namespace rtt {
 Line::Line(const Vector2 &location, const Vector2 &direction) {
-    this->location = location;
-    this->direction = direction;
+    this->v1 = location;
+    this->v2 = direction;
     if (location == direction) {
         std::cout << "Warning: you created an undefined line, because location == direction. Note that Lines have an infinite length. If you want to have a Line with finite length"
                      " then use the LineSegment class instead." << std::endl;
@@ -12,9 +12,9 @@ Line::Line(const Vector2 &location, const Vector2 &direction) {
 }
 
 Line::Line(const LineSegment &other) noexcept {
-    location = other.start;
-    direction = other.end;
-    if (location == direction) {
+    v1 = other.start;
+    v2 = other.end;
+    if (v1 == v2) {
         std::cout << "Warning: you created an undefined line, because location == direction. Note that Lines have an infinite length. If you want to have a Line with finite length"
                      " then use the LineSegment class instead." << std::endl;
     }
@@ -25,34 +25,34 @@ double Line::distanceToLine(const Vector2 &point) const {
 }
 
 Vector2 Line::project(const Vector2 &point) const {
-    Vector2 AB = direction - location;
-    Vector2 AP = point - location;
-    return location + AB * (AP.dot(AB) / AB.length2());
+    Vector2 AB = v2 - v1;
+    Vector2 AP = point - v1;
+    return v1 + AB * (AP.dot(AB) / AB.length2());
 }
 
 std::optional<Vector2> Line::intersect(const Line &line) const {
-    return intersect(location, direction, line.location, line.direction);
+    return intersect(v1, v2, line.v1, line.v2);
 }
 
-std::optional<Vector2> Line::intersect(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 line2Location, const Vector2 line2Direction) {
-    Vector2 A = line1Location - line1Direction;
-    Vector2 B = line2Location - line2Direction;
+std::optional<Vector2> Line::intersect(const Vector2 p1, const Vector2 p2, const Vector2 q1, const Vector2 q2) {
+    Vector2 A = p1 - p2;
+    Vector2 B = q1 - q2;
     double denom = A.cross(B);
     if (denom != 0) {
-        Vector2 C = line1Location - line2Location;
+        Vector2 C = p1 - q1;
         double numer = C.cross(A);
         double u = numer / denom;
-        return line2Location - B * u;
+        return q1 - B * u;
     }
     return std::nullopt;
 }
 
-float Line::relativePosition(Vector2 line1Location, Vector2 line1Direction, Vector2 pointOnLine) {
-    float xDiff = line1Direction.x - line1Location.x;
+float Line::relativePosition(Vector2 p1, Vector2 p2, Vector2 pointOnLine) {
+    float xDiff = p2.x - p1.x;
     if (xDiff == 0) {
-        return (pointOnLine.y - line1Location.y) / (line1Direction.y - line1Location.y);
+        return (pointOnLine.y - p1.y) / (p2.y - p1.y);
     } else {
-        return (pointOnLine.x - line1Location.x) / xDiff;
+        return (pointOnLine.x - p1.x) / xDiff;
     }
 }
 

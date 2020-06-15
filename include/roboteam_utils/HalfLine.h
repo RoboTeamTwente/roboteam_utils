@@ -14,15 +14,15 @@ namespace rtt {
 class HalfLine {
     private:
         Vector2 start; // The location where the HalfLine starts
-        Vector2 direction; // This vector indicates in which direction the HalfLine is infinite long
+        Vector2 other; // This vector indicates in which direction the HalfLine is infinite long
 
     public:
         /**
          * Construct a new HalfLine object by using 2 different points on that Line. Make sure that the given points are different.
          * @param start The location where the HalfLine starts.
-         * @param direction This vector indicates in which direction the HalfLine is infinite long (make sure that it is different than the start point).
+         * @param other This vector indicates in which direction the HalfLine is infinite long (make sure that it is different than the start point).
          */
-        explicit HalfLine(const Vector2 &start, const Vector2 &direction);
+        explicit HalfLine(const Vector2 &start, const Vector2 &other);
 
         /**
          * Compute the intersection point between this HalfLine and the given Line.

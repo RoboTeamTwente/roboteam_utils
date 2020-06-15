@@ -17,11 +17,11 @@ std::optional<LineSegment> Shadow::shadow(const Vector2 &source, const LineSegme
         // If both lines from the sources to the start and end of the obstacle do not intersect with the infinite line expansion of this projection line then there is no shadow.
         return std::nullopt;
     }
-    std::shared_ptr<LineSegment> shadow = nullptr;
+    std::optional<LineSegment> shadow;
     if (firstIntersect.has_value() && secondIntersect.has_value()) {
         /* If they do intersect then we can compute the shadow by projecting points in the infinite expansion of the LineSegments to either endings of the LineSegment (note
          * projection does not change the intersection location if the location is already at the LineSegment). */
-        shadow = std::make_shared<LineSegment>(LineSegment(project.project(firstIntersect.value()), project.project(secondIntersect.value())));
+        shadow = LineSegment(project.project(firstIntersect.value()), project.project(secondIntersect.value()));
     } else {
         /* If there is only one intersection then the shadow is unbounded in one direction. By only checking if the ending furthest away from the intersection point is visible you
         know for all cases (both for the cases where the intersection point is outside the LineSegment and at the LineSegment) where the shadow is. Moreover you do this quite
@@ -32,8 +32,8 @@ std::optional<LineSegment> Shadow::shadow(const Vector2 &source, const LineSegme
         Vector2 closest = distanceIntersectionToStart < distanceIntersectionToEnd ? project.start : project.end;
         Vector2 furthest = distanceIntersectionToStart < distanceIntersectionToEnd ? project.end : project.start;
         bool furthestInShadow = LineSegment(source, furthest).doesIntersect(obstacle);
-        shadow = std::make_shared<LineSegment>(furthestInShadow ? LineSegment(onlyIntersection, furthest) : LineSegment(onlyIntersection, closest));
+        shadow = furthestInShadow ? LineSegment(onlyIntersection, furthest) : LineSegment(onlyIntersection, closest);
     }
-    return shadow->length() > negligible_shadow_length ? std::optional(*shadow) : std::nullopt;
+    return shadow->length() > negligible_shadow_length ? shadow : std::nullopt;
 }
 }

@@ -15,17 +15,17 @@ class LineSegment;
  */
 class Line {
    private:
-    Vector2 location;   // One of the points located on the Line, which represents the location of the Line.
-    Vector2 direction;  // Another point located on the Line, which should be different than the location. It represents the direction of the Line.
+    Vector2 v1;   // One of the points located on the Line.
+    Vector2 v2;  // Another point located on the Line, which should be different than the v1.
 
    public:
     /**
      * Creates a new Line instance by using 2 different points on that Line. Make sure that the given points are different.
      *
-     * @param location An arbitrary point on the Line.
-     * @param direction An arbitrary different point on the Line (make sure that it is different than the location point).
+     * @param v1 An arbitrary point on the Line.
+     * @param v2 An arbitrary different point on the Line (make sure that it is different than the v2 point).
      */
-    explicit Line(const Vector2 &location, const Vector2 &direction);
+    explicit Line(const Vector2 &v1, const Vector2 &v2);
 
     /**
      * Create a new Line from a LineSegment by infinitely expanding that LineSegment.
@@ -62,24 +62,24 @@ class Line {
      * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal, parallel or if one of the lines is undefined
      * (a line is undefined if the 2 given points, which define the line, are equal). See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for more information.
      *
-     * @param line1Location An arbitrary point on the first line.
-     * @param line1Direction An arbitrary other point on the first line.
-     * @param line2Location An arbitrary point on the second line.
-     * @param line2Direction An arbitrary other point on the second line.
+     * @param p1 An arbitrary point on the first line.
+     * @param p2 An arbitrary other point on the first line.
+     * @param q1 An arbitrary point on the second line.
+     * @param q2 An arbitrary other point on the second line.
      * @return std::nullopt if the lines do not intersect, are equal or if one of the lines is undefined. Otherwise return the intersection point.
      */
-    static std::optional<Vector2> intersect(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 line2Location, const Vector2 line2Direction);
+    static std::optional<Vector2> intersect(const Vector2 p1, const Vector2 p2, const Vector2 q1, const Vector2 q2);
 
     /**
-     * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that line1Location + (line1Direction - line1Location) * t = pointOnLine. Make
-     * sure that the given parameters line1Location and line1Direction are different.
+     * Get the relative position of pointOnLine on the given infinite line, i.e. compute t such that p1 + (p2 - p1) * t = pointOnLine. Make sure that the given
+     * parameters p1 and p2 are different and that pointOnLine actually lies on that Line, otherwise the return value does not make sense.
      *
-     * @param line1Location An arbitrary point on the first line.
-     * @param line1Direction An arbitrary other point on the first line (make sure that it is different than line1Location).
+     * @param p1 An arbitrary point on the first line.
+     * @param p2 An arbitrary other point on the first line (make sure that it is different than p1).
      * @param pointOnLine A point that is located on the given line.
-     * @return The value t such that line1Location + (line1Direction - line1Location) * t = pointOnLine
+     * @return The value t such that p1 + (p2 - p1) * t = pointOnLine
      */
-    static float relativePosition(const Vector2 line1Location, const Vector2 line1Direction, const Vector2 pointOnLine);
+    static float relativePosition(const Vector2 p1, const Vector2 p2, const Vector2 pointOnLine);
 
     /* 	 ______   _______  _______  ______     _______  _______  ______   _______
      *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \

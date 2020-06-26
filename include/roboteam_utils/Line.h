@@ -55,8 +55,7 @@ class Line {
      *
      * @param line The other (infinite) Line.
      * @return In case there is no intersection (i.e. the Lines are parallel and distinct), return std::nullopt. In case there is a single intersection, return that point (Lines
-     * are non-parallel). In case there are multiple (infinitely many) intersectionsstd::nullopt if the Lines do not intersect or are equal. Otherwise return the intersection
-     * point.
+     * are non-parallel). In case there are multiple (infinitely many) intersections, return the intersection point closest to the origin (0,0).
      */
     [[nodiscard]] std::optional<Vector2> intersect(const Line &line) const;
 

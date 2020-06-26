@@ -39,7 +39,7 @@ class HalfLine {
          * @param point Point that is projected on this HalfLine.
          * @return The projection point. Note that this point is located on this HalfLine, but it does NOT have to be orthogonal to the given point.
          */
-        Vector2 project(const Vector2 &point) const
+        Vector2 project(const Vector2 &point) const;
 };
 }
 #endif //RTT_ROBOTEAM_UTILS_SRC_HALFLINE_H_

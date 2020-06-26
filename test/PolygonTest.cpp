@@ -100,11 +100,9 @@ TEST(isConvex, PolygonTest) {
                                         P1Last, P1First, P2First, P2Last, P3First, P3Last, P4};
     //P1Last,P1First,;
     // convex calculation only makes sense if the examples we use are actually valid
-    /*
     for (const Polygon &example : allExamples) {
         ASSERT_TRUE(example.isSimple());
     }
-    */
     EXPECT_TRUE(convexPentagon.isConvex());
     EXPECT_TRUE(convexPentagonCCW.isConvex());
     EXPECT_FALSE(nonConvexPentagon.isConvex());
@@ -158,8 +156,8 @@ TEST(areas, PolygonTest) {
     Polygon parallelogram({A, B, C, D});
     Polygon rectangle({A, B, E, F});
     Polygon triangleA({A, B, C}), triangleB({A, B, D}), triangleC({A, B, E}), triangleD({A, B, F});
-    // ASSERT_TRUE(parallelogram.isSimple());
-    // ASSERT_TRUE(rectangle.isSimple());
+    ASSERT_TRUE(parallelogram.isSimple());
+    ASSERT_TRUE(rectangle.isSimple());
     EXPECT_EQ(parallelogram.area(), width*height);
     EXPECT_EQ(rectangle.area(), width*height);
     EXPECT_EQ(triangleA.area(), width*height*0.5);
@@ -240,6 +238,6 @@ TEST(centroid, PolygonTest) {
     Vector2 centroid1(6,4),centroid2(4.0,2.0),centroid3(4+8.0/9.0,4+2.0/9.0);
     ASSERT_EQ(triangle.centroid(),centroid1);
     ASSERT_EQ(triangle2.centroid(),centroid2);
-    // ASSERT_TRUE(quadrilateral.isSimple());
+    ASSERT_TRUE(quadrilateral.isSimple());
     ASSERT_EQ(quadrilateral.centroid(),centroid3);
 }

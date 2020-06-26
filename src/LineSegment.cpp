@@ -30,11 +30,24 @@ std::optional<Vector2> LineSegment::intersects(const LineSegment &line) const {
             return std::nullopt;
         }
     } else {
-        if (line.isOnLine(start)) {
+        /* The only possible cases are that one/both of the LineSegments are actually points, the LineSegments have a shared LineSegment part or the LineSegments are distinct and
+         * parallel. */
+        if (isPoint()) {
+            return line.isOnLine(start) ? std::optional<Vector2>(start) : std::nullopt;
+        } else if (line.isPoint()) {
+            return isOnLine(line.start) ? std::optional<Vector2>(line.start) : std::nullopt;
+        }
+
+        // Check if both LineSegments are on the same infinite line.
+        Line checkLine = Line(*this);
+        if (!checkLine.isOnLine(line.start)) {
+            return std::nullopt;
+        }
+        if (line.isOnFiniteLine(start)) {
             return start;
-        } else if (line.isOnLine(end)) {
+        } else if (line.isOnFiniteLine(end)) {
             return end;
-        } else if (isOnLine(line.start)) {
+        } else if (isOnFiniteLine(line.start)) {
             return line.start;
         } else {
             return std::nullopt;
@@ -63,7 +76,17 @@ Vector2 LineSegment::project(const Vector2 &point) const {
 }
 
 bool LineSegment::isOnLine(const Vector2 &point) const {
-    return project(point) == point;
+    if (isPoint()) {
+        return (start == point || end == point);
+    }
+    Vector2 A = end - start;
+    Vector2 B = point - start;
+    double cross = A.cross(B);
+    if (cross != 0) {
+        return false;
+    }
+    float t = Line::relativePosition(start, end, point);
+    return t >= 0 && t <= 1;
 }
 
 std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const {
@@ -79,17 +102,33 @@ std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const 
     } else {
         /* The only possible cases are that one/both of the LineSegments are actually points, the LineSegments have a shared LineSegment part or the LineSegments are distinct and
          * parallel. */
+        if (isPoint()) {
+            if (line.isOnLine(start)) {
+                return {start};
+            } else {
+                return {};
+            }
+        } else if (line.isPoint()) {
+            if (isOnLine(line.start)) {
+                return {line.start};
+            } else {
+                return {};
+            }
+        }
+
+        // Check if both LineSegments are on the same infinite line.
+        Line checkLine = Line(*this);
+        if (!checkLine.isOnLine(line.start)) {
+            return {};
+        }
         std::vector<Vector2> intersections = {};
-        if (line.isOnLine(start)) {
+        if (line.isOnFiniteLine(start)) {
             intersections.push_back(start);
-        }
-        if (line.isOnLine(end)) {
+        } else if (line.isOnFiniteLine(end)) {
             intersections.push_back(end);
-        }
-        if (isOnLine(line.start)) {
+        } else if (isOnFiniteLine(line.start)) {
             intersections.push_back(line.start);
-        }
-        if (isOnLine(line.end)) {
+        } else if (isOnFiniteLine(line.end)) {
             intersections.push_back(line.end);
         }
         std::sort(intersections.begin(), intersections.end());
@@ -100,6 +139,11 @@ std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const 
 
 bool LineSegment::operator==(const LineSegment &other) const {
     return ((start == other.start && end == other.end) || (start == other.end && end == other.start));
+}
+
+bool LineSegment::isOnFiniteLine(const Vector2 &point) const {
+    float t = Line::relativePosition(start, end, point);
+    return t >= 0 && t <= 1;
 }
 
 /* 	 ______   _______  _______  ______     _______  _______  ______   _______

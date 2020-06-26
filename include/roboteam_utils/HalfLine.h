@@ -28,9 +28,18 @@ class HalfLine {
          * Compute the intersection point between this HalfLine and the given Line.
          *
          * @param line The given Line.
-         * @return std::nullopt in case of no intersection or in case the HalfLine lies into the parameter line. Otherwise return the unique intersection point.
+         * @return std::nullopt in case of no intersection. In case there is a single intersection point, return that point. In case there are multiple (infinitely many)
+         * intersection points, return the intersection point closest to the origin (0,0).
          */
         std::optional<Vector2> intersect(const Line &line);
+
+        /**
+         * Projects the point onto this HalfLine, i.e. find the location on this HalfLine closest to that point.
+         *
+         * @param point Point that is projected on this HalfLine.
+         * @return The projection point. Note that this point is located on this HalfLine, but it does NOT have to be orthogonal to the given point.
+         */
+        Vector2 project(const Vector2 &point) const
 };
 }
 #endif //RTT_ROBOTEAM_UTILS_SRC_HALFLINE_H_

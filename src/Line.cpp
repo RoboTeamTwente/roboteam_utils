@@ -30,6 +30,12 @@ Vector2 Line::project(const Vector2 &point) const {
     return v1 + AB * (AP.dot(AB) / AB.length2());
 }
 
+bool Line::isOnLine(const Vector2 &point) const {
+    Vector2 A = v2 - v1;
+    Vector2 B = point - v1;
+    return A.cross(B) == 0;
+}
+
 std::optional<Vector2> Line::intersect(const Line &line) const {
     return intersect(v1, v2, line.v1, line.v2);
 }
@@ -106,15 +112,6 @@ bool Line::isParallel(const LineSegment &line) const {
         return this->isVertical() && line.isVertical();
     }
     return this->slope() == line.slope();
-}
-
-bool Line::isOnLine(const Vector2 &point) const {
-    if (isPoint()){
-        return (start == point || end == point);
-    }
-    Vector2 A = end - start;
-    Vector2 B = point - start;
-    return A.cross(B) == 0;
 }
 
 double Line::slope() const {

@@ -59,6 +59,14 @@ class Line {
     [[nodiscard]] std::optional<Vector2> intersect(const Line &line) const;
 
     /**
+     * Determine whether a point lies on this Line. This function is NOT protected against double/float rounding issues.
+     *
+     * @param point The point which might lie on the Line.
+     * @return True if the given point lies on this Line, false otherwise.
+     */
+    [[nodiscard]] bool isOnLine(const Vector2 &point) const;
+
+    /**
      * Get the intersection point between two infinite lines. No intersection point is returned in case the lines are equal, parallel or if one of the lines is undefined
      * (a line is undefined if the 2 given points, which define the line, are equal). See https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection for more information.
      *
@@ -113,15 +121,6 @@ class Line {
      * @return false False if \ref line does not intersect `this`
      */
     // [[nodiscard]] bool doesIntersect(const LineSegment &line) const;
-
-    /**
-     * @brief Checks whether a \ref point is on the line
-     *
-     * @param point Point to check `this` against
-     * @return true If \ref point is on `this`
-     * @return false If \ref point is not on `this`
-     */
-    // [[nodiscard]] bool isOnLine(const Vector2 &point) const;
 
     /**
      * @brief Checks whether 2 lines are parralel

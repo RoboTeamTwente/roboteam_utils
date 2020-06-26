@@ -108,14 +108,6 @@ class LineSegment {
         [[nodiscard]] std::vector<Vector2> multiIntersect(const LineSegment &line) const;
 
         /**
-         * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directions of the LineSegments
-         * might be different in case of equality.
-         * @param other The other LineSegment to which comparisons are made.
-         * @return True if the LineSegments are the same, false otherwise.
-         */
-        [[nodiscard]] bool operator==(const LineSegment &other) const;
-
-        /**
          * Destructor of the LineSegment.
          */
         virtual ~LineSegment() = default;

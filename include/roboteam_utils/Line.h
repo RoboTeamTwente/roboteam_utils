@@ -15,7 +15,7 @@ class LineSegment;
  */
 class Line {
    private:
-    Vector2 v1;   // One of the points located on the Line.
+    Vector2 v1;  // One of the points located on the Line.
     Vector2 v2;  // Another point located on the Line, which should be different than the v1.
 
    public:
@@ -51,10 +51,12 @@ class Line {
     [[nodiscard]] Vector2 project(const Vector2 &point) const;
 
     /**
-     * Get the intersection point between two (infinite) Lines. No intersection point is returned in case the Lines are equal or parallel.
+     * Get the intersection point between two (infinite) Lines. In case there is no intersection (Lines are parallel and distinct), return std
      *
      * @param line The other (infinite) Line.
-     * @return std::nullopt if the Lines do not intersect or are equal. Otherwise return the intersection point.
+     * @return In case there is no intersection (i.e. the Lines are parallel and distinct), return std::nullopt. In case there is a single intersection, return that point (Lines
+     * are non-parallel). In case there are multiple (infinitely many) intersectionsstd::nullopt if the Lines do not intersect or are equal. Otherwise return the intersection
+     * point.
      */
     [[nodiscard]] std::optional<Vector2> intersect(const Line &line) const;
 

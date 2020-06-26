@@ -5,7 +5,7 @@ HalfLine::HalfLine(const Vector2 &start, const Vector2 &goesThrough) {
     this->start = start;
     this->goesThrough = goesThrough;
     if (start == goesThrough) {
-        std::cout << "Warning: you created an undefined line, because start == goesThrough. Note that HalfLines have an infinite length. If you want to have a Line with finite "
+        std::cerr << "Warning: you created an undefined line, because start == goesThrough. Note that HalfLines have an infinite length. If you want to have a Line with finite "
                      "length then use the LineSegment class instead." << std::endl;
     }
 }

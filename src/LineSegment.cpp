@@ -122,8 +122,6 @@ std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const 
     }
 }
 
-bool LineSegment::operator==(const LineSegment &other) const { return ((start == other.start && end == other.end) || (start == other.end && end == other.start)); }
-
 bool LineSegment::isOnFiniteLine(const Vector2 &point) const {
     float t = Line::relativePosition(start, end, point);
     return t >= 0 && t <= 1;

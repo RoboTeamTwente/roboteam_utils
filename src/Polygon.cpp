@@ -182,6 +182,7 @@ namespace rtt {
     bool Polygon::isSimple() const {
         // we loop over every unique pair
         std::vector<LineSegment> lines{ };
+        size_t numberIntersections = 0;
         for (auto first = vertices.begin(); first != vertices.end(); first++) {
             std::optional<LineSegment> boundarySegment;
             if (first == std::prev(vertices.end())) {
@@ -190,12 +191,13 @@ namespace rtt {
                 boundarySegment = LineSegment(*first, *(first + 1));
             }
             for (auto line : lines) {
-                if (boundarySegment.value().intersects(line).has_value()) {
-                    return false;
-                }
+                numberIntersections += boundarySegment.value().multiIntersect(line).size();
             }
             lines.push_back(boundarySegment.value());
         }
-        return true;
+        /* - A polygon (simple/non-simple) can never have less than the amount of vertices as intersections. Because every line start at a vertex where another line has ended.
+         * - A polygon that is simple has an equal number of intersections as the amount of vertices, since it only intersects at the corners.
+         * - A polygon that is not simple has more intersections, because it does not only intersects once at every corner but at least at some other place as well. */
+        return numberIntersections == amountOfVertices();
     }
 }//rtt

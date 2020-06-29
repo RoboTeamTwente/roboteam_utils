@@ -11,7 +11,7 @@ HalfLine::HalfLine(const Vector2 &start, const Vector2 &goesThrough) {
 }
 
 std::optional<Vector2> HalfLine::intersect(const Line &line) {
-    auto result = line.intersect(Line(start, goesThrough));
+    auto result = Line::intersect(start, goesThrough, line.v1, line.v2);
     if (result.has_value()) {
         float t = Line::relativePosition(start, goesThrough, result.value());
         if (t >= 0) return result.value();

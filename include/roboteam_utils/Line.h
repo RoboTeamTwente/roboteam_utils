@@ -14,11 +14,10 @@ class LineSegment;
  * @since 2019-04-18
  */
 class Line {
-   private:
+   public:
     Vector2 v1;  // One of the points located on the Line.
     Vector2 v2;  // Another point located on the Line, which should be different than the v1.
 
-   public:
     /**
      * Creates a new Line instance by using 2 different points on that Line. Make sure that the given points are different.
      *

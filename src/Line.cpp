@@ -31,7 +31,7 @@ Vector2 Line::project(const Vector2 &point) const {
 bool Line::isOnLine(const Vector2 &point) const {
     Vector2 A = v2 - v1;
     Vector2 B = point - v1;
-    return A.cross(B) == 0;
+    return abs(A.cross(B)) < FLOAT_PRECISION;
 }
 
 std::optional<Vector2> Line::intersect(const Line &line) const {
@@ -49,7 +49,7 @@ std::optional<Vector2> Line::intersect(const Vector2 p1, const Vector2 p2, const
     Vector2 A = p1 - p2;
     Vector2 B = q1 - q2;
     double denom = A.cross(B);
-    if (denom != 0) {
+    if (abs(denom) >= FLOAT_PRECISION) {
         Vector2 C = p1 - q1;
         double numer = C.cross(A);
         double u = numer / denom;
@@ -60,7 +60,7 @@ std::optional<Vector2> Line::intersect(const Vector2 p1, const Vector2 p2, const
 
 float Line::relativePosition(Vector2 p1, Vector2 p2, Vector2 pointOnLine) {
     float xDiff = p2.x - p1.x;
-    if (xDiff == 0) {
+    if (xDiff == 0.0) {
         return (pointOnLine.y - p1.y) / (p2.y - p1.y);
     } else {
         return (pointOnLine.x - p1.x) / xDiff;

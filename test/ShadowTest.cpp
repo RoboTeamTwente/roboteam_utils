@@ -9,15 +9,22 @@
 
 using namespace rtt;
 TEST(LineTests, Shadow) {
-    Vector2 source(1.0, 2.0), projectLine_start(-4.0, -6.0), projectLine_end(-4.0, 6.0), blockLine1_start(0.0, 2.0), blockLine1_end(0.0, 2.0), blockLine2_start(-1.0, 0.0),
-        blockLine2_end(-1.0, 2.0), blockLine3_start(1.0, 1.0), blockLine3_end(0.0, 0.0), blockLine4_start(1.0, 3.0), blockLine4_end(0.0, 2.0), blockLine5_start(0.0, -4.0),
-        blockLine5_end(0.0, 4.0), blockLine6_start(1.0, 2.0), blockLine6_end(1.0, 2.0), blockLine7_start(1.0, 0.0), blockLine7_end(1000000000.0, 0.0), blockLine8_start(-1.0, 1.0),
-        blockLine8_end(-3.0, -1.0), checkLine2_start(-4.0, -3.0), checkLine2_end(-4.0, 2.0), checkLine4_start(-4.0, 2.0), checkLine4_end(-4.0, 6.0), checkLine8_start(-4.0, -0.5),
+    Vector2 source(1.0, 2.0);  // The light source that is used in every test case.
+    Vector2 projectLine_start(-4.0, -6.0), projectLine_end(-4.0, 6.0);
+    LineSegment projectLine(projectLine_start, projectLine_end);  // The LineSegments on which the shadow is projected. This LineSegment is also used in every test case.
+
+    // The LineSegments which are the used obstacles in the different test cases.
+    Vector2 blockLine1_start(0.0, 2.0), blockLine1_end(0.0, 2.0), blockLine2_start(-1.0, 0.0), blockLine2_end(-1.0, 2.0), blockLine3_start(1.0, 1.0), blockLine3_end(0.0, 0.0),
+        blockLine4_start(1.0, 3.0), blockLine4_end(0.0, 2.0), blockLine5_start(0.0, -4.0), blockLine5_end(0.0, 4.0), blockLine6_start(1.0, 2.0), blockLine6_end(1.0, 2.0),
+        blockLine7_start(1.0, 0.0), blockLine7_end(1000000000.0, 0.0), blockLine8_start(-1.0, 1.0), blockLine8_end(-3.0, -1.0);
+    LineSegment blockLine1(blockLine1_start, blockLine1_end), blockLine2(blockLine2_start, blockLine2_end), blockLine3(blockLine3_start, blockLine3_end),
+        blockLine4(blockLine4_start, blockLine4_end), blockLine5(blockLine5_start, blockLine5_end), blockLine6(blockLine6_start, blockLine6_end),
+        blockLine7(blockLine7_start, blockLine7_end), blockLine8(blockLine8_start, blockLine8_end);
+
+    // The LineSegments which are the expected shadows in the different test cases, to which the actual shadow is checked against.
+    Vector2 checkLine2_start(-4.0, -3.0), checkLine2_end(-4.0, 2.0), checkLine4_start(-4.0, 2.0), checkLine4_end(-4.0, 6.0), checkLine8_start(-4.0, -0.5),
         checkLine8_end(-4.0, -1.75);
-    LineSegment projectLine(projectLine_start, projectLine_end), blockLine1(blockLine1_start, blockLine1_end), blockLine2(blockLine2_start, blockLine2_end),
-        blockLine3(blockLine3_start, blockLine3_end), blockLine4(blockLine4_start, blockLine4_end), blockLine5(blockLine5_start, blockLine5_end),
-        blockLine6(blockLine6_start, blockLine6_end), blockLine7(blockLine7_start, blockLine7_end), blockLine8(blockLine8_start, blockLine8_end),
-        checkLine2(checkLine2_start, checkLine2_end), checkLine4(checkLine4_start, checkLine4_end), checkLine8(checkLine8_start, checkLine8_end);
+    LineSegment checkLine2(checkLine2_start, checkLine2_end), checkLine4(checkLine4_start, checkLine4_end), checkLine8(checkLine8_start, checkLine8_end);
 
     std::optional<LineSegment> result = Shadow::shadow(source, blockLine1, projectLine);
     EXPECT_FALSE(result.has_value());  // A single point cannot cause a shadow (except if it lies at the source)

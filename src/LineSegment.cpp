@@ -109,11 +109,14 @@ std::vector<Vector2> LineSegment::multiIntersect(const LineSegment &line) const 
         std::vector<Vector2> intersections = {};
         if (line.isOnFiniteLine(start)) {
             intersections.push_back(start);
-        } else if (line.isOnFiniteLine(end)) {
+        }
+        if (line.isOnFiniteLine(end)) {
             intersections.push_back(end);
-        } else if (isOnFiniteLine(line.start)) {
+        }
+        if (isOnFiniteLine(line.start)) {
             intersections.push_back(line.start);
-        } else if (isOnFiniteLine(line.end)) {
+        }
+        if (isOnFiniteLine(line.end)) {
             intersections.push_back(line.end);
         }
         std::sort(intersections.begin(), intersections.end());

@@ -112,6 +112,14 @@ class LineSegment {
          */
         virtual ~LineSegment() = default;
 
+        /**
+         * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directions of the LineSegments
+         * might be different in case of equality.
+         * @param other The other LineSegment to which comparisons are made.
+         * @return True if the LineSegments are the same, false otherwise.
+         */
+        [[nodiscard]] bool operator==(const LineSegment &other) const;
+
     private:
         /**
          * Check whether a given point lies on this LineSegment, given that this LineSegment has length > 0 and that the given point lies on the infinite Line expansion of this

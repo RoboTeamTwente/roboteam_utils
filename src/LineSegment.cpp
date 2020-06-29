@@ -127,6 +127,8 @@ bool LineSegment::isOnFiniteLine(const Vector2 &point) const {
     return t >= 0 && t <= 1;
 }
 
+bool LineSegment::operator==(const LineSegment &other) const { return ((start == other.start && end == other.end) || (start == other.end && end == other.start)); }
+
 /* 	 ______   _______  _______  ______     _______  _______  ______   _______
  *	(  __  \ (  ____ \(  ___  )(  __  \   (  ____ \(  ___  )(  __  \ (  ____ \
  *	| (  \  )| (    \/| (   ) || (  \  )  | (    \/| (   ) || (  \  )| (    \/

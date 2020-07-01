@@ -1,3 +1,4 @@
+#include <Definitions.h>
 #include "../include/roboteam_utils/Position.h"
 
 namespace rtt {
@@ -27,11 +28,11 @@ namespace rtt {
     }
 
     bool Position::operator==(const Position &other) const {
-        return x == other.x && y == other.y && rot == other.rot;
+        return abs(x - other.x) < FLOAT_PRECISION && abs(y - other.y) < FLOAT_PRECISION && abs(rot - other.rot) < FLOAT_PRECISION;
     }
 
     bool Position::operator!=(const Position &other) const {
-        return x != other.x || y != other.y || rot != other.rot;
+        return !(*this == other);
     }
 
     Position Position::operator+(const Position &other) const {

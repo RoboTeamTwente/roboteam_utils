@@ -1,6 +1,7 @@
 #include "../include/roboteam_utils/Arc.h"
 #include "../include/roboteam_utils/Mathematics.h"
 #include <iostream>
+#include <Definitions.h>
 
 namespace rtt {
 
@@ -14,19 +15,14 @@ namespace rtt {
     Arc::Arc(Vector2 center, double length, double width, double angleStart, double angleEnd)
             : center(center), length(length), width(width), angleStart(normalize(angleStart)),
               angleEnd(normalize(angleEnd)) {
-
-        if (fabs(angleEnd) < .0001) {
-            angleEnd = ARC_MAX - .0001;
-        }
-
     }
 
     bool Arc::isCircle() const {
-        return length == width && angleStart == 0 && angleEnd == ARC_MAX;
+        return abs(length - width) < FLOAT_PRECISION && abs(angleStart) < FLOAT_PRECISION && abs(angleEnd - ARC_MAX) < FLOAT_PRECISION;
     }
 
     bool Arc::isPartialCircle() const {
-        return length == width;
+        return abs(length - width) < FLOAT_PRECISION;
     }
 
     bool Arc::angleWithinArc(double angle) const {
@@ -55,10 +51,7 @@ namespace rtt {
     }
 
     std::optional<Vector2> Arc::checkAndDenormalize(Vector2 vec) const {
-        return normalize(angleEnd - angleStart) - normalize(vec.angle() - angleStart) >= 0 ?
-               std::optional<Vector2>(vec + center)
-                                                                                           :
-               std::nullopt;
+        return normalize(angleEnd - angleStart) - normalize(vec.angle() - angleStart) >= 0 ? std::optional<Vector2>(vec + center) : std::nullopt;
     }
 
     std::pair<std::optional<Vector2>, std::optional<Vector2>>
@@ -81,7 +74,7 @@ namespace rtt {
                 auto first = checkAndDenormalize(Vector2(x1, y1));
 
                 std::optional<Vector2> second;
-                if (fabsl(discr) < .0001) {
+                if (abs(discr) < FLOAT_PRECISION) {
                     // single intersection
                     second = std::nullopt;
                 } else {
@@ -116,13 +109,13 @@ namespace rtt {
         // special cases
         // the 0.5 * pi and 1.5 * pi cases are important,
         // then tan(angle) is infinite and the normal calculation fails.
-        if (angle < .000001) {
+        if (angle < FLOAT_PRECISION) {
             return Vector2(length, 0);
-        } else if (fabsl(angle - M_PI_2) < .000001) {
+        } else if (abs(angle - M_PI_2) < FLOAT_PRECISION) {
             return Vector2(0, width);
-        } else if (fabsl(angle - M_PI) < .000001) {
+        } else if (abs(angle - M_PI) < FLOAT_PRECISION) {
             return Vector2(-length, 0);
-        } else if (fabsl(angle - M_PI - M_PI_2) < .000001) {
+        } else if (abs(angle - M_PI - M_PI_2) < FLOAT_PRECISION) {
             return Vector2(0, -width);
         }
 

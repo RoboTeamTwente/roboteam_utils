@@ -233,7 +233,7 @@ double PID::getOutput(double actual, double setpoint) {
   // 2. prevent windup by not increasing errorSum if we're already running against our max Ioutput
   // 3. prevent windup by not increasing errorSum if output is output=maxOutput
   Ioutput = I*errorSum/TICK_RATE;
-  if (maxIOutput!=0) {
+  if (maxIOutput != 0) {
     Ioutput = clamp(Ioutput, -maxIOutput, maxIOutput);
   }
 

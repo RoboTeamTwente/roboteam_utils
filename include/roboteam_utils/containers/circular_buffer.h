@@ -4,61 +4,17 @@
 
 #ifndef RTT_CIRCULAR_BUFFER_H
 #define RTT_CIRCULAR_BUFFER_H
-#include <iterator>
+
 #include <stdexcept>
+
 namespace rtt::collections {
-    template<typename Tp, std::size_t Size>
-    class circular_buffer_iterator_type {
-    private:
-        Tp *const buffer;
-        std::size_t offset;
-    public:
-        circular_buffer_iterator_type(Tp *buffer, std::size_t offset) : buffer{buffer}, offset{offset} {}
-
-        bool operator==(const circular_buffer_iterator_type &other) {
-            return other.buffer == buffer &&
-                   other.offset == offset; //TODO: iterators invalidated by pushing back elements now?
-        }
-
-        bool operator!=(const circular_buffer_iterator_type &other) {
-            return *this != other;
-        }
-
-        circular_buffer_iterator_type &operator++() {
-            ++offset;
-            return *this;
-        }
-
-        circular_buffer_iterator_type &operator--() {
-            --offset;
-            return *this;
-        }
-
-        std::ptrdiff_t operator-(circular_buffer_iterator_type const &other) const {
-            return offset - other.offset;
-        }
-
-        circular_buffer_iterator_type &operator+=(int amount) {
-            offset += amount;
-            return *this;
-        }
-
-        circular_buffer_iterator_type &operator-=(int amount) {
-            offset -= amount;
-            return *this;
-        }
-
-        Tp &operator*() const {
-            return buffer[offset % Size];
-        }
-    };
-
-
-
 /**
- * @brief A standard container for Circular buffers
- * @tparam _Tp
- * @tparam _Size
+ * @brief A standard container for Circular buffers.
+ * Note this class does not have iterators because they do not comply with the standard as there would be cases where
+ * first == last. This quickly becomes very ugly.
+ * The front of the buffer are the oldest elements, e.g. the ones first pushed in. These are the next to be erased.
+ * @tparam Tp value type
+ * @tparam Size largest size the buffer can hold
  */
     template<typename Tp, std::size_t Size>
     class circular_buffer {
@@ -69,12 +25,6 @@ namespace rtt::collections {
         typedef value_type &reference;
         typedef const value_type &const_reference;
         typedef std::size_t size_type;
-        typedef std::ptrdiff_t difference_type;
-
-        typedef circular_buffer_iterator_type<Tp, Size> iterator;
-        typedef circular_buffer_iterator_type<const Tp, Size> const_iterator;
-        typedef std::reverse_iterator<iterator> reverse_iterator;
-        typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
     private:
         // the internal array that actually stores the values
@@ -85,10 +35,6 @@ namespace rtt::collections {
 
         //The current size of the circular buffer
         size_type _current_size;
-
-        Tp &last_value() {
-            return _m_buff[(_current_offset + _current_size - 1) % Size];
-        }
 
     public:
         //Default constructor
@@ -110,7 +56,7 @@ namespace rtt::collections {
             } else {
                 ++_current_offset %= Size;
             }
-            last_value() = value;
+            _m_buff[(_current_offset + _current_size - 1) % Size] = value;
         }
 
         void push_back(Tp &&value) {
@@ -119,39 +65,9 @@ namespace rtt::collections {
             } else {
                 ++_current_offset %= Size;
             }
-            last_value() = std::move(value);
+            _m_buff[(_current_offset + _current_size - 1) % Size] = std::move(value);
         }
-
-        //iterator functions
-        constexpr iterator begin() noexcept {
-            return iterator{_m_buff, _current_offset};
-        }
-
-        constexpr const_iterator begin() const noexcept {
-            return const_iterator{_m_buff, _current_offset};
-        }
-
-        constexpr iterator end() noexcept { return iterator{_m_buff, _current_offset + Size}; }
-
-        constexpr const_iterator end() const noexcept { return const_iterator{_m_buff, _current_offset + Size}; }
-
-        constexpr reverse_iterator rbegin() noexcept { return reverse_iterator(end()); }
-
-        constexpr const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(end()); }
-
-        constexpr reverse_iterator rend() noexcept { return reverse_iterator(begin()); }
-
-        constexpr const_reverse_iterator rend() const noexcept { return const_reverse_iterator(begin()); }
-
-        constexpr const_iterator cbegin() const noexcept { return const_iterator(begin()); }
-
-        constexpr const_iterator cend() const noexcept { return const_iterator(end()); }
-
-        constexpr const_reverse_iterator crbegin() const noexcept { return rbegin(); }
-
-        constexpr const_reverse_iterator crend() const noexcept { return rend(); }
-
-        //Capacity functions
+                //Capacity functions
         [[nodiscard]] constexpr size_type size() const noexcept { return _current_size; }
 
         [[nodiscard]] constexpr size_type max_size() const noexcept { return Size; }
@@ -188,7 +104,7 @@ namespace rtt::collections {
 
         constexpr const_reference front() const noexcept { return _m_buff[_current_offset]; }
 
-        constexpr reference back() noexcept { return last_value(); }
+        constexpr reference back() noexcept { return _m_buff[(_current_offset + _current_size - 1) % Size]; }
 
         constexpr const_reference back() const noexcept {
             return _m_buff[(_current_offset + _current_size - 1) % Size];

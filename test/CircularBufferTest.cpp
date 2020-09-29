@@ -34,23 +34,3 @@ TEST(CircularBufferTest,construct){
     EXPECT_EQ(test.front(),4);
     EXPECT_EQ(test.back(),16);
 }
-void addVal(int &val){
-    val+=4;
-}
-TEST(CircularBufferTest,iteratorBasics){
-    circular_buffer<int,4> test;
-    for (int kI = 0; kI < 5; ++kI) {
-        test.push_back(kI*kI);
-    }
-//    int index = 1;
-//    for (const auto& elem : test) {
-//        EXPECT_EQ(elem,index*index);
-//        index++;
-//    }
-//    std::for_each(test.begin(),test.end(),addVal);
-//    index = 1;
-//    for (const auto& elem : test) {
-//        EXPECT_EQ(elem,index*index+4);
-//        index++;
-//    }
-}

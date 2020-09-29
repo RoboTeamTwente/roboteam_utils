@@ -196,16 +196,4 @@ namespace rtt::collections {
 
     };
 }
-// need to define the iterator traits for std algorithms
-//TODO: really hacky, but eh?
-template<typename Tp, std::size_t Size>
-class std::iterator_traits<rtt::collections::circular_buffer_iterator_type<Tp, Size>> {
-public:
-using difference_type = std::ptrdiff_t;
-using size_type = std::size_t;
-using value_type = Tp;
-using pointer = Tp *;
-using reference = Tp &;
-using iterator_category = std::random_access_iterator_tag;
-};
 #endif //RTT_CIRCULAR_BUFFER_H

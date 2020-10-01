@@ -6,6 +6,7 @@
 #define RTT_CIRCULAR_BUFFER_H
 
 #include <stdexcept>
+#include <array>
 
 namespace rtt::collections {
 /**
@@ -28,7 +29,7 @@ namespace rtt::collections {
 
     private:
         // the internal array that actually stores the values
-        Tp _m_buff[Size];
+        std::array<Tp,Size> _m_buff;
 
         //The virtual beginning of the circular buffer
         size_type _current_offset;

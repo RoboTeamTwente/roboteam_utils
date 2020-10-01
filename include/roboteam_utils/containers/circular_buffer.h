@@ -66,7 +66,17 @@ namespace rtt::collections {
             }
             _m_buff[(_current_offset + _current_size - 1) % Size] = std::move(value);
         }
-                //Capacity functions
+        template<typename... Types>
+        reference emplace_back(Types &&... args) {
+            if (_current_size < max_size()) {
+                ++_current_size;
+            } else {
+                ++_current_offset %= Size;
+            }
+            _m_buff[(_current_offset + _current_size - 1) % Size] = Tp{std::forward<Types>(args)...};
+            return back();
+        }
+        //Capacity functions
         [[nodiscard]] constexpr size_type size() const noexcept { return _current_size; }
 
         [[nodiscard]] constexpr size_type max_size() const noexcept { return Size; }

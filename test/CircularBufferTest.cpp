@@ -33,3 +33,16 @@ TEST(CircularBufferTest,construct){
     EXPECT_EQ(test.front(),4);
     EXPECT_EQ(test.back(),16);
 }
+struct vec2d{
+    double x,y;
+};
+TEST(CircularBufferTest,emplace_back){
+    circular_buffer<vec2d,3> vecs;
+    EXPECT_EQ(vecs.size(),0);
+    EXPECT_EQ(vecs.emplace_back(3.0,4.0).y,4.0);
+    EXPECT_EQ(vecs.size(),1);
+    vec2d elem = {3.0,4.0};
+    EXPECT_EQ(vecs[0].x,elem.x);
+    EXPECT_EQ(vecs[0].y,elem.y);
+
+}

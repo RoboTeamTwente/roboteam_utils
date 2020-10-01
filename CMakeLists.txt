@@ -109,7 +109,8 @@ add_executable(utils_tests
         test/StateMachineTest.cpp
         test/GridTest.cpp
         test/ShadowTest.cpp
-        test/CircularBufferTest.cpp)
+        test/CircularBufferTest.cpp
+        )
 
 if (UNIX AND NOT APPLE)
     target_link_libraries(utils_tests

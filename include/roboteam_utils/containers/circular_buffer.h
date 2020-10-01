@@ -19,12 +19,12 @@ namespace rtt::collections {
     template<typename Tp, std::size_t Size>
     class circular_buffer {
     public:
-        typedef Tp value_type;
-        typedef value_type *pointer;
-        typedef const value_type *const_pointer;
-        typedef value_type &reference;
-        typedef const value_type &const_reference;
-        typedef std::size_t size_type;
+        using value_type = Tp;
+        using pointer = Tp*;
+        using const_pointer = const Tp *;
+        using reference = Tp&;
+        using const_reference =  const Tp &;
+        using size_type = std::size_t;
 
     private:
         // the internal array that actually stores the values
@@ -39,7 +39,6 @@ namespace rtt::collections {
     public:
         //Default constructor
         circular_buffer() : _current_offset(0), _current_size(0) {
-
         }
 
         //modifying functions

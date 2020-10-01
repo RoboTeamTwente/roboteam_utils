@@ -15,7 +15,6 @@ void access(){
     exit(0);
 }
 TEST(CircularBufferTest,aTest){
-    //TODO: fix more tests
     EXPECT_ANY_THROW(access());
 }
 

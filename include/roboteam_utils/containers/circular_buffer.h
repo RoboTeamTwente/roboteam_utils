@@ -5,6 +5,7 @@
 #ifndef RTT_CIRCULAR_BUFFER_H
 #define RTT_CIRCULAR_BUFFER_H
 
+#include <new>
 #include <stdexcept>
 #include <array>
 

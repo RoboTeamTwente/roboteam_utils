@@ -11,8 +11,7 @@
 using namespace rtt::collections;
 void access(){
     circular_buffer<double,1> s;
-    double x = s[2];
-    exit(0);
+    double x = s.at(2);
 }
 TEST(CircularBufferTest,aTest){
     EXPECT_ANY_THROW(access());

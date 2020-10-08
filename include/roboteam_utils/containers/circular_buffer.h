@@ -51,21 +51,11 @@ namespace rtt::collections {
         }
 
         void push_back(const Tp &value) {
-            if (_current_size < max_size()) {
-                ++_current_size;
-            } else {
-                ++_current_offset %= Size;
-            }
-            _m_buff[(_current_offset + _current_size - 1) % Size] = value;
+            emplace_back(value);
         }
 
         void push_back(Tp &&value) {
-            if (_current_size < max_size()) {
-                ++_current_size;
-            } else {
-                ++_current_offset %= Size;
-            }
-            _m_buff[(_current_offset + _current_size - 1) % Size] = std::move(value);
+            emplace_back(std::move(value));
         }
         template<typename... Types>
         reference emplace_back(Types &&... args) {
@@ -74,7 +64,7 @@ namespace rtt::collections {
             } else {
                 ++_current_offset %= Size;
             }
-            _m_buff[(_current_offset + _current_size - 1) % Size] = Tp{std::forward<Types>(args)...};
+            new(&_m_buff[(_current_offset + _current_size - 1) % Size]) Tp{std::forward<Types>(args)...};
             return back();
         }
         //Capacity functions

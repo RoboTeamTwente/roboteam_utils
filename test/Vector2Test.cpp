@@ -103,15 +103,15 @@ TEST(VectorTests, moreOperators) {
 
     Vector2 z = b / 2;
     EXPECT_DOUBLE_EQ(z.x,1.5);
-    EXPECT_DOUBLE_EQ(z.y,2);
+    EXPECT_DOUBLE_EQ(z.y,1);
 
     z = b + 1;
     EXPECT_DOUBLE_EQ(z.x,4);
-    EXPECT_DOUBLE_EQ(z.y,5);
+    EXPECT_DOUBLE_EQ(z.y,3);
 
     z = b - 1;
     EXPECT_DOUBLE_EQ(z.x,2);
-    EXPECT_DOUBLE_EQ(z.y,3);
+    EXPECT_DOUBLE_EQ(z.y,1);
 
     b *= a;
     EXPECT_DOUBLE_EQ(b.x, 3);

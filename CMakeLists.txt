@@ -77,8 +77,8 @@ target_compile_options(roboteam_utils PRIVATE
         --std=c++17
         -Wall
         -Wextra
-        -pedantic-errors
-        -Werror=pedantic
+        -pedantic
+        -Werror
         -Wno-unused-function
         -Wno-comment
         -Wsign-compare

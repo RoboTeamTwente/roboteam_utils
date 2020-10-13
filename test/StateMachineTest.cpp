@@ -151,13 +151,11 @@ TEST(StateMachineTest, test_skip_to) {
     EXPECT_EQ(machine.get_current()->type_num(), 1);
     machine.skip_to(0);
     EXPECT_EQ(machine.get_current()->type_num(), 0);
-    //test clamping: TODO: these segfault (not clamped correctly?)
-    machine.skip_to(2);
-    EXPECT_EQ(machine.get_current()->type_num(),1);
     //test clamping:
-    machine.skip_to(-1);
-    EXPECT_EQ(machine.get_current()->type_num(),0);
+    machine.skip_to(3);
+    EXPECT_TRUE(machine.finished());
 }
+
 TEST(StateMachineTest, reset) {
     rtt::collections::state_machine<Base, TestEnum, SkillInfo> machine{
             Base(),
@@ -168,4 +166,5 @@ TEST(StateMachineTest, reset) {
     EXPECT_EQ(machine.get_current()->type_num(), 1);
     machine.reset();
     EXPECT_EQ(machine.get_current()->type_num(),0);
+
 }

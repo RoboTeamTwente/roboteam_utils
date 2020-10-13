@@ -140,7 +140,7 @@ namespace rtt::collections {
          */
         void skip_n(int n) noexcept {
             current += n;
-            current = std::clamp<size_t>(current, 0, _data.size());
+            current = std::clamp<size_t>(current, 0, _data.size()-1);
         }
 
         /**
@@ -149,7 +149,7 @@ namespace rtt::collections {
          */
         void skip_to(int n) noexcept {
             current = n;
-            current = std::clamp<size_t>(current, 0, _data.size());
+            current = std::clamp<size_t>(current, 0, _data.size()-1);
         }
 
         /**

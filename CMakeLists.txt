@@ -68,6 +68,9 @@ add_library(roboteam_utils STATIC
         src/Shadow.cpp
         include/roboteam_utils/Shadow.h
         include/roboteam_utils/containers/circular_buffer.h
+        src/RobotShape.cpp
+        include/roboteam_utils/RobotShape.h
+
         )
 
 

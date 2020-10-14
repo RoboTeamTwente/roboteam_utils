@@ -1,0 +1,69 @@
+//
+// Created by rolf on 26-04-20.
+//
+
+#ifndef ROBOTEAM_UTILS_ROBOTSHAPE_H_
+#define ROBOTEAM_UTILS_ROBOTSHAPE_H_
+
+#include "Circle.h"
+#include "Angle.h"
+#include "Line.h"
+
+namespace rtt {
+    class HalfLine;
+
+    class RobotShape {
+    private:
+        //The first three are necessary to determine the entire shape
+        Circle circle;
+        double centerToFront;
+        Angle orientation;
+        //The following is not necessary but prevents a lot of recomputation using sin() and cos() like functions which can be pretty expensive
+        Line kickerLine;//We use a Line as it gives more efficient computations
+
+    public:
+        RobotShape(const Vector2 &pos, double centerToFront, double radius, Angle orientation);
+
+        /**
+         * Checks if a given point lies in front (not on) of the line which defines the dribbler.
+         * This only checks if the point is on the correct side of the halfplane defined by the line passing through the dribbler
+         * @param point
+         * @return
+         */
+        [[nodiscard]] bool inFrontOfDribbler(const Vector2 &point) const;
+
+        [[nodiscard]] const Vector2 &pos() const;
+
+        [[nodiscard]] Angle angle() const;
+
+        [[nodiscard]] Vector2 centerOfKickerPos() const;
+
+        [[nodiscard]] LineSegment kicker() const;
+
+        [[nodiscard]] Vector2 project(const Vector2 &point) const;
+
+        [[nodiscard]] double distanceTo(const Vector2 &point) const;
+
+        [[nodiscard]] double squaredDistanceTo(const Vector2 &point) const;
+
+        void move(const Vector2 &by);
+
+        [[nodiscard]] bool contains(const Vector2 &point) const;
+
+        [[nodiscard]] Rectangle boundingBox() const;
+
+        [[nodiscard]] bool doesIntersect(const LineSegment &segment) const;
+
+        [[nodiscard]] bool doesIntersect(const HalfLine &ray) const;
+
+        [[nodiscard]] std::vector<Vector2> intersects(const LineSegment &segment) const;
+
+        [[nodiscard]] std::vector<Vector2> intersects(const HalfLine &ray) const;
+
+        [[nodiscard]] double radius() const;
+
+        [[nodiscard]] double centerToFrontDist() const;
+    };
+
+}
+#endif //ROBOTEAM_UTILS_ROBOTSHAPE_H_

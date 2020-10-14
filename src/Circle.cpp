@@ -49,7 +49,7 @@ bool Circle::doesIntersectOrContain2(const Rectangle &other) {
     return false;
 }
 
-Vector2 Circle::project(const Vector2 &point) { return center + (point - center).stretchToLength(radius); }
+Vector2 Circle::project(const Vector2 &point) const { return center + (point - center).stretchToLength(radius); }
 
 bool Circle::operator==(const Circle &other) const { return center == other.center && radius == other.radius; }
 bool Circle::operator!=(const Circle &other) const { return !(*this == other); }

@@ -69,8 +69,8 @@ TEST(StateMachineTest, test_skip_n_clamped) {
     };
 
     ASSERT_EQ(machine.current_num(), 0);
-    machine.skip_n(2);
-    ASSERT_EQ(machine.current_num(), 1);
+    machine.skip_n(3);
+    ASSERT_TRUE(machine.finished());
 }
 TEST(StateMachineTest, test_polymorphism) {
     rtt::collections::state_machine<Base, TestEnum, SkillInfo> machine{

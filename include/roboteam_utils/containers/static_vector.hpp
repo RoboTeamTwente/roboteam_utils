@@ -240,9 +240,9 @@ namespace rtt::collections {
         void erase(iterator iter) {
             element_type* prev = iter++;
             if constexpr (std::is_nothrow_move_constructible_v<element_type>) {//TODO: this makes no sense? We do not check for this
-                std::copy(iter, end(), prev);
-            } else {
                 std::move(iter, end(), prev);
+            } else {
+                std::copy(iter, end(), prev);
             }
             _size--;
         }

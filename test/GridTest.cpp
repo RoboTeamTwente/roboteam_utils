@@ -33,6 +33,17 @@ namespace rtt{
             }
         }
     }
+    TEST(Grid,getters){
+        Grid grid = Grid(1,2,3,4,5,6);
+        EXPECT_EQ(grid.getOffSetX(),1);
+        EXPECT_EQ(grid.getOffSetY(),2);
+        EXPECT_EQ(grid.getRegionWidth(),3);
+        EXPECT_EQ(grid.getRegionHeight(),4);
+        EXPECT_EQ(grid.getNumStepsX(),5);
+        EXPECT_EQ(grid.getNumStepsY(),6);
+        EXPECT_DOUBLE_EQ(grid.getStepSizeX(),3/5.0); //TOOD: possible bugs? Is the grid defined to be inclusive edge or not?
+        EXPECT_DOUBLE_EQ(grid.getStepSizeY(),4/6.0);
+    }
 
 
 

@@ -107,7 +107,7 @@ double Vector2::cross(const Vector2 &other) const {
 }
 
 bool Vector2::operator==(const Vector2 &other) const {
-    return fabs(this->x - other.x) < FLOAT_PRECISION && fabs(this->y - other.y) < FLOAT_PRECISION;
+    return fabs(this->x - other.x) < RTT_PRECISION_LIMIT && fabs(this->y - other.y) < RTT_PRECISION_LIMIT;
 }
 
 bool Vector2::operator!=(const Vector2 &other) const {

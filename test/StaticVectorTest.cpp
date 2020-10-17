@@ -79,12 +79,13 @@ struct MockClass{
     explicit MockClass(double x) : value{x}{
 
     }
-    MockClass(const MockClass& old) = default;
+    MockClass& operator=(const MockClass&) = default;
+    MockClass(const MockClass&) = default;
     MockClass(MockClass &&) = delete;
     double value;
 };
 static_assert(std::is_default_constructible_v<MockClass>,"Is type default constructable");
-static_assert(!std::is_nothrow_move_constructible<MockClass>::value,"Mock class should test nothrow move constructability");
+static_assert(!std::is_nothrow_move_constructible_v<MockClass>,"Mock class should test nothrow move constructability");
 
 TEST(static_vector,none_movable){
     MockClass data{3.0};
@@ -103,6 +104,6 @@ TEST(static_vector,none_movable){
     EXPECT_DOUBLE_EQ(copy.front().value,3.0);
     EXPECT_DOUBLE_EQ(copy.front().value,copy.data()->value);
     EXPECT_DOUBLE_EQ(copy.back().value,1.0);
-//    dataList.erase(dataList.begin()+1); //TODO: doesn't work?
-//    EXPECT_DOUBLE_EQ(dataList[1].value,1.0);
+    dataList.erase(dataList.begin()+1);
+    EXPECT_DOUBLE_EQ(dataList[1].value,1.0);
 }

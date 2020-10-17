@@ -11,7 +11,7 @@
 using namespace rtt::collections;
 void access(){
     circular_buffer<double,1> s;
-    double x = s.at(2);
+    [[maybe_unused]] double x = s.at(2);
 }
 void constAccess(){
     const circular_buffer<double,1> s;

@@ -17,7 +17,7 @@ namespace rtt {
          * @param regionWidth the width of the region you want the grid to encompass
          * @param regionHeight the height of the region you want the grid to encompass
          * @param numStepsX number of segments to divide the grid into in x direction
-         * @param numStepsY number of segment to divide the grid into in y direction
+         * @param numStepsY number of segments to divide the grid into in y direction
          */
         Grid(double offSetX, double offSetY, double regionWidth, double regionHeight, int numSegmentsX, int numSegmentsY);
 

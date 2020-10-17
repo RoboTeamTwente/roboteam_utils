@@ -17,8 +17,8 @@ namespace rtt {
         }
     {}
 
-    Polygon::Polygon(std::vector<rtt::Vector2> _vertices)
-        : vertices{std::move( _vertices )}
+    Polygon::Polygon(std::vector<rtt::Vector2> vertices)
+        : vertices{std::move(vertices)}
     {}
 
     size_t Polygon::amountOfVertices() const {

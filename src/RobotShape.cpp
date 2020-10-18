@@ -57,78 +57,13 @@ namespace rtt {
         return false;
     }
 
-    /**
+
     //We return the circle's bounding box. Strictly speaking the bounding box can be smaller depending on the robots orientation
 //But frankly, this probably costs more time to compute than it saves in computation later. This is just easier to work with.
-    BoundingBox2D RobotShape::boundingBox() const {
-        return circle.boundingBox();
-    }
-     bool RobotShape::doesIntersect(const HalfLine &ray) const {
-        std::vector <Vector2> intersects = circle.intersects(ray);
-        if (intersects.empty()) {
-            return false;
-        } else if (intersects.size() == 1) {
-            //Either the ray touches the circle, or (more likely) it started  inside of it.
-            if (inFrontOfDribbler(intersects[0])) {
-                //The ray might still have hit the kicker by starting inside of the robot
-                return LineSegment(kickerLine).doesIntersect(ray);
-            }
-            return true;//there is at least one intersection point on the hull
-        } else if (intersects.size() == 2) {
-            bool firstInFront = inFrontOfDribbler(intersects[0]);
-            bool secondInFront = inFrontOfDribbler(intersects[1]);
-            return !(firstInFront && secondInFront);
-        }
-        return false;//This should never be hit as circle intersection always hits atleast two.
-    }
-     std::vector <Vector2> RobotShape::intersects(const HalfLine &ray) const {
-        std::vector <Vector2> intersects = circle.intersects(ray);
-        if (intersects.empty()) {
-            //The ray is completely outside the circle.
-            return {};
-        } else if (intersects.size() == 1) {
-            auto intersect = ray.intersects(kickerLine); // we need this info in all branches
-            //Either the ray touches the circle, or (more likely) it started  inside of it.
-            if (inFrontOfDribbler(intersects[0])) {
-                //The ray might still have hit the kicker by starting inside of the robot
-                if (intersect) {
-                    return {*intersect};
-                }
-                return {};
-            }
-            //If the intersection point is on the hull there is no problem. However, there might be another intersection at the kicker.
-            if (intersect) {
-                if ((ray.start() - *intersect).length2() < (ray.start() - intersects[0]).length2()) {
-                    return {*intersect, intersects[0]};
-                }
-                intersects.push_back(
-                        *intersect); //TODO: this double counts now if the lines go through the exact corner. (need to write function that ignores end point intersections)
-            }
-            return intersects;
-        } else if (intersects.size() == 2) {
-            bool firstInFront = inFrontOfDribbler(intersects[0]);
-            bool secondInFront = inFrontOfDribbler(intersects[1]);
-            //Check where both points are on the circle:
-            if (firstInFront && secondInFront) {
-                //no intersections as both pass in front of the robot
-                return {};
-            }
-            if (!firstInFront && !secondInFront) {
-                //Both points intersect the outer hull and not the dribbler. So we can simply return
-                return intersects;
-            }
-            //One point is in front and one point is behind the kick line.
-            //As the circle is convex, this must mean there is an intersection between the two, so we use line here
-            Vector2 dribblerIntersect = *Line(kickerLine).intersects(ray); //If this
-            //Check which of the intersections was invalid.
-            if (firstInFront) {
-                return {dribblerIntersect, intersects[1]};
-            }
-            return {intersects[0], dribblerIntersect};
-        }
-        return {};//This should never be hit as circle intersection always hits atleast two.
-    }
-    */
+//    BoundingBox2D RobotShape::boundingBox() const {
+//        return circle.boundingBox();
+//    }
+
     std::vector <Vector2> RobotShape::intersects(const LineSegment &segment) const {
         std::vector <Vector2> intersects = circle.intersects(segment);
         if (intersects.empty()) {

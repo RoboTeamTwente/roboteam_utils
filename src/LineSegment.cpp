@@ -132,4 +132,13 @@ bool LineSegment::isOnFiniteLine(const Vector2 &point) const {
 
 bool LineSegment::operator==(const LineSegment &other) const { return ((start == other.start && end == other.end) || (start == other.end && end == other.start)); }
 
+Vector2 LineSegment::direction() const {
+    return end-start;
+}
+
+    void LineSegment::move(const Vector2 &by) {
+    start+=by;
+    end+=by;
+    }
+
 }  // namespace rtt

@@ -19,7 +19,7 @@ namespace rtt {
         double centerToFront;
         Angle orientation;
         //The following is not necessary but prevents a lot of recomputation using sin() and cos() like functions which can be pretty expensive
-        Line kickerLine;//We use a Line as it gives more efficient computations
+        LineSegment kickerLine;//We use a Line as it gives more efficient computations
 
     public:
         RobotShape(const Vector2 &pos, double centerToFront, double radius, Angle orientation);
@@ -54,11 +54,10 @@ namespace rtt {
 
         [[nodiscard]] bool doesIntersect(const LineSegment &segment) const;
 
-        [[nodiscard]] bool doesIntersect(const HalfLine &ray) const;
-
         [[nodiscard]] std::vector<Vector2> intersects(const LineSegment &segment) const;
 
-        [[nodiscard]] std::vector<Vector2> intersects(const HalfLine &ray) const;
+//        [[nodiscard]] bool doesIntersect(const HalfLine &ray) const;
+//        [[nodiscard]] std::vector<Vector2> intersects(const HalfLine &ray) const;
 
         [[nodiscard]] double radius() const;
 

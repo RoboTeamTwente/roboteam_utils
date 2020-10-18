@@ -18,6 +18,7 @@ class LineSegment {
         Vector2 start; // One of the endings of this LineSegment (which we define as the start of this LineSegment).
         Vector2 end; // Another ending of this LineSegment (which we define as the end of this LineSegment).
 
+        LineSegment() = default;
         /**
          * Creates a new LineSegment instance by giving 2 points which represents the locations between which the LineSegment is created.
          *
@@ -33,6 +34,15 @@ class LineSegment {
          */
         [[nodiscard]] double length() const;
 
+        /**
+         * @return Returns the vector which represents the direction in which the line points, e.g. end-start
+         */
+        [[nodiscard]] Vector2 direction() const;
+
+        /**
+         *
+         */
+         void move(const Vector2& by);
         /**
          * Computes the squared length of this line, which is the square of the Euclidean distance between both endings of this LineSegment.
          *
@@ -105,11 +115,6 @@ class LineSegment {
          * @return Returns a list of the intersections.
          */
         [[nodiscard]] std::vector<Vector2> multiIntersect(const LineSegment &line) const;
-
-        /**
-         * Destructor of the LineSegment.
-         */
-        virtual ~LineSegment() = default;
 
         /**
          * Checks if two LineSegments are actually the same, i.e. to check if the ending of the LineSegments are at the same locations. Note that the directions of the LineSegments

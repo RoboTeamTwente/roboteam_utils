@@ -71,7 +71,7 @@ add_library(roboteam_utils STATIC
         src/RobotShape.cpp
         include/roboteam_utils/RobotShape.h
 
-        )
+        src/Polynomial.cpp include/roboteam_utils/Polynomial.h)
 
 
 target_include_directories(roboteam_utils

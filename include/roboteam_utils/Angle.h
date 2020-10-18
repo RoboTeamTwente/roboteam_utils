@@ -37,6 +37,7 @@ class Angle {
          */
         Angle(const rtt::Vector2 &vec);
 
+        [[nodiscard]] double getValue() const noexcept;
         /**
          * Get the angle value in the range [-PI, PI).
          * @return The angle value.

@@ -70,8 +70,9 @@ add_library(roboteam_utils STATIC
         include/roboteam_utils/containers/circular_buffer.h
         src/RobotShape.cpp
         include/roboteam_utils/RobotShape.h
-
-        src/Polynomial.cpp include/roboteam_utils/Polynomial.h)
+        src/Polynomial.cpp
+        include/roboteam_utils/Polynomial.h
+        )
 
 
 target_include_directories(roboteam_utils
@@ -122,7 +123,7 @@ add_executable(utils_tests
         test/ShadowTest.cpp
         test/CircularBufferTest.cpp
         test/PubSubTest.cpp
-        )
+        test/RobotShapeTest.cpp)
 
 target_link_libraries(utils_tests
         PRIVATE roboteam_utils

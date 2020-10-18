@@ -40,12 +40,12 @@ namespace rtt {
             //No intersections with circle, which means segment is either completely outside or completely inside the circle
             // We need to check for the case where the segment is completely inside and hits the dribbler
             return circle.contains(segment.start) && circle.contains(segment.end) &&
-                   kickerLine.doesIntersect(segment);
+                   kickerLine.preciseDoesIntersect(segment);
         } else if (intersects.size() == 1) {
             //Either the segment touches the circle, or (more likely) it starts or ends inside of it.
             if (inFrontOfDribbler(intersects[0])) {
                 //the segment might still intersect with the kicker, if not, there is no intersection
-                return LineSegment(kickerLine).doesIntersect(segment);
+                return kickerLine.preciseDoesIntersect(segment);
             }
             //The intersection point is on the hull
             return true;
@@ -134,11 +134,10 @@ namespace rtt {
         if (intersects.empty()) {
             //No intersections with circle, which means segment is either completely outside or completely inside the circle
             // We need to check for the case where the segment is completely inside and hits the dribbler
-            //TODO: might be refactorable to not use contains but  just use LineSegment(kickerLine).intersects(segment) (check performance)
             if (circle.contains(segment.start) && circle.contains(
                     segment.end)) { //one of these checks should technically be redundant. But not optimizing for now.
                 //then we simply compute intersections of the kicker line with the line segment
-                auto intersect = kickerLine.intersects(segment);
+                auto intersect = kickerLine.firstIntersects(segment);
                 if (intersect) {
                     return {*intersect};
                 }
@@ -146,7 +145,7 @@ namespace rtt {
             //The segment is completely outside the circle.
             return {};
         } else if (intersects.size() == 1) {
-            auto intersect = segment.intersects(kickerLine); // we need this info in all branches
+            auto intersect = segment.firstIntersects(kickerLine); // we need this info in all branches
             //Either the segment touches the circle, or (more likely) it starts or ends inside of it.
             if (inFrontOfDribbler(intersects[0])) {
                 //The segment might still intersect with the kicker
@@ -178,8 +177,8 @@ namespace rtt {
             }
             //One point is in front and one point is behind the kick line.
             //As the circle is convex, this must mean there is an intersection between the two.
-            Vector2 dribblerIntersect = *kickerLine.intersects(
-                    segment); //If this crashes there has to be a bug somewhere.
+            Vector2 dribblerIntersect = *kickerLine.firstIntersects(
+                    segment);
             //Check which of the intersections was invalid.
             if (firstInFront) {
                 return {dribblerIntersect, intersects[1]};

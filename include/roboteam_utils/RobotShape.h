@@ -50,12 +50,12 @@ namespace rtt {
 
         [[nodiscard]] bool contains(const Vector2 &point) const;
 
-        [[nodiscard]] Rectangle boundingBox() const;
 
         [[nodiscard]] bool doesIntersect(const LineSegment &segment) const;
 
         [[nodiscard]] std::vector<Vector2> intersects(const LineSegment &segment) const;
 
+//        [[nodiscard]] Rectangle boundingBox() const;
 //        [[nodiscard]] bool doesIntersect(const HalfLine &ray) const;
 //        [[nodiscard]] std::vector<Vector2> intersects(const HalfLine &ray) const;
 

@@ -95,6 +95,9 @@ class LineSegment {
          */
         [[nodiscard]] std::optional<Vector2> intersects(const LineSegment &line) const;
 
+        [[nodiscard]] std::optional<Vector2> firstIntersects(const LineSegment &segment) const;
+
+        [[nodiscard]] bool preciseDoesIntersect(const LineSegment&line) const;
         /**
          * Check if two LineSegment intersect. Note that this function knows how to deal with LineSegments that are points and how to deal with parallel LineSegments.
          *

@@ -77,4 +77,8 @@ namespace rtt {
         this->normalize();
         return *this;
     }
+
+    double Angle::getValue() const noexcept {
+        return angle;
+    }
 }

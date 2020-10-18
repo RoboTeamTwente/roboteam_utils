@@ -20,7 +20,7 @@ namespace rtt {
         //We use the cross product to determine which side of the plane the point is on.
         //KickerLine is always oriented such that this definition is consistent with the ball being ahead of the robot.
         //Note we don't do >=0 because we want to exclude the case where the point is exactly on the line.
-        return kickerLine.direction().cross(kickerLine.start() - point) > 0;
+        return kickerLine.direction().cross(kickerLine.start - point) > 0;
     }
 
     void RobotShape::move(const Vector2 &by) {
@@ -192,8 +192,8 @@ namespace rtt {
         return orientation;
     }
 
-    const Vector2 &RobotShape::pos() const {
-        return circle.center();
+    Vector2 RobotShape::pos() const {
+        return circle.center;
     }
 
     Vector2 RobotShape::centerOfKickerPos() const {

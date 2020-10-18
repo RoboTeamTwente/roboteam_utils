@@ -32,7 +32,7 @@ namespace rtt {
          */
         [[nodiscard]] bool inFrontOfDribbler(const Vector2 &point) const;
 
-        [[nodiscard]] const Vector2 &pos() const;
+        [[nodiscard]] Vector2 pos() const;
 
         [[nodiscard]] Angle angle() const;
 

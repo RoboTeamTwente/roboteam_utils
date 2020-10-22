@@ -12,21 +12,21 @@ namespace rtt {
     public:
         /**
          * A Grid is a 2D vector of Vector2 points.
-         * @param offSetX the distance you want to horizontally shift the grid from 0
-         * @param offSetY the distance you want to vertically shift the grid from 0
+         * @param offSetX the distance you want to horizontally shift the grid from 0 (where 0 is left edge)
+         * @param offSetY the distance you want to vertically shift the grid from 0 (where 0 is bottom edge)
          * @param regionWidth the width of the region you want the grid to encompass
          * @param regionHeight the height of the region you want the grid to encompass
-         * @param numStepsX number of steps to divide the grid into in x direction
-         * @param numStepsY number of steps to divide the grid into in y direction
+         * @param numStepsX number of segments to divide the grid into in x direction
+         * @param numStepsY number of segments to divide the grid into in y direction
          */
-        Grid(double offSetX, double offSetY, double regionWidth, double regionHeight, int numStepsX, int numStepsY);
+        Grid(double offSetX, double offSetY, double regionWidth, double regionHeight, int numSegmentsX, int numSegmentsY);
 
         [[nodiscard]] double getOffSetX() const;
         [[nodiscard]] double getOffSetY() const;
         [[nodiscard]] double getRegionWidth() const;
         [[nodiscard]] double getRegionHeight() const;
-        [[nodiscard]] int getNumStepsX() const;
-        [[nodiscard]] int getNumStepsY() const;
+        [[nodiscard]] int getNumSegmentsX() const;
+        [[nodiscard]] int getNumSegmentsY() const;
         [[nodiscard]] double getStepSizeX() const;
         [[nodiscard]] double getStepSizeY() const;
         [[nodiscard]] const std::vector<std::vector<Vector2>> &getPoints() const;
@@ -40,8 +40,8 @@ namespace rtt {
         double offSetY;
         double regionWidth;
         double regionHeight;
-        int numStepsX;
-        int numStepsY;
+        int numSegmentsX;
+        int numSegmentsY;
         double stepSizeX;
         double stepSizeY;
     };

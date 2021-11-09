@@ -20,9 +20,9 @@ namespace rtt {
             points.emplace_back(a);
         }
 
-        for (int i = 0; i <= numSegmentsX; i++) {
-            for (int j = 0; j <= numSegmentsY; j++) {
-                points[i].emplace_back(Vector2(offSetX + stepSizeX * i, offSetY + stepSizeY * j));
+        for (int i = 0; i < numSegmentsX; i++) {
+            for (int j = 0; j < numSegmentsY; j++) {
+                points[i].emplace_back(Vector2(offSetX + stepSizeX * i + stepSizeX/2, offSetY + stepSizeY * j + stepSizeY/2));
             }
         }
     }

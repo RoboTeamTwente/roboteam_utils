@@ -4,16 +4,17 @@
 
 #include "Grid.h"
 namespace rtt {
-    Grid::Grid(double offSetX, double offSetY, double regionWidth, double regionHeight, int numSegmentsX, int numSegmentsY) :
+    Grid::Grid(double offSetX, double offSetY, double regionWidth, double regionLength, int numSegmentsX, int numSegmentsY) :
     offSetX{offSetX},
     offSetY{offSetY},
     regionWidth{regionWidth},
-    regionHeight{regionHeight},
+    regionLength{regionLength},
     numSegmentsX{numSegmentsX},
     numSegmentsY{numSegmentsY}
     {
-        this->stepSizeX = regionWidth/numSegmentsX;
-        this->stepSizeY = regionHeight/numSegmentsY;
+        this->stepSizeX = regionLength/numSegmentsX;
+        this->stepSizeY = regionWidth/numSegmentsY;
+
         for (int i = 0; i <= numSegmentsX; i++) {
             std::vector<Vector2> a;
             points.emplace_back(a);
@@ -47,8 +48,8 @@ namespace rtt {
         return regionWidth;
     }
 
-    double Grid::getRegionHeight() const {
-        return regionHeight;
+    double Grid::getRegionLength() const {
+        return regionLength;
     }
 
     int Grid::getNumSegmentsX() const {

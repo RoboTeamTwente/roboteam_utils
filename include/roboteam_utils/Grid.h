@@ -47,4 +47,4 @@ namespace rtt {
     };
 }
 
-#endif //RTT_GRID_H
+#endif  // RTT_GRID_H

@@ -55,6 +55,7 @@ target_include_directories(roboteam_utils
         PRIVATE include/roboteam_utils
         INTERFACE include
         )
+target_compile_options(roboteam_utils PRIVATE "${COMPILER_FLAGS}")
 
 add_executable(utils_tests
         ${ROBOTEAM_UTILS_TEST_SRC}

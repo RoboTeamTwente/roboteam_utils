@@ -15,8 +15,12 @@ class Polygon;
  * @date 22-01-2020
  * @author Rolf van der Hulst
  */
-class LazyRectangle : public Rectangle {
+class LazyRectangle : virtual public Rectangle {
    public:
+    /**
+     * @brief Constructs a rectangle from the given rectangle
+     */
+    explicit LazyRectangle(const Rectangle&);
     /**
      * @brief Constructs a rectangle from two opposite corners
      * @param corner Primary corner

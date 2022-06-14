@@ -8,6 +8,8 @@ namespace rtt {
 
 class Rectangle : public Shape {
 public:
+    virtual ~Rectangle() = default;
+
     // Gets the width of the rectangle
     [[nodiscard]] virtual double width() const = 0;
     // Gets the height of the rectangle

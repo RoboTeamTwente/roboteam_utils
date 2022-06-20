@@ -86,15 +86,15 @@ class Grid3x3 : public FastGrid<3, 3, T> {
 public:
     explicit Grid3x3(const Rectangle& r) : FastGrid<3, 3, T>(r) {}
 
-    const T& topLeftCell() { return this->getCell(0, 0); }
-    const T& topMiddleCell() { return this->getCell(1, 0); }
-    const T& topRightCell() { return this->getCell(2, 0); }
-    const T& middleLeftCell() { return this->getCell(0, 1); }
-    const T& middleMiddleCell() { return this->getCell(1, 1); }
-    const T& middleRightCell() { return this->getCell(2, 1); }
-    const T& bottomLeftCell() { return this->getCell(0, 2); }
-    const T& bottomMiddleCell() { return this->getCell(1, 2); }
-    const T& bottomRightCell() { return this->getCell(2, 2); }
+    const T& topLeftCell() const { return this->getCell(0, 0); }
+    const T& topMiddleCell() const { return this->getCell(1, 0); }
+    const T& topRightCell() const { return this->getCell(2, 0); }
+    const T& middleLeftCell() const { return this->getCell(0, 1); }
+    const T& middleMiddleCell() const { return this->getCell(1, 1); }
+    const T& middleRightCell() const { return this->getCell(2, 1); }
+    const T& bottomLeftCell() const { return this->getCell(0, 2); }
+    const T& bottomMiddleCell() const { return this->getCell(1, 2); }
+    const T& bottomRightCell() const { return this->getCell(2, 2); }
 };
 
 } // namespace rtt

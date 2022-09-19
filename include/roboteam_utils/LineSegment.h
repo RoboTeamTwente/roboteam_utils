@@ -47,6 +47,8 @@ class LineSegment {
      */
     [[nodiscard]] double length2() const;
 
+    [[nodiscard]] Vector2 center() const;
+
     /**
      * Checks whether this LineSegment is also a point, i.e. check if both of the endings of this LineSegment are the same.
      *
@@ -138,6 +140,21 @@ class LineSegment {
     void move(const Vector2& by);
 
     /**
+     * Rotates the line around the middle point by the given angle
+     * @param angle
+     * @param rotationPoint
+     */
+    void rotate(const Angle angle, const Vector2 rotationPoint);
+
+    /**
+     * Resizes the linesegment. Moves both ends from the center outwards untill the specified length is achieved
+     * Will not resize if length of this LineSegment is 0.
+     * Negative size will mirror the line
+     * @param toLength the new length this LineSegment should have
+     */
+    void resize(double toLength);
+
+    /**
      * Computes the intersection of two line segments.
      * If the two lines are colinear and have a overlapping line segment, it returns the point closest to the start of this line segment
      * @param segment
@@ -151,6 +168,14 @@ class LineSegment {
      * @return
      */
     [[nodiscard]] bool preciseDoesIntersect(const LineSegment&line) const;
+
+    /**
+     * Gets the point on this LineSegment that is closest to any point of the other line
+     * If other line is parallel to this,
+     * @return point on this LineSegment closest to given line
+     */
+    [[nodiscard]] std::optional<Vector2> getClosestPointToLine(const Line&) const;
+
    private:
     /**
      * Check whether a given point lies on this LineSegment, given that this LineSegment has length > 0 and that the given point lies on the infinite Line expansion of this

@@ -1,62 +1,105 @@
-//
-// Created by jesse on 18-05-20.
-//
-
-//
-// Created by rolf on 22-01-20.
-//
-
 #include <gtest/gtest.h>
 #include <roboteam_utils/Grid.h>
+#include <roboteam_utils/Random.h>
 
 namespace rtt {
 
-// Check to see if the grid contains the expected number of data points for the step size
-TEST(Grid, numStepsTest) {
-    Grid grid = Grid(0, 0, 1, 1, 3, 4);
-    int sizeOfGrid = 0;
-    for (auto nestedPoints : grid.getPoints()) {
-        sizeOfGrid += nestedPoints.size();
-    }
-    EXPECT_EQ(sizeOfGrid, (grid.getNumPointsX() * grid.getNumPointsY()));
+// The size should match the given template arguments
+TEST(FastGrid, sizeTest) {
+    constexpr unsigned int ROW_SIZE = 3;
+    constexpr unsigned int COLUMN_SIZE = 4;
+    constexpr unsigned int EXPECTED_SIZE = ROW_SIZE * COLUMN_SIZE;
+
+    auto grid = FastGrid<ROW_SIZE, COLUMN_SIZE, FastRectangle>(LazyRectangle({0, 0}, {1, 1}));
+
+    EXPECT_EQ(grid.getPoints().size(), EXPECTED_SIZE);
+    EXPECT_EQ(grid.getCells().size(), EXPECTED_SIZE);
+    EXPECT_EQ(grid.getRowSize(), ROW_SIZE);
+    EXPECT_EQ(grid.getColumnSize(), COLUMN_SIZE);
 }
 
-// Test to see if any of the points in the grid are not within the allowed region
-TEST(Grid, offSetTest) {
-    // The points should be within the box defined by x \in [2, 3] and y \in [2,3]
-    Grid grid = Grid(2, 2, 1, 1, 4, 4);
-    for (auto nestedPoints : grid.getPoints()) {
-        for (auto point : nestedPoints) {
-            EXPECT_TRUE(point.x >= 2 && point.x <= 3);
-            EXPECT_TRUE(point.y >= 2 && point.y <= 3);
+// All points from a grid should be within that grid
+TEST(FastGrid, pointsTest) {
+    for (int i = 0; i < 20; i++) {
+        double left = SimpleRandom::getDouble(-10, 5);
+        double right = SimpleRandom::getDouble(left, 10);
+        double bottom = SimpleRandom::getDouble(-10, 5);
+        double top = SimpleRandom::getDouble(bottom, 10);
+        auto gridBounding = LazyRectangle({left, top}, {right, bottom});
+
+        auto grid = FastGrid<3, 3, FastRectangle>(gridBounding);
+
+        for (const auto& point : grid.getPoints()) {
+            ASSERT_TRUE(grid.contains(point));
         }
     }
 }
-TEST(Grid, getters) {
-    Grid grid = Grid(1, 2, 3, 4, 5, 6);
-    EXPECT_EQ(grid.getOffSetX(), 1);
-    EXPECT_EQ(grid.getOffSetY(), 2);
-    EXPECT_EQ(grid.getRegionWidth(), 3);
-    EXPECT_EQ(grid.getRegionLength(), 4);
-    EXPECT_EQ(grid.getNumPointsX(), 5);
-    EXPECT_EQ(grid.getNumPointsY(), 6);
-    EXPECT_DOUBLE_EQ(grid.getStepSizeX(), 4 / 5.0);
-    EXPECT_DOUBLE_EQ(grid.getStepSizeY(), 3 / 6.0);
+
+// Incorrect construction of grid throws exception
+TEST(FastGrid, constructionException) {
+    auto gridBoundary = LazyRectangle({1,1}, {0,0});
+
+    EXPECT_NO_THROW(( FastGrid<1, 1, LazyRectangle>(gridBoundary) ));
+    EXPECT_THROW(( FastGrid<0, 1, LazyRectangle>(gridBoundary)), InvalidGridSizeException);
+    EXPECT_THROW(( FastGrid<1, 0, LazyRectangle>(gridBoundary)), InvalidGridSizeException);
+    EXPECT_THROW(( FastGrid<0, 0, LazyRectangle>(gridBoundary)), InvalidGridSizeException);
 }
 
-// Test whether the points are equally spaced in the region (average should be in the center of the grid)
-TEST(Grid, spreadTest) {
-    Grid grid = Grid(-3, -2, 4, 6, 5, 3);
-    double totalX = 0;
-    double totalY = 0;
-    for (auto nestedPoints : grid.getPoints()) {
-        for (auto point : nestedPoints){
-            totalX += point.x;
-            totalY += point.y;
+// Access to nonexistent cells throws exception
+TEST(FastGrid, noCellException) {
+    constexpr int WIDTH = 3;
+    constexpr int HEIGHT = 3;
+    auto gridBoundary = LazyRectangle({1,1}, {0,0});
+    auto grid = FastGrid<WIDTH, HEIGHT, LazyRectangle>(gridBoundary);
+
+    // Valid cells will not throw
+    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
+            EXPECT_NO_THROW(grid.getCell(x, y));
         }
     }
-    // As floating point errors are accumulated above, these numbers won't be the exact same (even DOUBLE_EQ won't accept the error). An accuracy of 1e-10 is required
-    EXPECT_NEAR(totalX/5.0, 0.0, 1e-10);
-    EXPECT_NEAR(totalY/3.0, 0.0, 1e-10);
+    // Invalid cells will throw
+    EXPECT_THROW(grid.getCell(WIDTH, 0), InvalidCellLocation);
+    EXPECT_THROW(grid.getCell(0, HEIGHT), InvalidCellLocation);
+    EXPECT_THROW(grid.getCell(WIDTH, HEIGHT), InvalidCellLocation);
 }
+
+// All points of a grid should be equally spaced in the region (average should be in the center of the grid)
+TEST(FastGrid, spreadTest) {
+    auto gridBoundary = LazyRectangle({1,1}, {0,0});
+    auto grid = FastGrid<3, 4, LazyRectangle>(gridBoundary);
+
+    auto points = grid.getPoints();
+
+    Vector2 sum = std::reduce(points.begin(), points.end(), Vector2(0.0, 0.0));
+    Vector2 average = sum / static_cast<double>(points.size());
+
+    grid.getPoints().size();
+    grid.getPoints().size();
+
+    EXPECT_EQ(average, grid.center());
+}
+
+// A 3x3 Grid is actually 3 by 3 cells
+TEST(Grid3x3, size) {
+    auto grid = Grid3x3<LazyRectangle>(LazyRectangle({1,1},{0,0}));
+    ASSERT_EQ(grid.getRowSize(), 3);
+    ASSERT_EQ(grid.getColumnSize(), 3);
+}
+
+// All easy accessibility functions of 3x3 access correct cell
+TEST(Grid3x3, access) {
+    auto grid = Grid3x3<FastRectangle>(LazyRectangle({1,1}, {0,0}));
+
+    ASSERT_EQ(grid.topLeftCell(), grid.getCell(0, 0));
+    ASSERT_EQ(grid.topMiddleCell(), grid.getCell(1, 0));
+    ASSERT_EQ(grid.topRightCell(), grid.getCell(2, 0));
+    ASSERT_EQ(grid.middleLeftCell(), grid.getCell(0, 1));
+    ASSERT_EQ(grid.middleMiddleCell(), grid.getCell(1, 1));
+    ASSERT_EQ(grid.middleRightCell(), grid.getCell(2, 1));
+    ASSERT_EQ(grid.bottomLeftCell(), grid.getCell(0, 2));
+    ASSERT_EQ(grid.bottomMiddleCell(), grid.getCell(1, 2));
+    ASSERT_EQ(grid.bottomRightCell(), grid.getCell(2, 2));
+}
+
 }  // namespace rtt

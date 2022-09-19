@@ -2,6 +2,7 @@
 
 #include <Angle.h>
 
+#include "Line.h"
 #include <cmath>
 #include <algorithm>
 #include <optional>

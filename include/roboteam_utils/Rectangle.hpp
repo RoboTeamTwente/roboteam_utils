@@ -3,11 +3,14 @@
 #include "Shape.h"
 #include "Vector2.h"
 #include "LineSegment.h"
+#include "GridCell.hpp"
 
 namespace rtt {
 
-class Rectangle : public Shape {
+class Rectangle : public GridCell {
 public:
+    virtual ~Rectangle() = default;
+
     // Gets the width of the rectangle
     [[nodiscard]] virtual double width() const = 0;
     // Gets the height of the rectangle
@@ -40,6 +43,10 @@ public:
     [[nodiscard]] virtual LineSegment rightLine() const = 0;
     // Gets the bottom line segment
     [[nodiscard]] virtual LineSegment bottomLine() const = 0;
+
+    void addPoints(std::vector<Vector2>& points) const override {
+        points.push_back(this->center());
+    }
 };
 
 } // namespace rtt

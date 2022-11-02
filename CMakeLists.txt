@@ -88,4 +88,4 @@ target_link_libraries(roboteam_utils_tests
 
 target_compile_options(roboteam_utils_tests PRIVATE "${COMPILER_FLAGS}")
 
-gtest_discover_tests(roboteam_utils_tests)
+# gtest_discover_tests(roboteam_utils_tests)

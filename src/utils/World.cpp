@@ -1,7 +1,5 @@
 #include <roboteam_utils/World.hpp>
 
-#include <google/protobuf/util/message_differencer.h> // For comparing proto objects
-
 namespace rtt {
 
 bool World::operator==(const World &other) const {
